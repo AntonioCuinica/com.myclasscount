@@ -23,11 +23,11 @@ public class mainFrame extends JFrame {
     private Color backColor=new Color(33,80,172);
     private Container container;
     private JFrame frame;
-    public mainFrame(){        
-        this.setSize(950,700);
+    public mainFrame(JFrame anterior){        
+        this.setSize(anterior.getSize());
         this.setMinimumSize(new Dimension(860,600));
         this.setLayout(null);
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(anterior);
         container=this.getContentPane();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         container.setBackground(backColor);
@@ -302,8 +302,5 @@ public class mainFrame extends JFrame {
             }
             
     }
-    
-    public static void main(String[] args) {
-        new mainFrame();
-    }
+ 
 }
