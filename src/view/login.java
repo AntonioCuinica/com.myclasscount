@@ -8,15 +8,11 @@ package view;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -31,7 +27,7 @@ public class login extends JFrame {
     private JFrame frame;
     
     public login(){
-        this.setSize(940,700);
+        this.setSize(940,650);
         this.setMinimumSize(new Dimension(860,600));
         this.setLayout(null);
         this.setLocationRelativeTo(null);
@@ -98,10 +94,11 @@ public class login extends JFrame {
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-           new mainFrame(frame).setVisible(true);
+           new mainFrame(frame);
            dispose();
         }
     }
+    
     public static void main(String[] args) {
         new login();
     }

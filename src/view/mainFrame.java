@@ -23,6 +23,7 @@ public class mainFrame extends JFrame {
     private Color backColor=new Color(33,80,172);
     private Container container;
     private JFrame frame;
+    
     public mainFrame(JFrame anterior){        
         this.setSize(anterior.getSize());
         this.setMinimumSize(new Dimension(860,600));
