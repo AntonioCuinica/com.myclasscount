@@ -72,8 +72,6 @@ public class CriarSenha extends JFrame {
                 }
             }
         ).start();
-    }
-   
-    
+    }            
     
 }
