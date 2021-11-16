@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -49,7 +50,8 @@ public class login extends JFrame {
         pan1.setLayout(new GridLayout(7,1));
         pan1.invisible(true, true);
         
-        JTextField txtF[]={new JTextField(),new JTextField()};
+        JTextField txtF[]={new JTextField()};
+        JPasswordField pswF=new JPasswordField();
         mybutton entrar=new mybutton("Entrar",160,25,false);
         entrar.addMouseListener(new Clique());
         JLabel labels[]={new JLabel("Bem vindo ao MyClassCount",SwingConstants.CENTER),new JLabel("Usuario"),
@@ -61,7 +63,7 @@ public class login extends JFrame {
         pan1.add(labels[1]);
         pan1.add(txtF[0]);
         pan1.add(labels[2]);
-        pan1.add(txtF[1]);
+        pan1.add(pswF);
         pan1.add(new JLabel());
         pan1.add(entrar);
         

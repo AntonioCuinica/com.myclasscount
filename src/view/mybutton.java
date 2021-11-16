@@ -8,17 +8,12 @@ package view;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 /**
  *
@@ -26,6 +21,7 @@ import javax.swing.JLabel;
  */
 public class mybutton extends JButton{
     private Color color=new Color(82,79,180);
+    private Color brColor=Color.white;
     private boolean opaque;
     private String name;
     private int x=0,y=0;
@@ -36,7 +32,17 @@ public class mybutton extends JButton{
     }
     public Color getColor(){
         return this.color;
-    }    
+    } 
+
+    public Color getBrColor() {
+        return brColor;
+    }
+
+    public void setBrColor(Color brColor) {
+        this.brColor = brColor;
+        repaint();
+    }
+    
         
     public mybutton(String name,int x,int y, boolean opaque){
         super(name);
@@ -74,22 +80,26 @@ public class mybutton extends JButton{
     
     public void paintBorder(Graphics g){
         Graphics2D gr=(Graphics2D)g;
-        gr.setColor(Color.white);
+        gr.setColor(getBrColor());
         gr.setStroke(new BasicStroke(1.0f));
         gr.draw(new RoundRectangle2D.Double(1,1,this.getWidth()-2,this.getHeight()-2,20,20));
     }
     private class clique extends MouseAdapter {
         private mybutton btn=null;
         private Color color;
+        private Color brColor;
         public clique(mybutton btn){
         this.btn=btn;
             color=new Color(82,79,180);
+            brColor=getBrColor();
         }
         public void mouseEntered(MouseEvent e){
             btn.setColor(color.brighter());
+            btn.setBrColor(color.brighter());
         }
         public void mouseExited(MouseEvent e){
             btn.setColor(color.darker());
+            btn.setBrColor(brColor);
         }
             
     }
