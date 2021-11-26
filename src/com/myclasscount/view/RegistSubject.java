@@ -23,7 +23,7 @@ public class RegistSubject extends JFrame {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
-    
+    Panel title;
     public RegistSubject(JFrame anterior){
         this.setSize(anterior.getSize());
         this.setMinimumSize(new Dimension(860,600));
@@ -32,7 +32,7 @@ public class RegistSubject extends JFrame {
         container=this.getContentPane();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         container.setBackground(backColor.darker());
-        Panel title=myProcedures.barName("Registar Disciplina",this);
+        title=myProcedures.barName("Registar Disciplina",this);
         container.add(title);
         this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
         this.setVisible(true);
@@ -66,9 +66,12 @@ public class RegistSubject extends JFrame {
                         }catch(InterruptedException e){
                             System.out.println("Erro: "+e.getMessage());
                         }
+                        int x=50,y=50;
+                        x=container.getWidth()/2-title.getWidth()/2;
+                        title.setLocation(x,y);
                         pan1.setSize((int)(mainPane.getWidth()*0.75),mainPane.getHeight()-50);
-                        int x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
-                        int y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
+                        x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
+                        y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
                         pan1.setLocation(x,y);
                         mainPane.revalidate();
                     }
