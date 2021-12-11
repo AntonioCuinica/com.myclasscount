@@ -24,20 +24,15 @@ public class conexao {
     private static String username="root";
     private static String password="";
     private static String ip="localhost";
-    //private static String driver="com.mysql.jdbc.Driver";
     private static String bdName="myclasscount";
     
     public static Connection getConnection(){
         if(!connected){
             try{
-                //Class.forName(driver);
                 connection=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+bdName,username,password);
             }catch(SQLException e){
                 throw new RuntimeException(e);
             }
-            //catch(ClassNotFoundException f){
-              //  throw new RuntimeException(f);
-            //}
             connected=true;
             return connection;
         }
@@ -45,7 +40,7 @@ public class conexao {
     }
     
     public static void closeConnection() throws SQLException{
-        if(!connection.equals(null)){
+        if(connected){
             connection.close();
         }
     }

@@ -19,22 +19,16 @@ import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import javax.swing.*;
 
-public class mainFrame extends JFrame {
+public class mainFrame extends JPanel {
     private Color backColor=new Color(33,80,172);
     private Container container;
-    private JFrame frame;
     
-    public mainFrame(JFrame anterior){        
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public mainFrame(){        
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor);
         this.mainBar(); 
         this.mainPane();
-        frame=this;
         this.setVisible(true);
     }
     
@@ -229,6 +223,7 @@ public class mainFrame extends JFrame {
         
         
     }
+    
     private class clique extends MouseAdapter implements ActionListener {
             private mycard btn=null;
             private JButton btn2=null;
@@ -245,24 +240,25 @@ public class mainFrame extends JFrame {
                 this.type=type;
             }
             
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getActionCommand().equals("card1")){
-                    new AdicionarProfessor(frame);
-                    dispose();
-                }else if(e.getActionCommand().equals("card2")){
-                    new addStudent(frame);
-                    dispose();
-                }
-                else if(e.getActionCommand().equals("card3")){
-                    new RegistSubject(frame);
-                    dispose();
-                }
-                else if(e.getActionCommand().equals("card4")){
-                    new CriarTurma(frame);
-                    dispose();
-                }
-            }
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if(e.getActionCommand().equals("card1")){
+//                    new AdicionarProfessor(container);
+//                    dispose();
+//                }else if(e.getActionCommand().equals("card2")){
+//                    new addStudent(container);
+//                    dispose();
+//                }
+//                else if(e.getActionCommand().equals("card3")){
+//                    new RegistSubject(container);
+//                    dispose();
+//                }
+//                else if(e.getActionCommand().equals("card4")){
+//                    new CriarTurma(container);
+//                    dispose();
+//                }
+//            }
+            
             public void mouseEntered(MouseEvent e){
                 if(type==0){
                     btn.setBarColor(color.brighter());
@@ -276,31 +272,30 @@ public class mainFrame extends JFrame {
             public void mouseClicked(MouseEvent e){
                 
                 if(type==1){
-                    new verAlunos(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
                 }
                 else if(type==2){
-                    new verProfessores(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
                 }
                 else if(type==3){
-                    new  Categoria(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
                 }
                 else if(type==4){
-                    new verObservacoes(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
                 }
                 else if(type==5){
-                    new verDisciplinas(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
                 }
                 else if(type==6){
-                    new VerTurmas(frame);
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
                 }
                 
             }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("action clicked");
+        }
             
     }
  

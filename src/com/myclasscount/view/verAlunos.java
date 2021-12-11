@@ -7,7 +7,6 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
@@ -16,22 +15,16 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
-public class verAlunos extends JFrame {
+public class verAlunos extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
     private Table tabela;
-    private JFrame anterior;
     
-    public verAlunos(JFrame anterior){
-        this.anterior=anterior;
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public verAlunos(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Ver Alunos",this);
         container.add(title);
@@ -57,7 +50,7 @@ public class verAlunos extends JFrame {
         src.getViewport().setBackground(Color.white);
         container.add(src);
         container.add(voltar);
-        verAlunos(this);
+        verAlunos(Myclasscount.getFrame());
         new Thread(
             new Runnable(){
                 public void run(){
@@ -96,12 +89,8 @@ public class verAlunos extends JFrame {
     }
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-           anterior.setVisible(true);
-           anterior.setBounds(getBounds());
-           dispose();
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
         }
     }
-    /*public static void main(String[] args) {
-        new verAlunos();
-    }*/
+    
 }

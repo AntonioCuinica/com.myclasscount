@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -13,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -21,24 +23,18 @@ import javax.swing.SwingConstants;
  *
  * @author CUINIC4
  */
-public class login extends JFrame {
+public class login extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private Panel title;
-    private JFrame frame;
     
     public login(){
-        this.setSize(940,650);
-        this.setMinimumSize(new Dimension(860,600));
         this.setLayout(null);
-        this.setLocationRelativeTo(null);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Login",this);
         container.add(title);
         this.addComponentToMainPane(myProcedures.mainPane(this,this,container));
-        frame=this;
         this.setVisible(true);
     }
     
@@ -96,13 +92,7 @@ public class login extends JFrame {
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-           new mainFrame(frame);
-           dispose();
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
         }
     }
-    
-    public static void main(String[] args) {
-        new login();
-    }
-    
 }

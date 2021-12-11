@@ -19,23 +19,15 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
-public class VerTurmas extends JFrame {
+public class VerTurmas extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
-    private JFrame frame;
-    private JFrame anterior;
     
-    public VerTurmas(JFrame anterior){
-        this.anterior=anterior;
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public VerTurmas(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        frame=this;
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Turmas",this);
         container.add(title);
@@ -137,19 +129,13 @@ public class VerTurmas extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(clicarTurma){
-                    new VerTurmas2(frame);
-                    dispose();
+                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
                 }else if(clicarVoltar){
-                    anterior.setVisible(true);
-                    anterior.setBounds(getBounds());
-                    dispose();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
                 }
             }
            
             
     }
     
-    /*public static void main(String[] args) {
-        new VerTurmas();
-    }*/
 }

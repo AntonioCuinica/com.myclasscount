@@ -16,22 +16,16 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
-public class verObservacoes extends JFrame {
+public class verObservacoes extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
     private Table tabela;
-    private JFrame anterior;
      
-    public verObservacoes(JFrame anterior){
-        this.anterior=anterior;
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public verObservacoes(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Lista de Observaçoes",this);
         container.add(title);
@@ -57,7 +51,7 @@ public class verObservacoes extends JFrame {
         src.getViewport().setBackground(Color.white);
         container.add(src);
         container.add(voltar);
-        verAlunos(this);
+        verAlunos(Myclasscount.getFrame());
         new Thread(
             new Runnable(){
                 public void run(){
@@ -97,12 +91,8 @@ public class verObservacoes extends JFrame {
     }
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-           anterior.setVisible(true);
-           anterior.setBounds(getBounds());
-           dispose();
+          Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
         }
     }
-    /*public static void main(String[] args) {
-        new verObservacoes();
-    }*/
+    
 }

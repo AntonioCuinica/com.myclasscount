@@ -20,27 +20,19 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
-public class Categoria extends JFrame {
+public class Categoria extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
-    private JFrame frame;
-     private JFrame anterior;
      
-    public Categoria(JFrame anterior){
-        this.anterior=anterior;
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public Categoria(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Categorias",this);
         container.add(title);
         this.addCategoria();
-        frame=this;
         this.setVisible(true);
     }
     
@@ -127,13 +119,13 @@ public class Categoria extends JFrame {
             }
             @Override
             public void actionPerformed(ActionEvent e) {
-                myDialog dialog=new myDialog(frame,true);
+                //myDialog dialog=new myDialog(container,true);
+                 myDialog dialog=new myDialog(Myclasscount.getFrame(),true);
+                
             }
             
             public void mouseClicked(MouseEvent e){
-                anterior.setVisible(true);
-                anterior.setBounds(getBounds());
-                dispose();
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
             }
             
     }
