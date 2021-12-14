@@ -5,14 +5,13 @@
  */
 package com.myclasscount.view;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import com.myclasscount.control.Login_ctrl;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JFrame;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -27,6 +26,9 @@ public class login extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private Panel title;
+    private JTextField txtF;
+    private JPasswordField pswF;
+    private JLabel labels[];
     
     public login(){
         this.setLayout(null);
@@ -34,33 +36,39 @@ public class login extends JPanel {
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Login",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(this,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","mainFrame",container));
         this.setVisible(true);
     }
     
    
     public void addComponentToMainPane(Panel mainPane){
+        // remove os botoes voltar e proximo do mainPane
         container.remove(container.getComponentCount()-1);
         container.remove(container.getComponentCount()-1);
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(7,1));
         pan1.invisible(true, true);
         
-        JTextField txtF[]={new JTextField()};
-        JPasswordField pswF=new JPasswordField();
+        txtF=new JTextField();
+        pswF=new JPasswordField();
         mybutton entrar=new mybutton("Entrar",160,25,false);
         entrar.addMouseListener(new Clique());
-        JLabel labels[]={new JLabel("Bem vindo ao MyClassCount",SwingConstants.CENTER),new JLabel("Usuario"),
+        labels=new JLabel[]{new JLabel("Bem vindo ao MyClassCount",SwingConstants.CENTER),new JLabel("Usuario"),
             new JLabel("Senha")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
+        JButton esqueceu=new JButton("Esqueceu a senha ?");
+        esqueceu.setContentAreaFilled(false);
+        esqueceu.setBorderPainted(false);
+        esqueceu.setForeground(Color.white);
+        esqueceu.addMouseListener(new Clique());
         
         pan1.add(labels[0]); 
         pan1.add(labels[1]);
-        pan1.add(txtF[0]);
+        pan1.add(txtF);
         pan1.add(labels[2]);
         pan1.add(pswF);
-        pan1.add(new JLabel());
+        pan1.add(esqueceu);
         pan1.add(entrar);
         
         mainPane.add(pan1);
@@ -92,7 +100,16 @@ public class login extends JPanel {
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            if(e.getComponent().toString().contains("Entrar")){
+                String psw=new String(pswF.getPassword());
+                if(Login_ctrl.login_crtl(txtF.getText(),psw)){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+                }
+                txtF.setText("");
+                pswF.setText("");
+            }else if(e.getComponent().toString().contains("Esqueceu a senha ?")){
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"recuperarSenha");
+            }
         }
     }
 }

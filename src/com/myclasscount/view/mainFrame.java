@@ -94,6 +94,8 @@ public class mainFrame extends JPanel {
         pane.setLayout(null);
         /**out(sair) button*/
         mybutton out=new mybutton("Sair",15,20,false);
+        out.addActionListener(new clique(out,(byte)-1));
+        out.setActionCommand("out");
         
         /**menu buttons names */
         String btnName[]={"Alunos","Professor","Categoria","Observações","Disciplina","Turma","Mensalidade"};
@@ -240,24 +242,22 @@ public class mainFrame extends JPanel {
                 this.type=type;
             }
             
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if(e.getActionCommand().equals("card1")){
-//                    new AdicionarProfessor(container);
-//                    dispose();
-//                }else if(e.getActionCommand().equals("card2")){
-//                    new addStudent(container);
-//                    dispose();
-//                }
-//                else if(e.getActionCommand().equals("card3")){
-//                    new RegistSubject(container);
-//                    dispose();
-//                }
-//                else if(e.getActionCommand().equals("card4")){
-//                    new CriarTurma(container);
-//                    dispose();
-//                }
-//            }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getActionCommand().equals("card1")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
+                }else if(e.getActionCommand().equals("card2")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
+                }
+                else if(e.getActionCommand().equals("card3")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"registSubject");
+                }
+                else if(e.getActionCommand().equals("card4")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"crirTurma");
+                }else if(e.getActionCommand().equals("out")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
+                }
+            }
             
             public void mouseEntered(MouseEvent e){
                 if(type==0){
@@ -269,6 +269,7 @@ public class mainFrame extends JPanel {
                     btn.setBarColor(color.darker());
                 }
             }
+            
             public void mouseClicked(MouseEvent e){
                 
                 if(type==1){
@@ -292,10 +293,6 @@ public class mainFrame extends JPanel {
                 
             }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("action clicked");
-        }
             
     }
  

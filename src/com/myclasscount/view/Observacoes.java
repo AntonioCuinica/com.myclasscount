@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -19,21 +20,17 @@ import javax.swing.JTextField;
  *
  * @author CUINIC4
  */
-public class Observacoes extends JFrame {
+public class Observacoes extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private Panel title;
-    public Observacoes(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public Observacoes(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Observaçoes",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","",container));
         this.setVisible(true);
     }
     

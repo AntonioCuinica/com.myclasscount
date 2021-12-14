@@ -7,34 +7,29 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
  *
  * @author CUINIC4
  */
-public class CriarHorario extends JFrame {
+public class CriarHorario extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Panel title;
     private Container container;
     private mybutton btns[];
     
-    public CriarHorario(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public CriarHorario(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Criar Horario",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("crirTurma","verTurmas",container));
         this.setVisible(true);
     }
     
@@ -83,6 +78,5 @@ public class CriarHorario extends JFrame {
             }
         ).start();
     }
-   
     
 }

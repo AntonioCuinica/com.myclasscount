@@ -27,7 +27,7 @@ public class verProfessores extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Cadastrar Professores",this);
+        title=myProcedures.barName("Professores",this);
         container.add(title);
         this.addTable();
         this.setVisible(true);

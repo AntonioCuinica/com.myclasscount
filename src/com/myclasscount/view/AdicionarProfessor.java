@@ -16,24 +16,20 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
-public class AdicionarProfessor extends JFrame {
+public class AdicionarProfessor extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
     
    
-    public AdicionarProfessor(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    public AdicionarProfessor(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Cadastrar Professor",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","criarSenha",container));
         this.setVisible(true);
     }
     
@@ -142,8 +138,4 @@ public class AdicionarProfessor extends JFrame {
         ).start();
     }
    
-    
-    /*public static void main(String[] args) {
-        new AdicionarProfessor();
-    }*/
 }

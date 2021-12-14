@@ -11,28 +11,25 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
  *
  * @author CUINIC4
  */
-public class CriarSenha extends JFrame {
+public class CriarSenha extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
-    
-    public CriarSenha(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    private Panel title;
+    public CriarSenha(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
-        Panel title=myProcedures.barName("Criar Senha",this);
+        title=myProcedures.barName("Criar Senha",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("adicionarProfessor","login",container));
         this.setVisible(true);
     }
     
@@ -63,9 +60,12 @@ public class CriarSenha extends JFrame {
                         }catch(InterruptedException e){
                             System.out.println("Erro: "+e.getMessage());
                         }
+                        int x=50,y=50;
+                        x=container.getWidth()/2-title.getWidth()/2;
+                        title.setLocation(x,y);
                         pan1.setSize((int)(mainPane.getWidth()*0.75),mainPane.getHeight()-50);
-                        int x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
-                        int y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
+                        x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
+                        y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
                         pan1.setLocation(x,y);
                         mainPane.revalidate();
                     }

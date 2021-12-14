@@ -19,6 +19,7 @@ public class Myclasscount extends JFrame {
     private static CardLayout layout;
     private static Container container;
     private static JFrame frame;
+    
     public static CardLayout getCardLayout(){
         return layout;
     }
@@ -71,6 +72,30 @@ public class Myclasscount extends JFrame {
         
         verDisciplinas verD=new verDisciplinas();
         container.add(verD,"verDisciplinas");
+        
+        AdicionarProfessor addP=new AdicionarProfessor();
+        container.add(addP,"adicionarProfessor");
+        
+        AdicionarAluno addE=new AdicionarAluno();
+        container.add(addE,"addStudent");
+        
+        AdicionarDisciplina addD=new AdicionarDisciplina();
+        container.add(addD,"registSubject");
+        
+        CriarTurma criarT=new CriarTurma();
+        container.add(criarT,"crirTurma");
+        
+        CriarHorario criarH=new CriarHorario();
+        container.add(criarH,"crirHorario");
+        
+        Inscricao inscricao=new Inscricao();
+        container.add(inscricao,"inscricao");
+        
+        RecuperarSenha recupS=new RecuperarSenha();
+        container.add(recupS,"recuperarSenha");
+        
+        CriarSenha criarS=new CriarSenha();
+        container.add(criarS,"criarSenha");
         
         resizing();
     }

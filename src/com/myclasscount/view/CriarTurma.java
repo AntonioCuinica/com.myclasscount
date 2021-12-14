@@ -11,10 +11,10 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -22,25 +22,17 @@ import javax.swing.JTextField;
  *
  * @author CUINIC4
  */
-public class CriarTurma extends JFrame {
+public class CriarTurma extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private Panel title;
-    private JFrame anterior;
-    JFrame frame;
-    public CriarTurma(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.anterior=anterior;
-        this.setMinimumSize(new Dimension(860,600));
+    public CriarTurma(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
         title=myProcedures.barName("Criar Turma",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
-        frame=this;
+        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","verTurmas",container));
         this.setVisible(true);
     }
     
@@ -112,8 +104,7 @@ public class CriarTurma extends JFrame {
     private class Clique implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            new CriarHorario(frame);
-            dispose();
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"crirHorario");
         }
     }
     

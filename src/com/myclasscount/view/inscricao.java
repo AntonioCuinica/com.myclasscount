@@ -7,11 +7,9 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -20,22 +18,18 @@ import javax.swing.JRadioButton;
  *
  * @author CUINIC4
  */
-public class inscricao extends JFrame {
+public class Inscricao extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
-    
-    public inscricao(JFrame anterior){
-        this.setSize(anterior.getSize());
-        this.setMinimumSize(new Dimension(860,600));
+    private Panel title;
+    public Inscricao(){
         this.setLayout(null);
-        this.setLocationRelativeTo(anterior);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        container=this;
         container.setBackground(backColor.darker());
-        Panel title=myProcedures.barName("Inscriçao",this);
+        title=myProcedures.barName("Inscriçao",this);
         container.add(title);
-        this.addComponentToMainPane(myProcedures.mainPane(anterior,this,container));
+        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","verAlunos",container));
         this.setVisible(true);
     }
     
@@ -102,17 +96,18 @@ public class inscricao extends JFrame {
                         }catch(InterruptedException e){
                             System.out.println("Erro: "+e.getMessage());
                         }
-                        pan1.setSize((int)(mainPane.getWidth()*0.75),mainPane.getHeight()-50);
-                        int x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
-                        int y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
+                        int x=50,y=50;
+                        x=container.getWidth()/2-title.getWidth()/2;
+                        title.setLocation(x,y);
+                        pan1.setSize((int)(mainPane.getWidth()*0.60),(int)(mainPane.getHeight()*0.75));
+                        x=mainPane.getWidth()/2-pan1.getWidth()/2;
+                        y=mainPane.getHeight()/2-pan1.getHeight()/2;
                         pan1.setLocation(x,y);
                         mainPane.revalidate();
+                        
                     }
                 }
             }
         ).start();
     }
-   
-    
-    
 }
