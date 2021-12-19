@@ -29,6 +29,8 @@ public class login extends JPanel {
     private JTextField txtF;
     private JPasswordField pswF;
     private JLabel labels[];
+    private int countFalhas=0;
+    private JButton esqueceu;
     
     public login(){
         this.setLayout(null);
@@ -57,7 +59,8 @@ public class login extends JPanel {
             new JLabel("Senha")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
-        JButton esqueceu=new JButton("Esqueceu a senha ?");
+        esqueceu=new JButton("Esqueceu a senha ?");
+        esqueceu.setVisible(false);
         esqueceu.setContentAreaFilled(false);
         esqueceu.setBorderPainted(false);
         esqueceu.setForeground(Color.white);
@@ -103,12 +106,17 @@ public class login extends JPanel {
             if(e.getComponent().toString().contains("Entrar")){
                 String psw=new String(pswF.getPassword());
                 if(Login_ctrl.login_crtl(txtF.getText(),psw)){
+                    countFalhas--;
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
                 }
                 txtF.setText("");
                 pswF.setText("");
+                if(countFalhas++>=2){
+                    esqueceu.setVisible(true);
+                }
             }else if(e.getComponent().toString().contains("Esqueceu a senha ?")){
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"recuperarSenha");
+                esqueceu.setVisible(false);
             }
         }
     }

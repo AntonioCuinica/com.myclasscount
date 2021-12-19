@@ -44,4 +44,43 @@ public class Acesso_dao {
         return acesso;
     }
     
+    public static Acesso getAcesso(String user){
+        Connection con=conexao.getConnection();
+        String select="SELECT * FROM myclasscount.acesso WHERE username=?";
+        Acesso acesso=null;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,user);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                acesso=new Acesso();
+                acesso.setId(Integer.parseInt(rs.getString("id")));
+                acesso.setUsername(rs.getString("username"));
+                acesso.setCodigo(rs.getString("codigo"));
+                acesso.setPergunta(rs.getString("pergunta"));
+                acesso.setResposta(rs.getString("resposta"));
+                acesso.setProfessor_id(Integer.parseInt(rs.getString("professor_id")));
+            }
+                    
+        }catch(SQLException e){
+        
+        }
+        return acesso;
+    }
+    
+    public static void mudarSenha(String codigo,int id){
+        Connection con=conexao.getConnection();
+        String select="UPDATE acesso SET codigo=? WHERE id=?";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,codigo);
+            stmt.setString(2,""+id);
+            stmt.execute();
+                    
+        }catch(SQLException e){
+        
+        }
+        
+    }
+    
 }

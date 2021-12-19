@@ -10,10 +10,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,7 +19,12 @@ import javax.swing.JPanel;
  * @author CUINIC4
  */
 public class myProcedures {
-    
+    private mybutton btns[];
+
+    public mybutton[] getBtns() {
+        return btns;
+    }
+  
     public static Panel barName(String title,JPanel panel){
         Panel pane=new Panel(Color.black,false);
         pane.setLayout(null);
@@ -79,7 +81,7 @@ public class myProcedures {
         pane.setLayout(null);
        
         /** btns(voltar e proximo) buttons*/
-        mybutton btns[]=new mybutton[]{new mybutton("Voltar",15,20,false),new mybutton("Proximo",7,20,false)};
+        btns=new mybutton[]{new mybutton("Voltar",15,20,false),new mybutton("Proximo",7,20,false)};
         btns[0].addActionListener(new Clique(antes));
         btns[0].setActionCommand("Voltar");
         btns[1].addActionListener(new Clique(depois));
@@ -108,12 +110,12 @@ public class myProcedures {
                         pane.setLocation(x,y);  
                         
                         /** btns Location */
-                        btns[1].setSize(60,30);
-                        x=pane.getWidth()+pane.getX()-btns[1].getWidth();
+                        getBtns()[1].setSize(60,30);
+                        x=pane.getWidth()+pane.getX()-getBtns()[1].getWidth();
                         y=pane.getHeight()+pane.getY()+12;
-                        btns[1].setLocation(x,y);
-                        x-=btns[1].getWidth()+15;
-                        btns[0].setBounds(x,y,btns[1].getWidth(),btns[1].getHeight());
+                        getBtns()[1].setLocation(x,y);
+                        x-=getBtns()[1].getWidth()+15;
+                        getBtns()[0].setBounds(x,y,getBtns()[1].getWidth(),getBtns()[1].getHeight());
                        
                         container.repaint();
                     }
@@ -122,9 +124,10 @@ public class myProcedures {
         ).start();
         return pane;
     }
-  
+
+    
     private class Clique implements ActionListener{
-        private String dir;
+        private String dir; 
         
         public Clique(String dir){
             this.dir=dir;

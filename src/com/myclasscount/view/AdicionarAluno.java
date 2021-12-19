@@ -7,7 +7,6 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -34,7 +33,7 @@ public class AdicionarAluno extends JPanel {
    
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(12,1));
+        pan1.setLayout(new GridLayout(13,1));
         pan1.invisible(true, true);
         Panel pan2=new Panel(Color.black,false);
         pan2.setLayout(null);
@@ -78,18 +77,20 @@ public class AdicionarAluno extends JPanel {
             ano[i]=""+(i+1990);
         }
         JComboBox data[]={new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        JPanel dataN=new JPanel(new GridLayout(2,3,20,1));
+        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
         dataN.setOpaque(false);
         dataN.add(labels[11]);
         dataN.add(labels[12]);
         dataN.add(labels[13]);
-        dataN.add(data[0]);
-        dataN.add(data[1]);
-        dataN.add(data[2]);
+        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
+        dataN1.setOpaque(false);
+        dataN1.add(data[0]);
+        dataN1.add(data[1]);
+        dataN1.add(data[2]);
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
         pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(dataN);
+        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx[0]);
         
@@ -134,6 +135,4 @@ public class AdicionarAluno extends JPanel {
         ).start();
     }
    
-    
-  
 }

@@ -19,9 +19,19 @@ import javax.swing.JFrame;
  */
 public class myDialog extends JDialog {
     private Color color=Color.blue;
+    
     public myDialog(JFrame container,boolean modal){
         super(container,modal);
         this.setSize(450,500);
+        this.setLocationRelativeTo(container);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        this.getContentPane().setBackground(null);
+        this.setVisible(true);
+    }
+    
+    public myDialog(JFrame container,int width, int height,boolean modal){
+        super(container,modal);
+        this.setSize(width,height);
         this.setLocationRelativeTo(container);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.getContentPane().setBackground(null);
