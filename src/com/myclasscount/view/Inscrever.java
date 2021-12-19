@@ -18,12 +18,12 @@ import javax.swing.JRadioButton;
  *
  * @author CUINIC4
  */
-public class Inscricao extends JPanel {
+public class Inscrever extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private mybutton btns[];
     private Panel title;
-    public Inscricao(){
+    public Inscrever(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
@@ -111,3 +111,4 @@ public class Inscricao extends JPanel {
         ).start();
     }
 }
+
