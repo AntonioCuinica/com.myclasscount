@@ -45,8 +45,10 @@ public class login extends JPanel {
    
     public void addComponentToMainPane(Panel mainPane){
         // remove os botoes voltar e proximo do mainPane
-        container.remove(container.getComponentCount()-1);
-        container.remove(container.getComponentCount()-1);
+        //container.remove(container.getComponentCount()-1);
+        //container.remove(container.getComponentCount()-1);
+        container.getComponent(container.getComponentCount()-1).setVisible(false);
+        container.getComponent(container.getComponentCount()-2).setVisible(false);
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(7,1));
         pan1.invisible(true, true);
