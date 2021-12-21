@@ -21,15 +21,15 @@ import javax.swing.JTextField;
 public class CriarCategoria extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     
     public CriarCategoria(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        Panel title=myProcedures.barName("Criar Categoria",this);
+        Panel title=MyProcedures.barName("Criar Categoria",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("","",container));
+        this.addComponentToMainPane(new MyProcedures().mainPane("","",container));
         this.setVisible(true);
     }
    

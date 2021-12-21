@@ -9,6 +9,7 @@ package com.myclasscount.view;
 
 import com.myclasscount.model.Acesso;
 import com.myclasscount.model.dao.Acesso_dao;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -16,6 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,9 +32,9 @@ public class RecuperarSenha extends JPanel {
     
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
-    private myProcedures myProc;
+    private MyProcedures myProc;
     private JTextField txtF[];
     private JPasswordField pswF[];
     private JLabel labels[];
@@ -42,9 +44,9 @@ public class RecuperarSenha extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Recuperar Senha",this);
+        title=MyProcedures.barName("Recuperar Senha",this);
         container.add(title);
-        myProc=new myProcedures();
+        myProc=new MyProcedures();
         this.addComponentToMainPane(myProc.mainPane("login","login",container));
         this.setVisible(true);
     }
@@ -52,7 +54,7 @@ public class RecuperarSenha extends JPanel {
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(10,1));
-        pan1.invisible(true, true);
+        pan1.invisible(true,true);
        
         //System.out.println("Size: "+myProc.getBtns()[1].getMouseListeners()[1]);
         myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
@@ -62,7 +64,7 @@ public class RecuperarSenha extends JPanel {
         txtF[0].addKeyListener(new Clique());
         pswF=new JPasswordField[]{new JPasswordField(),new JPasswordField()};
         
-        labels=new JLabel[]{new JLabel("Username"),new JLabel("Nova Senha"),new JLabel("Confirmar Senha"),
+        labels=new JLabel[]{new JLabel("Usuario"),new JLabel("Nova Senha"),new JLabel("Confirmar Senha"),
                          new JLabel("Qual é o seu nome")};
         
         for(JLabel lb:labels)lb.setForeground(Color.white);
@@ -108,12 +110,14 @@ public class RecuperarSenha extends JPanel {
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                     }else{
                         txtF[1].setText("");
-                        myDialog dialog=new myDialog(Myclasscount.getFrame(),400,250,true);
+                        MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Resposta errada !!",true);
                     }
                 }else{
                     pswF[1].setText("");
-                    myDialog dialog=new myDialog(Myclasscount.getFrame(),400,250,true);
+                    MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
                 }
+            }else{
+                MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
             }
         }
 
@@ -125,7 +129,6 @@ public class RecuperarSenha extends JPanel {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            System.out.println("Username: "+txtF[0].getText());
             acesso=Acesso_dao.getAcesso(txtF[0].getText());
             if(!(acesso==null)){
                 labels[3].setText(acesso.getPergunta());

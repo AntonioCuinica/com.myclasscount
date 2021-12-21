@@ -28,9 +28,9 @@ public class Observacoes extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Observaçoes",this);
+        title=MyProcedures.barName("Observaçoes",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","",container));
+        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","",container));
         this.setVisible(true);
     }
     
@@ -47,14 +47,14 @@ public class Observacoes extends JPanel {
         JTextField txtF[]={new JTextField()};
         JTextArea note=new JTextArea();
         note.setLineWrap(true);
-        mybutton saveNote=new mybutton("Gravar",15,20,false);
+        MyButton saveNote=new MyButton("Gravar",15,20,false);
         JLabel labels[]={new JLabel("Titulo"),new JLabel("Nota")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
-        mybutton student[]=new mybutton[20];
+        MyButton student[]=new MyButton[20];
         Panel stud=new Panel(new Color(209,178,255),true);
         for(int i=0;i<student.length;i++){
-            student[i]=new mybutton("Estudante "+(i+1),7,18,false);
+            student[i]=new MyButton("Estudante "+(i+1),7,18,false);
             stud.add(student[i]);
         }
         stud.setLayout(new GridLayout(student.length,1,10,5));
@@ -63,7 +63,7 @@ public class Observacoes extends JPanel {
         pan1.add(labels[1]); pan1.add(note);
         pan1.add(saveNote);
         
-        pan2.add(myProcedures.barName("Escolher Aluno"));
+        pan2.add(MyProcedures.barName("Escolher Aluno"));
         pan2.add(new JScrollPane(stud));
         
         mainPane.add(pan1);

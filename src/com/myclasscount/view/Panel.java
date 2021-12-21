@@ -6,19 +6,15 @@
 package com.myclasscount.view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -31,6 +27,7 @@ public class Panel extends JPanel {
         private ImageIcon img;
         private boolean invisible=false;
         private boolean borderInvisible=false;
+        private boolean gradiente=false;
         
         public void setColor(Color color){
             this.color=color;
@@ -52,6 +49,14 @@ public class Panel extends JPanel {
             this.setOpaque(opaque);
             if(color!=null)this.color=color;
             this.opaque=opaque;
+            this.setBackground(this.color);
+        }
+        
+        public Panel(Color color,boolean opaque,boolean gradiente){
+            this.setOpaque(opaque);
+            if(color!=null)this.color=color;
+            this.opaque=opaque;
+            this.gradiente=gradiente;
             this.setBackground(this.color);
         }
         
@@ -81,6 +86,7 @@ public class Panel extends JPanel {
                     gr.fill(new RoundRectangle2D.Double(0,0,this.getWidth()-1,this.getHeight()-1,50,50));
                 }
             }
+            if(gradiente)gr.fill(new Rectangle2D.Double(0,0,this.getWidth()-1,this.getHeight()-1));
         }
              
         public void paintBorder(Graphics g){

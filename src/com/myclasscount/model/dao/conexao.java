@@ -13,8 +13,6 @@ package com.myclasscount.model.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -44,25 +42,4 @@ public class conexao {
             connection.close();
         }
     }
-    
-    public static void main(String[] args)throws Exception {
-         PreparedStatement stmt=getConnection().prepareStatement("select * from aluno;");
-            ResultSet rs=stmt.executeQuery();
-            while(rs.next()){
-                com.myclasscount.model.Aluno aluno=new com.myclasscount.model.Aluno();
-                aluno.setId((Integer.parseInt(rs.getString("id"))));
-                aluno.setNome(rs.getString("nome"));
-                aluno.setApelido(rs.getString("apelido"));
-                aluno.setEmail(rs.getString("email"));
-                aluno.setMorada(rs.getString("morada"));
-                //aluno.setNascimento(rs.getDate("nascimento"));
-                System.out.println("============================");
-                System.out.println(aluno);
-                System.out.println("============================");
-            }
-            rs.close();
-            stmt.close();
-            closeConnection();
-    }
-    
 }

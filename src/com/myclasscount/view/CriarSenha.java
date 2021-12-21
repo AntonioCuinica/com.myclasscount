@@ -21,15 +21,15 @@ import javax.swing.JTextField;
 public class CriarSenha extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     public CriarSenha(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Criar Senha",this);
+        title=MyProcedures.barName("Criar Senha",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("adicionarProfessor","login",container));
+        this.addComponentToMainPane(new MyProcedures().mainPane("adicionarProfessor","login",container));
         this.setVisible(true);
     }
     

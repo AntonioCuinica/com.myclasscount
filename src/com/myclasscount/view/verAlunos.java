@@ -18,7 +18,7 @@ import javax.swing.*;
 public class verAlunos extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     private Table tabela;
     
@@ -26,7 +26,7 @@ public class verAlunos extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Ver Alunos",this);
+        title=MyProcedures.barName("Ver Alunos",this);
         container.add(title);
         this.addTable();
         this.setVisible(true);
@@ -34,7 +34,7 @@ public class verAlunos extends JPanel {
     
     public void addTable(){
         String colunas[]={"Nome","Apelido","BI","Idade","Classe","Sexo","Nível","Pagamento"};
-        mybutton voltar=new mybutton("Voltar",15,20,false);
+        MyButton voltar=new MyButton("Voltar",15,20,false);
         voltar.setSize(60,30);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
@@ -81,7 +81,7 @@ public class verAlunos extends JPanel {
                         int linha=tabela.getSelectedRow();
                         String txt=tabela.getValueAt(linha,0).toString()+" | "+tabela.getValueAt(linha,1).toString()+
                              " | "+tabela.getValueAt(linha,2).toString()+" | "+tabela.getValueAt(linha,3).toString();
-                        myDialog dialog=new myDialog(frame,true);
+                        MyDialog dialog=new MyDialog(frame,true);
                     }
                 }
             }

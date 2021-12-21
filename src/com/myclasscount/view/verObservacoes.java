@@ -19,7 +19,7 @@ import javax.swing.*;
 public class verObservacoes extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     private Table tabela;
      
@@ -27,7 +27,7 @@ public class verObservacoes extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Lista de Observaçoes",this);
+        title=MyProcedures.barName("Lista de Observaçoes",this);
         container.add(title);
         this.addTable();
         this.setVisible(true);
@@ -35,7 +35,7 @@ public class verObservacoes extends JPanel {
     
     public void addTable(){
         String colunas[]={"Nome do Aluno","Titulo","Data","Nota",""};
-        mybutton voltar=new mybutton("Voltar",15,20,false);
+        MyButton voltar=new MyButton("Voltar",15,20,false);
         voltar.setSize(60,30);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
@@ -83,7 +83,7 @@ public class verObservacoes extends JPanel {
                         String txt=tabela.getValueAt(linha,0).toString()+" | "+tabela.getValueAt(linha,1).toString()+
                              " | "+tabela.getValueAt(linha,2).toString()+" | "+tabela.getValueAt(linha,3).toString();
                         System.out.println("Linha: "+tabela.getSelectedColumn());
-                        if(tabela.getSelectedColumn()==4){myDialog dialog=new myDialog(frame,true);}
+                        if(tabela.getSelectedColumn()==4){MyDialog dialog=new MyDialog(frame,true);}
                     }
                 }
             }

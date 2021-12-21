@@ -17,16 +17,16 @@ import javax.swing.*;
 public class AdicionarAluno extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     
     public AdicionarAluno(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        this.title=myProcedures.barName("Cadastrar Alunos",this);
+        this.title=MyProcedures.barName("Cadastrar Alunos",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","inscricao",container));
+        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","inscricao",container));
         this.setVisible(true);
     }
     

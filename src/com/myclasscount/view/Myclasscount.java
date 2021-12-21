@@ -46,10 +46,10 @@ public class Myclasscount extends JFrame {
     }
     
     public void addViews(){
-        login login=new login();
+        Login login=new Login();
         container.add(login,"login");
         
-        mainFrame mainF=new mainFrame();
+        MainFrame mainF=new MainFrame();
         container.add(mainF,"mainFrame");
         
         verAlunos verA=new verAlunos();

@@ -19,7 +19,7 @@ import javax.swing.*;
 public class AdicionarProfessor extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     
    
@@ -27,9 +27,9 @@ public class AdicionarProfessor extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Cadastrar Professor",this);
+        title=MyProcedures.barName("Cadastrar Professor",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","criarSenha",container));
+        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","criarSenha",container));
         this.setVisible(true);
     }
     

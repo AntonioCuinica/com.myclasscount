@@ -22,21 +22,21 @@ import javax.swing.border.EmptyBorder;
 public class VerTurmas extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButton btns[];
     private Panel title;
     
     public VerTurmas(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Turmas",this);
+        title=MyProcedures.barName("Turmas",this);
         container.add(title);
         this.addCategoria();
         this.setVisible(true);
     }
     
     public void addCategoria(){
-        mybutton bts[]=new mybutton[6];
+        MyButton bts[]=new MyButton[6];
         Panel pan=new Panel(Color.white,true);
         GridLayout gLyt=new GridLayout(1,3,15,0);
         BoxLayout bLyt=new BoxLayout(pan,BoxLayout.Y_AXIS);
@@ -45,7 +45,7 @@ public class VerTurmas extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         for(int i=0;i<bts.length;i++){
-            bts[i]=new mybutton("Turma "+(i+1),15,16,false);
+            bts[i]=new MyButton("Turma "+(i+1),15,16,false);
             bts[i].addActionListener(new clique(true,false));
             bts[i].addMouseListener(new clique(bts[i]));
         }
@@ -80,7 +80,7 @@ public class VerTurmas extends JPanel {
         }
         
         
-        mybutton voltar=new mybutton("Voltar",15,20,false);
+        MyButton voltar=new MyButton("Voltar",15,20,false);
         voltar.setSize(60,30);
         voltar.addActionListener(new clique(false,true));
         JScrollPane src=new JScrollPane(pan);
@@ -112,10 +112,10 @@ public class VerTurmas extends JPanel {
     }
     
     private class clique extends MouseAdapter implements ActionListener {
-            private mybutton btn=null;
+            private MyButton btn=null;
             private boolean clicarTurma=true;
             private boolean clicarVoltar=true;
-            public clique(mybutton btn){
+            public clique(MyButton btn){
                 this.btn=btn;
                 clicarTurma=false;
                 clicarVoltar=false;
