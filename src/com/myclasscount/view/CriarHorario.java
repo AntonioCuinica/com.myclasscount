@@ -21,15 +21,15 @@ public class CriarHorario extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Panel title;
     private Container container;
-    private MyButton btns[];
+    private MyButtonn btns[];
     
     public CriarHorario(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Criar Horario",this);
+        title=MyProceduress.barName("Criar Horario",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProcedures().mainPane("crirTurma","verTurmas",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("crirTurma","verTurmas",container));
         this.setVisible(true);
     }
     

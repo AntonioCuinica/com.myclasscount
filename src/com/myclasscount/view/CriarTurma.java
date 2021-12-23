@@ -30,9 +30,9 @@ public class CriarTurma extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Criar Turma",this);
+        title=MyProceduress.barName("Criar Turma",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","verTurmas",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verTurmas",container));
         this.setVisible(true);
     }
     
@@ -51,16 +51,16 @@ public class CriarTurma extends JPanel {
                          "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
         JComboBox combbx[]={new JComboBox(turno),new JComboBox(professor),new JComboBox(classe)};
         JTextField txtF[]={new JTextField()};
-        MyButton defHorario=new MyButton("Definir Horario",165,20,false);
+        MyButtonn defHorario=new MyButtonn("Definir Horario",165,20,false);
         defHorario.addActionListener(new Clique());
         JLabel labels[]={new JLabel("Nome da Turma"),new JLabel("Turno"),new JLabel("Nome do Professor"),
                          new JLabel("Classe")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
-        MyButton student[]=new MyButton[20];
+        MyButtonn student[]=new MyButtonn[20];
         Panel stud=new Panel(new Color(209,178,255),true);
         for(int i=0;i<student.length;i++){
-            student[i]=new MyButton("Estudante "+(i+1),7,18,false);
+            student[i]=new MyButtonn("Estudante "+(i+1),7,18,false);
             stud.add(student[i]);
         }
         stud.setLayout(new GridLayout(student.length,1,10,5));
@@ -71,7 +71,7 @@ public class CriarTurma extends JPanel {
         pan1.add(labels[3]); pan1.add(combbx[2]);
         pan1.add(new JLabel());pan1.add(defHorario);
         
-        pan2.add(MyProcedures.barName("Adicionar Alunos"));
+        pan2.add(MyProceduress.barName("Adicionar Alunos"));
         pan2.add(new JScrollPane(stud));
         
         mainPane.add(pan1);

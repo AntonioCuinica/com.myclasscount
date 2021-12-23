@@ -46,16 +46,16 @@ public class Myclasscount extends JFrame {
     }
     
     public void addViews(){
-        Login login=new Login();
+        Loginn login=new Loginn();
         container.add(login,"login");
         
-        MainFrame mainF=new MainFrame();
+        MainFramee mainF=new MainFramee();
         container.add(mainF,"mainFrame");
         
-        verAlunos verA=new verAlunos();
+        Ver_Alunos verA=new Ver_Alunos();
         container.add(verA,"verAlunos");
         
-        verProfessores verP=new verProfessores();
+        Ver_Professores verP=new Ver_Professores();
         container.add(verP,"verProfessores");
         
         Categoria cat=new Categoria();
@@ -67,10 +67,10 @@ public class Myclasscount extends JFrame {
         VerTurmas2 verT2=new VerTurmas2();
         container.add(verT2,"verTurmas2");
         
-        verObservacoes verO=new verObservacoes();
+        Ver_Observacoes verO=new Ver_Observacoes();
         container.add(verO,"verObservacoes");
         
-        verDisciplinas verD=new verDisciplinas();
+        Ver_Disciplinas verD=new Ver_Disciplinas();
         container.add(verD,"verDisciplinas");
         
         AdicionarProfessor addP=new AdicionarProfessor();

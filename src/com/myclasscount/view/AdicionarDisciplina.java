@@ -23,16 +23,16 @@ import javax.swing.JTextField;
 public class AdicionarDisciplina extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private MyButton btns[];
+    private MyButtonn btns[];
     Panel title;
     
     public AdicionarDisciplina(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Registar Disciplina",this);
+        title=MyProceduress.barName("Registar Disciplina",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","verDisciplinas",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verDisciplinas",container));
         this.setVisible(true);
     }
     

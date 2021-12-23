@@ -32,9 +32,9 @@ public class RecuperarSenha extends JPanel {
     
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private MyButton btns[];
+    private MyButtonn btns[];
     private Panel title;
-    private MyProcedures myProc;
+    private MyProceduress myProc;
     private JTextField txtF[];
     private JPasswordField pswF[];
     private JLabel labels[];
@@ -44,9 +44,9 @@ public class RecuperarSenha extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Recuperar Senha",this);
+        title=MyProceduress.barName("Recuperar Senha",this);
         container.add(title);
-        myProc=new MyProcedures();
+        myProc=new MyProceduress();
         this.addComponentToMainPane(myProc.mainPane("login","login",container));
         this.setVisible(true);
     }
@@ -104,20 +104,22 @@ public class RecuperarSenha extends JPanel {
             String nPsw=new String(pswF[0].getPassword());
             String cPsw=new String(pswF[1].getPassword());
             if(!(acesso==null)){
-                if(nPsw.equals(cPsw)){
+                if(nPsw.equals(cPsw) && !nPsw.isBlank()){
                     if(acesso.getResposta().equals(txtF[1].getText())){
                         Acesso_dao.mudarSenha(nPsw,acesso.getId());
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                     }else{
                         txtF[1].setText("");
-                        MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Resposta errada !!",true);
+                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Resposta errada !!",true);
                     }
+                }else if(nPsw.isBlank()){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, A senha nao pode ser nula !!",true);
                 }else{
                     pswF[1].setText("");
-                    MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
                 }
             }else{
-                MyDialog dialog=new MyDialog(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
             }
         }
 

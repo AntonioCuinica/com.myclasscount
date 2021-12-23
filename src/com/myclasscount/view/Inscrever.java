@@ -21,15 +21,15 @@ import javax.swing.JRadioButton;
 public class Inscrever extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private MyButton btns[];
+    private MyButtonn btns[];
     private Panel title;
     public Inscrever(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Inscriçao",this);
+        title=MyProceduress.barName("Inscriçao",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProcedures().mainPane("mainFrame","verAlunos",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verAlunos",container));
         this.setVisible(true);
     }
     

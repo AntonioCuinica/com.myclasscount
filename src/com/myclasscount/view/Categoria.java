@@ -23,21 +23,21 @@ import javax.swing.border.EmptyBorder;
 public class Categoria extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private MyButton btns[];
+    private MyButtonn btns[];
     private Panel title;
      
     public Categoria(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProcedures.barName("Categorias",this);
+        title=MyProceduress.barName("Categorias",this);
         container.add(title);
         this.addCategoria();
         this.setVisible(true);
     }
     
     public void addCategoria(){
-        MyButton bts[]=new MyButton[6];
+        MyButtonn bts[]=new MyButtonn[6];
         Panel pan=new Panel(Color.white,true);
         GridLayout gLyt=new GridLayout(1,3,15,0);
         BoxLayout bLyt=new BoxLayout(pan,BoxLayout.Y_AXIS);
@@ -46,7 +46,7 @@ public class Categoria extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         for(int i=0;i<bts.length;i++){
-            bts[i]=new MyButton("Escola "+(i+1),15,16,false);
+            bts[i]=new MyButtonn("Escola "+(i+1),15,16,false);
             bts[i].addActionListener(new clique(bts[i]));
             bts[i].addMouseListener(new clique(bts[i]));
         }
@@ -81,7 +81,7 @@ public class Categoria extends JPanel {
         }
         
         
-        MyButton voltar=new MyButton("Voltar",15,20,false);
+        MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
         voltar.setSize(60,30);
         voltar.addMouseListener(new clique(voltar));
         JScrollPane src=new JScrollPane(pan);
@@ -113,14 +113,14 @@ public class Categoria extends JPanel {
     }
    
     private class clique extends MouseAdapter implements ActionListener {
-            MyButton btn=null;
-            public clique(MyButton btn){
+            MyButtonn btn=null;
+            public clique(MyButtonn btn){
                 this.btn=btn;
             }
             @Override
             public void actionPerformed(ActionEvent e) {
-                //myDialog dialog=new MyDialog(container,true);
-                 MyDialog dialog=new MyDialog(Myclasscount.getFrame(),true);
+                //myDialog dialog=new MyDialogg(container,true);
+                 MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),true);
                 
             }
             
