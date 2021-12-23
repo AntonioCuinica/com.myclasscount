@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import com.myclasscount.control.Login_ctrl;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -66,7 +67,7 @@ public class Loginn extends JPanel {
             new JLabel("Senha")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
-        esqueceu=new JButton("Esqueceu a senha ?");
+        esqueceu=new JButton("Acesso invalido !!");
         esqueceu.setVisible(false);
         esqueceu.setContentAreaFilled(false);
         esqueceu.setBorderPainted(false);
@@ -111,20 +112,30 @@ public class Loginn extends JPanel {
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Entrar")){
-                String psw=new String(pswF.getPassword());
-                if(Login_ctrl.login_crtl(txtF.getText(),psw)){
-                    countFalhas=0;
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
-                }
-                txtF.setText("");
-                pswF.setText("");
-                if(countFalhas++>=2){
-                    esqueceu.setVisible(true);
-                }
+                entrar(e);
             }else if(e.getComponent().toString().contains("Esqueceu a senha ?")){
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"recuperarSenha");
+                countFalhas=0;
                 esqueceu.setVisible(false);
             }
+        }
+    }
+    
+    public void entrar(InputEvent e){
+        String psw=new String(pswF.getPassword());
+        if(Login_ctrl.login_crtl(txtF.getText(),psw)){
+            countFalhas=0;
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+        }else{
+            esqueceu.setText("Acesso invalido !!");
+            esqueceu.setVisible(true);
+            txtF.grabFocus();
+        }
+        txtF.setText("");
+        pswF.setText("");
+        if(countFalhas++>=2){
+            esqueceu.setText("Esqueceu a senha ?");
+            esqueceu.setVisible(true);
         }
     }
     
@@ -134,15 +145,18 @@ public class Loginn extends JPanel {
             if(e.getSource().equals(txtF)){
                 if(e.getKeyText(e.getKeyCode()).equals("Enter") || e.getKeyText(e.getKeyCode()).equals("Down") ){
                     txtF.transferFocus();
+                }else{
+                    esqueceu.setVisible(false);
                 }
             }else if(e.getSource().equals(pswF)){
                 if(e.getKeyText(e.getKeyCode()).equals("Backspace") && String.valueOf(pswF.getPassword()).isBlank()){
                     pswF.transferFocusBackward();
                 }else if(e.getKeyText(e.getKeyCode()).equals("Up") ){
                     pswF.transferFocusBackward();
+                }else if(e.getKeyText(e.getKeyCode()).equals("Enter") ){
+                    entrar(e);
                 }
             }
         }
     }
-    
 }

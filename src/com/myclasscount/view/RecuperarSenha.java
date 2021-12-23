@@ -109,17 +109,22 @@ public class RecuperarSenha extends JPanel {
                         Acesso_dao.mudarSenha(nPsw,acesso.getId());
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                     }else{
-                        txtF[1].setText("");
                         MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Resposta errada !!",true);
+                        txtF[1].setText("");
+                        txtF[1].grabFocus();
                     }
                 }else if(nPsw.isBlank()){
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, A senha nao pode ser nula !!",true);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, senha vazia",true);
+                    pswF[0].grabFocus();
                 }else{
-                    pswF[1].setText("");
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
+                    pswF[1].setText("");
+                    pswF[1].grabFocus();
                 }
             }else{
                 MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
+                txtF[0].setText("");
+                txtF[0].grabFocus();
             }
         }
 
