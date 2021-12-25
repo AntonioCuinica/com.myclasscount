@@ -18,14 +18,14 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
-public class VerTurmas2 extends JPanel {
+public class Ver_Turmas2 extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private MyButtonn btns[];
     private Panel title;
     private Table tabela;
     
-    public VerTurmas2(){
+    public Ver_Turmas2(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());

@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.categoria_ctrl;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -12,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -19,24 +21,24 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
-public class VerTurmas extends JPanel {
+public class Ver_Categoria extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private MyButtonn btns[];
     private Panel title;
-    
-    public VerTurmas(){
+     
+    public Ver_Categoria(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Turmas",this);
+        title=MyProceduress.barName("Categorias",this);
         container.add(title);
         this.addCategoria();
         this.setVisible(true);
     }
     
     public void addCategoria(){
-        MyButtonn bts[]=new MyButtonn[6];
+        MyButtonn bts[]=new MyButtonn[categoria_ctrl.getCategorias().size()];
         Panel pan=new Panel(Color.white,true);
         GridLayout gLyt=new GridLayout(1,3,15,0);
         BoxLayout bLyt=new BoxLayout(pan,BoxLayout.Y_AXIS);
@@ -45,8 +47,9 @@ public class VerTurmas extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         for(int i=0;i<bts.length;i++){
-            bts[i]=new MyButtonn("Turma "+(i+1),15,16,false);
-            bts[i].addActionListener(new clique(true,false));
+            com.myclasscount.model.Categoria cat=categoria_ctrl.getCategorias().get(i);
+            bts[i]=new MyButtonn(cat.getNome(),15,16,false);
+            bts[i].addActionListener(new clique(bts[i]));
             bts[i].addMouseListener(new clique(bts[i]));
         }
         
@@ -82,11 +85,16 @@ public class VerTurmas extends JPanel {
         
         MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
         voltar.setSize(60,30);
-        voltar.addActionListener(new clique(false,true));
+        voltar.addMouseListener(new clique(voltar));
+        MyButtonn criar=new MyButtonn("Criar",15,20,false);
+        criar.setSize(60,30);
+        criar.addMouseListener(new clique(criar));
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
         container.add(voltar);
+        container.add(criar);
+        
         new Thread(
             new Runnable(){
                 public void run(){
@@ -102,40 +110,39 @@ public class VerTurmas extends JPanel {
                         src.setBounds(0,title.getY()+y,container.getWidth(),(int)(container.getHeight()*0.75));
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
-                        voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setLocation(x-criar.getWidth(),container.getHeight()-y);
+                        criar.setLocation(x+10,container.getHeight()-y);
                         container.revalidate();
-                        
                     }
                 }
             }
         ).start();
     }
     
+    public void updateComponents(){
+        removeAll();
+        addCategoria();
+    }
+    
     private class clique extends MouseAdapter implements ActionListener {
-            private MyButtonn btn=null;
-            private boolean clicarTurma=true;
-            private boolean clicarVoltar=true;
+            MyButtonn btn=null;
+            
             public clique(MyButtonn btn){
                 this.btn=btn;
-                clicarTurma=false;
-                clicarVoltar=false;
-            }
-            
-            public clique(boolean clickT,boolean clickBack){
-                clicarTurma=clickT;
-                clicarVoltar=clickBack;
             }
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(clicarTurma){
-                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
-                }else if(clicarVoltar){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),true);
+            }
+            
+            public void mouseClicked(MouseEvent e){
+                if(btn.getText().equals("Voltar")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+                }else if(btn.getText().equals("Criar")){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"CriarCat");
                 }
             }
-           
             
     }
-    
 }

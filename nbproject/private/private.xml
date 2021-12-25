@@ -5,14 +5,18 @@
         <group>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Inscrever.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Myclasscount.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/categoria_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/validar/ValidarCategoria.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/conexao.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/CriarCategoria.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Loginn.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MyProceduress.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MyDialogg.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Categoria.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MyDialog.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Login_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/Categoria.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Acesso_dao.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Login.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MyProcedures.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/Acesso.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/RecuperarSenha.java</file>
         </group>
     </open-files>
 </project-private>

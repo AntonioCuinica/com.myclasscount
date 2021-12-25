@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -20,17 +19,17 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
-public class Categoria extends JPanel {
+public class Ver_Turmas extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private MyButtonn btns[];
     private Panel title;
-     
-    public Categoria(){
+    
+    public Ver_Turmas(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Categorias",this);
+        title=MyProceduress.barName("Turmas",this);
         container.add(title);
         this.addCategoria();
         this.setVisible(true);
@@ -46,8 +45,8 @@ public class Categoria extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         for(int i=0;i<bts.length;i++){
-            bts[i]=new MyButtonn("Escola "+(i+1),15,16,false);
-            bts[i].addActionListener(new clique(bts[i]));
+            bts[i]=new MyButtonn("Turma "+(i+1),15,16,false);
+            bts[i].addActionListener(new clique(true,false));
             bts[i].addMouseListener(new clique(bts[i]));
         }
         
@@ -83,7 +82,7 @@ public class Categoria extends JPanel {
         
         MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
         voltar.setSize(60,30);
-        voltar.addMouseListener(new clique(voltar));
+        voltar.addActionListener(new clique(false,true));
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
@@ -111,26 +110,32 @@ public class Categoria extends JPanel {
             }
         ).start();
     }
-   
+    
     private class clique extends MouseAdapter implements ActionListener {
-            MyButtonn btn=null;
+            private MyButtonn btn=null;
+            private boolean clicarTurma=true;
+            private boolean clicarVoltar=true;
             public clique(MyButtonn btn){
                 this.btn=btn;
-            }
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //myDialog dialog=new MyDialogg(container,true);
-                 MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),true);
-                
+                clicarTurma=false;
+                clicarVoltar=false;
             }
             
-            public void mouseClicked(MouseEvent e){
-                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            public clique(boolean clickT,boolean clickBack){
+                clicarTurma=clickT;
+                clicarVoltar=clickBack;
             }
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(clicarTurma){
+                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
+                }else if(clicarVoltar){
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+                }
+            }
+           
             
     }
     
-    /*public static void main(String[] args) {
-        new Categoria();
-    }*/
 }

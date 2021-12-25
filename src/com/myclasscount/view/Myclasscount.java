@@ -58,13 +58,13 @@ public class Myclasscount extends JFrame {
         Ver_Professores verP=new Ver_Professores();
         container.add(verP,"verProfessores");
         
-        Categoria cat=new Categoria();
+        Ver_Categoria cat=new Ver_Categoria();
         container.add(cat,"categoria");
         
-        VerTurmas verT=new VerTurmas();
+        Ver_Turmas verT=new Ver_Turmas();
         container.add(verT,"verTurmas");
         
-        VerTurmas2 verT2=new VerTurmas2();
+        Ver_Turmas2 verT2=new Ver_Turmas2();
         container.add(verT2,"verTurmas2");
         
         Ver_Observacoes verO=new Ver_Observacoes();
@@ -96,6 +96,9 @@ public class Myclasscount extends JFrame {
         
         CriarSenha criarS=new CriarSenha();
         container.add(criarS,"criarSenha");
+        
+        CriarCategoria criarC=new CriarCategoria();
+        container.add(criarC,"CriarCat");
         
         resizing();
     }

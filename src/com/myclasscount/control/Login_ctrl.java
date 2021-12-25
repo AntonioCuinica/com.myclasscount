@@ -13,7 +13,7 @@ import com.myclasscount.model.validar.ValidarAcesso;
  */
 public class Login_ctrl {
     
-    public static boolean login_crtl(String user, String psw){
+    public static boolean login_ctrl(String user, String psw){
         return ValidarAcesso.temAcesso(user,psw);
     }
 }

@@ -48,9 +48,7 @@ public class Loginn extends JPanel {
     
    
     public void addComponentToMainPane(Panel mainPane){
-        // remove os botoes voltar e proximo do mainPane
-        //container.remove(container.getComponentCount()-1);
-        //container.remove(container.getComponentCount()-1);
+        //remove os botoes voltar e proximo do mainPane
         container.getComponent(container.getComponentCount()-1).setVisible(false);
         container.getComponent(container.getComponentCount()-2).setVisible(false);
         Panel pan1=new Panel(Color.black,false);
@@ -123,7 +121,7 @@ public class Loginn extends JPanel {
     
     public void entrar(InputEvent e){
         String psw=new String(pswF.getPassword());
-        if(Login_ctrl.login_crtl(txtF.getText(),psw)){
+        if(Login_ctrl.login_ctrl(txtF.getText(),psw)){
             countFalhas=0;
             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
         }else{

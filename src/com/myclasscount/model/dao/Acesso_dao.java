@@ -37,7 +37,9 @@ public class Acesso_dao {
                 acesso.setResposta(rs.getString("rsposta"));
                 acesso.setProfessor_id(Integer.parseInt("professor_id"));
             }
-                    
+            stmt.close();
+            rs.close();
+            con.close();
         }catch(SQLException e){
         
         }
@@ -61,7 +63,9 @@ public class Acesso_dao {
                 acesso.setResposta(rs.getString("resposta"));
                 acesso.setProfessor_id(Integer.parseInt(rs.getString("professor_id")));
             }
-                    
+            stmt.close();
+            rs.close();
+            con.close();
         }catch(SQLException e){
         
         }
@@ -76,7 +80,8 @@ public class Acesso_dao {
             stmt.setString(1,codigo);
             stmt.setString(2,""+id);
             stmt.execute();
-                    
+            stmt.close();
+            con.close();
         }catch(SQLException e){
         
         }
