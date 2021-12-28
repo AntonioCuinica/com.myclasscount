@@ -6,9 +6,12 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.categoria_ctrl;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,20 +24,23 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
+
 public class Ver_Categoria extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private MyButtonn btns[];
     private Panel title;
-     
+    private com.myclasscount.model.Categoria catActual=null;
+    private MyDialogg ver_dialog;
+    
     public Ver_Categoria(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Categorias",this);
         container.add(title);
-        this.addCategoria();
-        this.setVisible(true);
+        addCategoria();
+        setVisible(true);
     }
     
     public void addCategoria(){
@@ -48,9 +54,10 @@ public class Ver_Categoria extends JPanel {
         
         for(int i=0;i<bts.length;i++){
             com.myclasscount.model.Categoria cat=categoria_ctrl.getCategorias().get(i);
-            bts[i]=new MyButtonn(cat.getNome(),15,16,false);
-            bts[i].addActionListener(new clique(bts[i]));
-            bts[i].addMouseListener(new clique(bts[i]));
+            bts[i]=new MyButtonn(cat.getNome(),false);
+            bts[i].addActionListener(new Clique(bts[i]));
+            bts[i].setActionCommand(cat.getNome());
+            bts[i].addMouseListener(new Clique(bts[i]));
         }
         
         Panel pan1=null;
@@ -83,12 +90,12 @@ public class Ver_Categoria extends JPanel {
         }
         
         
-        MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
-        voltar.setSize(60,30);
-        voltar.addMouseListener(new clique(voltar));
-        MyButtonn criar=new MyButtonn("Criar",15,20,false);
-        criar.setSize(60,30);
-        criar.addMouseListener(new clique(criar));
+        MyButtonn voltar=new MyButtonn("Voltar",false);
+        voltar.setSize(85,25);
+        voltar.addMouseListener(new Clique(voltar));
+        MyButtonn criar=new MyButtonn("Criar",false);
+        criar.setSize(85,25);
+        criar.addMouseListener(new Clique(criar));
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
@@ -121,28 +128,90 @@ public class Ver_Categoria extends JPanel {
     
     public void updateComponents(){
         removeAll();
+        title=MyProceduress.barName("Categorias",this);
+        container.add(title);
         addCategoria();
     }
     
-    private class clique extends MouseAdapter implements ActionListener {
+    public JPanel info(String n,String v){
+        JPanel panel=new JPanel(new GridLayout(1,2));
+        panel.setOpaque(false);
+        JLabel name=new JLabel(n);
+        name.setForeground(Color.white);
+        name.setFont(new Font("Arial",Font.BOLD,18));
+        JLabel value=new JLabel(v);
+        value.setForeground(Color.white);
+        value.setFont(new Font("Arial",Font.PLAIN,18));
+        value.setToolTipText(v);
+        panel.add(name);
+        panel.add(value);
+        return panel;
+    }
+    
+    public void verCategoria(com.myclasscount.model.Categoria cat){
+        catActual=cat;
+        ver_dialog=new MyDialogg(Myclasscount.getFrame(),true);
+        ver_dialog.setLayout(new BorderLayout());
+        
+        JPanel pan1=new JPanel(new GridLayout(5,1));
+        pan1.setOpaque(false);
+        pan1.setBorder(new EmptyBorder(15,15,15,15));
+        pan1.add(info("Nome",": "+cat.getNome()));
+        pan1.add(info("Tipo de Ensino",": "+cat.getTipoEnsino()));
+        pan1.add(info("Classe",": "+cat.getClasse()));
+        pan1.add(info("Preco",": "+String.valueOf(cat.getPreco())));
+        pan1.add(info("Descricao",": "+cat.getDescricao()));
+        
+        JPanel pan2=new JPanel(new FlowLayout());
+        pan2.setOpaque(false);
+        MyButtonn modificar=new MyButtonn("Modificar",false);
+        modificar.addMouseListener(new Clique(modificar));
+        MyButtonn remover=new MyButtonn("Remover",false);
+        remover.addMouseListener(new Clique(remover));
+        pan2.add(modificar);
+        pan2.add(remover);
+        
+        ver_dialog.add(pan1,BorderLayout.CENTER);
+        ver_dialog.add(pan2,BorderLayout.SOUTH);
+        ver_dialog.setVisible(true);
+    }
+    
+    private class Clique extends MouseAdapter implements ActionListener {
             MyButtonn btn=null;
             
-            public clique(MyButtonn btn){
+            public Clique(MyButtonn btn){
                 this.btn=btn;
             }
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),true);
+                com.myclasscount.model.Categoria cat=categoria_ctrl.getCategoria(e.getActionCommand());
+                verCategoria(cat);
             }
             
+            @Override
             public void mouseClicked(MouseEvent e){
                 if(btn.getText().equals("Voltar")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
                 }else if(btn.getText().equals("Criar")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"CriarCat");
+                }else if(btn.getText().equals("Remover")){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover ?",true);
+                    if(dialog.getSimTeste()){
+                        if(categoria_ctrl.deletarCategoria(catActual)){
+                            updateComponents();
+                            ver_dialog.dispose();
+                        }else {
+                            MyDialogg dialog1=new MyDialogg(Myclasscount.getFrame(),1,"Erro, categoria em uso",true);
+                        }
+                    }
+                }else if(btn.getText().equals("Modificar")){
+                    ModificarCategoria modificar=new ModificarCategoria(Myclasscount.getFrame(),catActual,true);
+                    ver_dialog.dispose();
+                    modificar.setVisible(true);
                 }
             }
             
     }
+    
 }

@@ -47,7 +47,7 @@ public class RecuperarSenha extends JPanel {
         title=MyProceduress.barName("Recuperar Senha",this);
         container.add(title);
         myProc=new MyProceduress();
-        this.addComponentToMainPane(myProc.mainPane("login","login",container));
+        this.addComponentToMainPane(myProc.mainPane("login","login", container));
         this.setVisible(true);
     }
     

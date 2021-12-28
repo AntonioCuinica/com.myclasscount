@@ -30,7 +30,7 @@ public class Observacoes extends JPanel {
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Observaçoes",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","", container));
         this.setVisible(true);
     }
     
@@ -47,14 +47,14 @@ public class Observacoes extends JPanel {
         JTextField txtF[]={new JTextField()};
         JTextArea note=new JTextArea();
         note.setLineWrap(true);
-        MyButtonn saveNote=new MyButtonn("Gravar",15,20,false);
+        MyButtonn saveNote=new MyButtonn("Gravar",false);
         JLabel labels[]={new JLabel("Titulo"),new JLabel("Nota")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
         MyButtonn student[]=new MyButtonn[20];
         Panel stud=new Panel(new Color(209,178,255),true);
         for(int i=0;i<student.length;i++){
-            student[i]=new MyButtonn("Estudante "+(i+1),7,18,false);
+            student[i]=new MyButtonn("Estudante "+(i+1),false);
             stud.add(student[i]);
         }
         stud.setLayout(new GridLayout(student.length,1,10,5));
@@ -89,7 +89,7 @@ public class Observacoes extends JPanel {
                         labels[1].setBounds(0,txtF[0].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         note.setBounds(0,labels[1].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.5));
                         saveNote.setBounds(0,note.getHeight()+note.getY()+10,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
-                        saveNote.setPosition(saveNote.getWidth()/2-14,saveNote.getHeight()/2+2);
+                        //saveNote.setPosition(saveNote.getWidth()/2-14,saveNote.getHeight()/2+2);
                         pan2.getComponent(0).setBounds(0,0,pan2.getWidth(),25);
                         pan2.getComponent(1).setBounds(0,30,pan2.getWidth(),pan2.getHeight()-30);
                         mainPane.revalidate();

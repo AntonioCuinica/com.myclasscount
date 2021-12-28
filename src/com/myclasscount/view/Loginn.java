@@ -42,7 +42,7 @@ public class Loginn extends JPanel {
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Login",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","mainFrame",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","mainFrame", container));
         this.setVisible(true);
     }
     
@@ -59,7 +59,7 @@ public class Loginn extends JPanel {
         txtF.addKeyListener(new ChangeFocus());
         pswF=new JPasswordField();
         pswF.addKeyListener(new ChangeFocus());
-        MyButtonn entrar=new MyButtonn("Entrar",160,25,false);
+        MyButtonn entrar=new MyButtonn("Entrar",false);
         entrar.addMouseListener(new Clique());
         labels=new JLabel[]{new JLabel("Bem vindo ao MyClassCount",SwingConstants.CENTER),new JLabel("Usuario"),
             new JLabel("Senha")};
@@ -99,7 +99,6 @@ public class Loginn extends JPanel {
                         x=mainPane.getWidth()/2-pan1.getWidth()/2;
                         y=mainPane.getHeight()/2-pan1.getHeight()/2;
                         pan1.setLocation(x,y);
-                        entrar.setPosition((int)(x*1.40),(int)(y*0.5));
                         mainPane.revalidate();
                     }
                 }

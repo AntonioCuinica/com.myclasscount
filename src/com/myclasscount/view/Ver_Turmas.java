@@ -45,7 +45,7 @@ public class Ver_Turmas extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         for(int i=0;i<bts.length;i++){
-            bts[i]=new MyButtonn("Turma "+(i+1),15,16,false);
+            bts[i]=new MyButtonn("Turma "+(i+1),false);
             bts[i].addActionListener(new clique(true,false));
             bts[i].addMouseListener(new clique(bts[i]));
         }
@@ -80,8 +80,8 @@ public class Ver_Turmas extends JPanel {
         }
         
         
-        MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
-        voltar.setSize(60,30);
+        MyButtonn voltar=new MyButtonn("Voltar",false);
+        voltar.setSize(85,25);
         voltar.addActionListener(new clique(false,true));
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());

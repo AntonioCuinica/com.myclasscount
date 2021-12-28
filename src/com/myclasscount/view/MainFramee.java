@@ -38,7 +38,7 @@ public class MainFramee extends JPanel {
         
         MyLabell logo=new MyLabell("img/logo.png");
         JTextField search=new JTextField("Buscar estudante");
-        MyButtonn btnSearch=new MyButtonn("Buscar",16,20,false);
+        MyButtonn btnSearch=new MyButtonn("Buscar",false);
         
         /**Adding components */
         pane.add(logo);
@@ -72,7 +72,7 @@ public class MainFramee extends JPanel {
                         
                         
                         /** btnSearch location*/
-                        btnSearch.setSize(new Dimension(70,30));
+                        btnSearch.setSize(new Dimension(85,25));
                         x=(pane.getWidth()-(btnSearch.getWidth()+25));
                         y=(pane.getHeight()/2)-(btnSearch.getHeight()/2);
                         btnSearch.setLocation(x,y);
@@ -93,7 +93,7 @@ public class MainFramee extends JPanel {
         pane.setBorderColor(new Color(0,24,242));
         pane.setLayout(null);
         /**out(sair) button*/
-        MyButtonn out=new MyButtonn("Sair",15,20,false);
+        MyButtonn out=new MyButtonn("Sair",false);
         out.addActionListener(new clique(out,(byte)-1));
         out.setActionCommand("out");
         
@@ -166,7 +166,7 @@ public class MainFramee extends JPanel {
                         }
                         
                         /**out location*/
-                        out.setSize(50,30);
+                        out.setSize(65,25);
                         x=pane.getWidth()-(out.getWidth()+20);
                         y=pane.getHeight()-(out.getHeight()+20);
                         out.setLocation(x,y);

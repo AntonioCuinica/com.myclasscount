@@ -76,8 +76,8 @@ public class Ver_Turmas2 extends JPanel {
         pan.add(src1);
         
         String colunas[]={"Aluno","Apelido","BI","Idade","Classe","Sexo","Nível","Pagamento"};
-        MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
-        voltar.setSize(60,30);
+        MyButtonn voltar=new MyButtonn("Voltar",false);
+        voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
         String dados[][]=new String[30][colunas.length];

@@ -6,6 +6,7 @@
 package com.myclasscount.view;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -35,7 +36,10 @@ public  class MyDialogg extends JDialog {
         setSize(450,500);
         setLocationRelativeTo(container);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setVisible(true);
+        setResizable(false);
+        Panel back=new Panel(color.darker().darker(),true,true);
+        back.setBorderColor(Color.WHITE);
+        setContentPane(back);
     }
     
     public MyDialogg(JFrame container,int type,String text,boolean modal){

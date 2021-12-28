@@ -17,6 +17,11 @@ import java.util.ArrayList;
  * @author CUINIC4
  */
 public class categoria_ctrl {
+    private static String erro="";
+    
+    public static String getErro(){
+        return erro;
+    }
     
     public static boolean inserirCategoria(Categoria cat){
         String resultado=ValidarCategoria.validarCategoria(cat);
@@ -25,6 +30,7 @@ public class categoria_ctrl {
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria Cadastrada!",true);
             return true;
         }else{
+            erro=resultado;
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,resultado,true);
         }
         return false;
@@ -38,4 +44,20 @@ public class categoria_ctrl {
         return categoria_dao.getCategorias();
     }
     
+    public static boolean deletarCategoria(Categoria cat){
+        return categoria_dao.delCategoria(cat);
+    }
+    
+    public static boolean updateCategoria(Categoria cat){
+        String resultado=ValidarCategoria.validarCategoria(cat);
+        if(resultado.equals("valida") || resultado.equals("Erro, a categoria ja existe")){
+            categoria_dao.updateCategoria(cat);
+            MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria Actualizada!",true);
+            return true;
+        }else{
+            erro=resultado;
+            MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,resultado,true);
+        }
+        return false;
+    }
 }

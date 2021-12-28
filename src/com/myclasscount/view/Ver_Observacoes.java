@@ -35,8 +35,8 @@ public class Ver_Observacoes extends JPanel {
     
     public void addTable(){
         String colunas[]={"Nome do Aluno","Titulo","Data","Nota",""};
-        MyButtonn voltar=new MyButtonn("Voltar",15,20,false);
-        voltar.setSize(60,30);
+        MyButtonn voltar=new MyButtonn("Voltar",false);
+        voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
         String dados[][]=new String[30][colunas.length];

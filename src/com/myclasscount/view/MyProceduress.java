@@ -25,7 +25,7 @@ public class MyProceduress {
         return btns;
     }
   
-    public static Panel barName(String title,JPanel panel){
+    public static Panel barName(String title,Container panel){
         Panel pane=new Panel(Color.black,false);
         pane.setLayout(null);
         pane.invisible(true,true);
@@ -74,14 +74,14 @@ public class MyProceduress {
     }
     
    
-    public  Panel mainPane(String antes,String depois,Container container){
+    public  Panel mainPane(String antes, String depois, Container container){
         /**main panel*/
         Panel pane = new Panel(new Color(82,79,250),false);
         pane.setBorderColor(Color.white);
         pane.setLayout(null);
        
         /** btns(voltar e proximo) buttons*/
-        btns=new MyButtonn[]{new MyButtonn("Voltar",15,20,false),new MyButtonn("Proximo",7,20,false)};
+        btns=new MyButtonn[]{new MyButtonn("Voltar",false),new MyButtonn("Proximo",false)};
         btns[0].addActionListener(new Clique(antes));
         btns[0].setActionCommand("Voltar");
         btns[1].addActionListener(new Clique(depois));
@@ -110,9 +110,9 @@ public class MyProceduress {
                         pane.setLocation(x,y);  
                         
                         /** btns Location */
-                        getBtns()[1].setSize(60,30);
+                        getBtns()[1].setSize(85,25);
                         x=pane.getWidth()+pane.getX()-getBtns()[1].getWidth();
-                        y=pane.getHeight()+pane.getY()+12;
+                        y=pane.getHeight()+pane.getY()+15;
                         getBtns()[1].setLocation(x,y);
                         x-=getBtns()[1].getWidth()+15;
                         getBtns()[0].setBounds(x,y,getBtns()[1].getWidth(),getBtns()[1].getHeight());

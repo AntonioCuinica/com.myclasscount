@@ -7,23 +7,24 @@ package com.myclasscount.view;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 /** *
  * @author CUINIC4
  */
 public class MyButtonn extends JButton{
-    private Color color=new Color(82,79,180);
+    private Color color=new Color(82,79,180).darker();
     private Color brColor=Color.white;
     private boolean opaque;
     private String name;
-    private int x=0,y=0;
     
     public void setColor(Color color){
         this.color=color;
@@ -43,22 +44,19 @@ public class MyButtonn extends JButton{
     }
     
         
-    public MyButtonn(String name,int x,int y, boolean opaque){
+    public MyButtonn(String name, boolean opaque){
         super(name);
+        setLayout(new GridLayout());
         this.name=name;
-        this.x=x;
-        this.y=y;
         this.opaque=opaque;
         this.setContentAreaFilled(opaque);
         this.setSize(55,22);
         this.addMouseListener(new clique(this));
+        JLabel lab=new JLabel(name,SwingConstants.CENTER);
+        lab.setForeground(Color.white);
+        add(lab);
     }
     
-    public void setPosition(int x,int y){
-        this.x=x;
-        this.y=y;
-        repaint();
-    }
     
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -72,9 +70,6 @@ public class MyButtonn extends JButton{
         if(!this.opaque){
             gr.fill(new RoundRectangle2D.Double(0,0,this.getWidth()-1,this.getHeight()-1,20,20));
         }
-        gr.setColor(Color.white);
-        gr.setFont(new Font("Arial",Font.BOLD,12));
-        gr.drawString(this.name,this.x,this.y);
     }
     
     public void paintBorder(Graphics g){
@@ -83,12 +78,14 @@ public class MyButtonn extends JButton{
         gr.setStroke(new BasicStroke(1.0f));
         gr.draw(new RoundRectangle2D.Double(1,1,this.getWidth()-2,this.getHeight()-2,20,20));
     }
+    
     private class clique extends MouseAdapter {
         private MyButtonn btn=null;
         private Color color;
         private Color brColor;
         public clique(MyButtonn btn){
-        this.btn=btn;
+        
+            this.btn=btn;
             color=new Color(82,79,180);
             brColor=getBrColor();
         }

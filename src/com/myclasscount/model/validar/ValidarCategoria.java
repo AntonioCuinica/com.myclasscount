@@ -1,12 +1,13 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.myclasscount.model.validar;
-import com.myclasscount.model.Categoria;
-import com.myclasscount.model.dao.categoria_dao;
 
+package com.myclasscount.model.validar;
+import  com.myclasscount.model.Categoria;
+import  com.myclasscount.model.dao.categoria_dao;
 
 /**
  *
@@ -23,12 +24,13 @@ public class ValidarCategoria {
         }
         
         if(cat.getPreco()==-1){
-            return "Erro, preco Vazio !!";
+            return "Erro, preco vazio !!";
         }else if(cat.getPreco()==-2){
-            return "Erro, Preco invalido !!";
+            return "Erro, preco invalido !!";
         }else if(cat.getPreco()<0){
             return "Erro, preco negativo !!";
         }
+        
         return "valida";
         
     }

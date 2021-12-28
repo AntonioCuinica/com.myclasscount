@@ -34,7 +34,7 @@ public class Myclasscount extends JFrame {
     
     public Myclasscount(){
         this.setSize(940,650);
-        this.setMinimumSize(new Dimension(860,600));
+        this.setMinimumSize(new Dimension(940,650));
         layout=new CardLayout();
         this.setLayout(layout);
         this.setLocationRelativeTo(null);

@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,13 +25,14 @@ public class CriarTurma extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
     private Panel title;
+    
     public CriarTurma(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Criar Turma",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verTurmas",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verTurmas", container));
         this.setVisible(true);
     }
     
@@ -51,7 +51,7 @@ public class CriarTurma extends JPanel {
                          "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
         JComboBox combbx[]={new JComboBox(turno),new JComboBox(professor),new JComboBox(classe)};
         JTextField txtF[]={new JTextField()};
-        MyButtonn defHorario=new MyButtonn("Definir Horario",165,20,false);
+        MyButtonn defHorario=new MyButtonn("Definir Horario",false);
         defHorario.addActionListener(new Clique());
         JLabel labels[]={new JLabel("Nome da Turma"),new JLabel("Turno"),new JLabel("Nome do Professor"),
                          new JLabel("Classe")};
@@ -60,7 +60,7 @@ public class CriarTurma extends JPanel {
         MyButtonn student[]=new MyButtonn[20];
         Panel stud=new Panel(new Color(209,178,255),true);
         for(int i=0;i<student.length;i++){
-            student[i]=new MyButtonn("Estudante "+(i+1),7,18,false);
+            student[i]=new MyButtonn("Estudante "+(i+1),false);
             stud.add(student[i]);
         }
         stud.setLayout(new GridLayout(student.length,1,10,5));
@@ -91,7 +91,7 @@ public class CriarTurma extends JPanel {
                         title.setLocation(x,y);
                         pan1.setBounds(50,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
                         pan2.setBounds(mainPane.getWidth()/2+25,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
-                        defHorario.setPosition(defHorario.getWidth()/2-35,defHorario.getHeight()/2+4);
+                        //defHorario.setPosition(defHorario.getWidth()/2-35,defHorario.getHeight()/2+4);
                         pan2.getComponent(0).setBounds(0,0,pan2.getWidth(),25);
                         pan2.getComponent(1).setBounds(0,30,pan2.getWidth(),pan2.getHeight()-30);
                         pan2.revalidate();

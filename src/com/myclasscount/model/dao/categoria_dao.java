@@ -69,23 +69,60 @@ public class categoria_dao {
     
     }
     
-    public static void setCategoria(Categoria cat){
+    public static void updateCategoria(Categoria cat){
         Connection con=conexao.getConnection();
-        String select="CALL `myclasscount`.`inserir_categoria`(?,?,?,?,?);";
-        ArrayList<Categoria> categoria=new ArrayList();
+        String select="UPDATE myclasscount.categoria_aluno SET nome=?,tipo_ensino=?,class=?,preco=?,descricao=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,cat.getNome());
             stmt.setString(2,cat.getTipoEnsino());
             stmt.setString(3,cat.getClasse());
-            stmt.setString(4,""+cat.getPreco());
+            stmt.setString(4,String.valueOf(cat.getPreco()));
             stmt.setString(5,cat.getDescricao());
+            stmt.setString(6,String.valueOf(cat.getId()));
             stmt.execute();
             
             stmt.close();
             con.close();
         }catch(SQLException e){
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public static void setCategoria(Categoria cat){
+        Connection con=conexao.getConnection();
+        String select="CALL myclasscount.inserir_categoria(?,?,?,?,?);";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,cat.getNome());
+            stmt.setString(2,cat.getTipoEnsino());
+            stmt.setString(3,cat.getClasse());
+            stmt.setString(4,String.valueOf(cat.getPreco()));
+            stmt.setString(5,cat.getDescricao());
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public static boolean delCategoria(Categoria cat){
+        Connection con=conexao.getConnection();
+        String select="DELETE FROM `myclasscount`.`categoria_aluno` WHERE id=?;";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(cat.getId()));
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+            
+            return true;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return false;
         }
     }
 }
