@@ -16,10 +16,10 @@ import java.util.ArrayList;
  *
  * @author CUINIC4
  */
-public class categoria_dao {
+public class Categoriaa_dao {
     
     public static Categoria getCategoria(String nome){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.categoria_aluno WHERE nome=?";
         Categoria categoria=null;
         try{
@@ -44,7 +44,7 @@ public class categoria_dao {
     }
     
     public static ArrayList<Categoria> getCategorias(){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.categoria_aluno";
         ArrayList<Categoria> categoria=new ArrayList();
         try{
@@ -70,7 +70,7 @@ public class categoria_dao {
     }
     
     public static void updateCategoria(Categoria cat){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="UPDATE myclasscount.categoria_aluno SET nome=?,tipo_ensino=?,class=?,preco=?,descricao=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -90,7 +90,7 @@ public class categoria_dao {
     }
     
     public static void setCategoria(Categoria cat){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="CALL myclasscount.inserir_categoria(?,?,?,?,?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -109,7 +109,7 @@ public class categoria_dao {
     }
     
     public static boolean delCategoria(Categoria cat){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="DELETE FROM `myclasscount`.`categoria_aluno` WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);

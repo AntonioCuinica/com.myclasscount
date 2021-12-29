@@ -6,7 +6,7 @@
 package com.myclasscount.control;
 
 import com.myclasscount.model.Categoria;
-import com.myclasscount.model.dao.categoria_dao;
+import com.myclasscount.model.dao.Categoriaa_dao;
 import com.myclasscount.model.validar.ValidarCategoria;
 import com.myclasscount.view.MyDialogg;
 import com.myclasscount.view.Myclasscount;
@@ -26,7 +26,7 @@ public class categoria_ctrl {
     public static boolean inserirCategoria(Categoria cat){
         String resultado=ValidarCategoria.validarCategoria(cat);
         if(resultado.equals("valida")){
-            categoria_dao.setCategoria(cat);
+            Categoriaa_dao.setCategoria(cat);
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria Cadastrada!",true);
             return true;
         }else{
@@ -37,21 +37,21 @@ public class categoria_ctrl {
     }
     
     public static Categoria getCategoria(String nome){
-        return categoria_dao.getCategoria(nome);
+        return Categoriaa_dao.getCategoria(nome);
     }
     
     public static ArrayList<Categoria> getCategorias(){
-        return categoria_dao.getCategorias();
+        return Categoriaa_dao.getCategorias();
     }
     
     public static boolean deletarCategoria(Categoria cat){
-        return categoria_dao.delCategoria(cat);
+        return Categoriaa_dao.delCategoria(cat);
     }
     
     public static boolean updateCategoria(Categoria cat){
         String resultado=ValidarCategoria.validarCategoria(cat);
         if(resultado.equals("valida") || resultado.equals("Erro, a categoria ja existe")){
-            categoria_dao.updateCategoria(cat);
+            Categoriaa_dao.updateCategoria(cat);
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria Actualizada!",true);
             return true;
         }else{

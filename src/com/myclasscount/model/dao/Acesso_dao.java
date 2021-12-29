@@ -20,7 +20,7 @@ public class Acesso_dao {
     
     
     public static Acesso getAcesso(String user,String psw){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.acesso WHERE username=? and codigo=?";
         Acesso acesso=null;
         try{
@@ -47,7 +47,7 @@ public class Acesso_dao {
     }
     
     public static Acesso getAcesso(String user){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.acesso WHERE username=?";
         Acesso acesso=null;
         try{
@@ -73,7 +73,7 @@ public class Acesso_dao {
     }
     
     public static void mudarSenha(String codigo,int id){
-        Connection con=conexao.getConnection();
+        Connection con=Conexaoo.getConnection();
         String select="UPDATE acesso SET codigo=? WHERE id=?";
         try{
             PreparedStatement stmt=con.prepareStatement(select);

@@ -7,7 +7,7 @@
 
 package com.myclasscount.model.validar;
 import  com.myclasscount.model.Categoria;
-import  com.myclasscount.model.dao.categoria_dao;
+import  com.myclasscount.model.dao.Categoriaa_dao;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ValidarCategoria {
         
         if(cat.getNome().isBlank()){
             return "Erro, nome vazio";
-        }else if(categoria_dao.getCategoria(cat.getNome())!=null){
+        }else if(Categoriaa_dao.getCategoria(cat.getNome())!=null){
             return "Erro, a categoria ja existe";
         }
         

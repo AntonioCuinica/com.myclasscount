@@ -294,7 +294,6 @@ public class MainFramee extends JPanel {
                 
             }
 
-            
     }
  
 }
