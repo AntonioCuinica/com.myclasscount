@@ -5,11 +5,13 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Disciplina_ctrl;
+import com.myclasscount.model.Disciplina;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -24,28 +26,33 @@ public class Ver_Disciplinas extends JPanel {
     private Table tabela;
     
     public Ver_Disciplinas(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Lista de Disciplinas",this);
         container.add(title);
-        this.addTable();
-        this.setVisible(true);
+        addTable();
+        setVisible(true);
     }
     
     public void addTable(){
-        String colunas[]={"Nome","Carga Horaria","Secçao","",""};
+        String colunas[]={"Nome","Carga Horaria","Secçao","-.",".-"};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
-        String dados[][]=new String[30][colunas.length];
-         for(int i=0;i<dados.length;i++){
-            for(int j=0;j<dados[0].length;j++){
-                dados[i][j]=""+i*j;
-            }
+        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
+        Object dados[][]=new Object[disciplinas.size()][colunas.length];
+        
+        for(int i=0;i<dados.length;i++){
+            dados[i][0]=disciplinas.get(i).getNome();
+            dados[i][1]=disciplinas.get(i).getCarga_horaria();
+            dados[i][2]=disciplinas.get(i).getSeccao();
         }
+        
         tabela.setTableData(dados);
+        tabela.setButton("-.","Modificar",Color.green);
+        tabela.setButton(".-","Remover",Color.red);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
         src.getViewport().setBackground(Color.white);
@@ -74,23 +81,41 @@ public class Ver_Disciplinas extends JPanel {
             }
         ).start();
     }
+    
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addTable();
+    }
+    
+    
     public void verDisciplinas(JFrame frame){
         tabela.addMouseListener(
             new MouseAdapter(){
-                public void mouseClicked(MouseEvent evento){
-                    if(evento.getClickCount()==2){
-                        int linha=tabela.getSelectedRow();
-                        String txt=tabela.getValueAt(linha,0).toString()+" | "+tabela.getValueAt(linha,1).toString()+
-                             " | "+tabela.getValueAt(linha,2).toString()+" | "+tabela.getValueAt(linha,3).toString();
-                        if(tabela.getSelectedColumn()==4 ||tabela.getSelectedColumn()==3){MyDialogg dialog=new MyDialogg(frame,true);}
+                public void mouseClicked(MouseEvent e){
+                    int linha=tabela.getSelectedRow();
+                    Disciplina disciplina=Disciplina_ctrl.getDisciplina(tabela.getValueAt(linha,0).toString());
+                    if(tabela.getSelectedColumn()==3){
+                        ModificarDisciplina mDisc=new ModificarDisciplina(frame,disciplina,true);
+                        mDisc.setVisible(true);
+                    }else if(tabela.getSelectedColumn()==4){
+                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover ?",true);
+                        if(dialog.getSimTeste()){
+                            if(Disciplina_ctrl.delDisciplina(disciplina)){
+                                updateComponents();
+                            }else {
+                                MyDialogg dialog1=new MyDialogg(Myclasscount.getFrame(),1,"Erro, disciplina em uso",true);
+                            }
+                        }
                     }
                 }
             }
         );
     }
+    
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-          Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
         }
     }
     

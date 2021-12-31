@@ -52,7 +52,7 @@ public class categoria_ctrl {
         String resultado=ValidarCategoria.validarCategoria(cat);
         if(resultado.equals("valida") || resultado.equals("Erro, a categoria ja existe")){
             Categoriaa_dao.updateCategoria(cat);
-            MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria Actualizada!",true);
+            MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Categoria actualizada!",true);
             return true;
         }else{
             erro=resultado;

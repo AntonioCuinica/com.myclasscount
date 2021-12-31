@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -126,6 +127,12 @@ public class Myclasscount extends JFrame {
     
     
     public static void main(String[] args) {
-        new Myclasscount();
+        SwingUtilities.invokeLater(
+            new Runnable(){
+                public void run(){
+                    new Myclasscount();
+                }
+            }
+        );
     }
 }

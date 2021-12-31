@@ -37,13 +37,13 @@ public class Loginn extends JPanel {
     private JButton esqueceu;
     
     public Loginn(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Login",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","mainFrame", container));
-        this.setVisible(true);
+        addComponentToMainPane(new MyProceduress().mainPane("mainFrame","mainFrame", container));
+        setVisible(true);
     }
     
    
@@ -81,7 +81,6 @@ public class Loginn extends JPanel {
         pan1.add(entrar);
         
         mainPane.add(pan1);
-        
         
         new Thread(
             new Runnable(){

@@ -7,11 +7,16 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionListener;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -39,7 +44,7 @@ public class Table extends JTable {
         this.setRowHeight(40);
     }
     
-    public void setTableData(String linhas[][]){
+    public void setTableData(Object linhas[][]){
         for(int i=0;i<linhas.length;i++){
             for(int j=0;j<linhas[0].length;j++){
                 this.td[j]=linhas[i][j];
@@ -56,6 +61,17 @@ public class Table extends JTable {
     
     public void setCellData(String data, int i,int j){
         this.modelo.setValueAt(data, i, i);
+    }
+    
+    public void setCellButton(JTextField data,int j){
+        TableColumn col=getColumnModel().getColumn(j);
+        col.setCellEditor(new DefaultCellEditor(data));
+        System.out.println(col);
+    }
+    
+    public void setButton(String column,String txt,Color color){
+        MyButtonT button=new MyButtonT(txt,color);
+        getColumn(column).setCellRenderer(button);
     }
     
     public void addColumn(Object data){
@@ -120,6 +136,29 @@ public class Table extends JTable {
             return this;
         }
         
-    }  
+    }
+    
+    private  class MyButtonT extends JButton implements TableCellRenderer{
+        
+        private String txt;
+        
+        public MyButtonT(String txt,Color color){
+            super(txt);
+            setOpaque(true);
+            setForeground(color);
+            setBackground(Color.white);
+        }
+        
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            MyButtonT button=(MyButtonT)value;
+            if(value==null){
+                button=this;
+            }
+            return button;
+        }
+    
+    }
+   
     
 }

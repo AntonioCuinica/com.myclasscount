@@ -61,7 +61,7 @@ public class MainFramee extends JPanel {
                         /** pane location */
                         int width=getWidth()-60;
                         int height=getHeight()/7;
-                        x=20;
+                        x=30;
                         pane.setBounds(x,20,width,height); 
                         
                         /** logo location*/
@@ -146,7 +146,7 @@ public class MainFramee extends JPanel {
                         Component cmp=container.getComponent(0);
                         int width=getWidth()-60;
                         int height=getHeight()-(cmp.getHeight()+100);
-                        x=20;
+                        x=30;
                         y=cmp.getY()+cmp.getHeight()+20;
                         pane.setBounds(x,y,width,height);  
                         
@@ -171,8 +171,9 @@ public class MainFramee extends JPanel {
                         y=pane.getHeight()-(out.getHeight()+20);
                         out.setLocation(x,y);
  
-                        revalidate();
                         repaint();
+                        revalidate();
+                        
                     }
                 }
             }
