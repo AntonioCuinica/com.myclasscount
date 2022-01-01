@@ -34,72 +34,72 @@ public class Myclasscount extends JFrame {
     }
     
     public Myclasscount(){
-        this.setSize(940,650);
-        this.setMinimumSize(new Dimension(940,650));
+        setSize(940,650);
+        setMinimumSize(new Dimension(940,650));
         layout=new CardLayout();
-        this.setLayout(layout);
-        this.setLocationRelativeTo(null);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(layout);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addViews();
+        container=getContentPane();
         frame=this;
-        this.setVisible(true);
+        setVisible(true);
     }
     
     public void addViews(){
         Loginn login=new Loginn();
-        container.add(login,"login");
+        add(login,"login");
         
         MainFramee mainF=new MainFramee();
-        container.add(mainF,"mainFrame");
+        add(mainF,"mainFrame");
         
         Ver_Alunos verA=new Ver_Alunos();
-        container.add(verA,"verAlunos");
+        add(verA,"verAlunos");
         
         Ver_Professores verP=new Ver_Professores();
-        container.add(verP,"verProfessores");
+        add(verP,"verProfessores");
         
         Ver_Categoria cat=new Ver_Categoria();
-        container.add(cat,"categoria");
+        add(cat,"categoria");
         
         Ver_Turmas verT=new Ver_Turmas();
-        container.add(verT,"verTurmas");
+        add(verT,"verTurmas");
         
         Ver_Turmas2 verT2=new Ver_Turmas2();
-        container.add(verT2,"verTurmas2");
+        add(verT2,"verTurmas2");
         
         Ver_Observacoes verO=new Ver_Observacoes();
-        container.add(verO,"verObservacoes");
+        add(verO,"verObservacoes");
         
         Ver_Disciplinas verD=new Ver_Disciplinas();
-        container.add(verD,"verDisciplinas");
+        add(verD,"verDisciplinas");
         
         AdicionarProfessor addP=new AdicionarProfessor();
-        container.add(addP,"adicionarProfessor");
+        add(addP,"adicionarProfessor");
         
         AdicionarAluno addE=new AdicionarAluno();
-        container.add(addE,"addStudent");
+        add(addE,"addStudent");
         
         AdicionarDisciplina addD=new AdicionarDisciplina();
-        container.add(addD,"registSubject");
+        add(addD,"registSubject");
         
         CriarTurma criarT=new CriarTurma();
-        container.add(criarT,"crirTurma");
+        add(criarT,"crirTurma");
         
         CriarHorario criarH=new CriarHorario();
-        container.add(criarH,"crirHorario");
+        add(criarH,"crirHorario");
         
         Inscrever inscricao=new Inscrever();
-        container.add(inscricao,"inscricao");
+        add(inscricao,"inscricao");
         
         RecuperarSenha recupS=new RecuperarSenha();
-        container.add(recupS,"recuperarSenha");
+        add(recupS,"recuperarSenha");
         
         CriarSenha criarS=new CriarSenha();
-        container.add(criarS,"criarSenha");
+        add(criarS,"criarSenha");
         
         CriarCategoria criarC=new CriarCategoria();
-        container.add(criarC,"CriarCat");
+        add(criarC,"CriarCat");
         
         resizing();
     }
@@ -115,10 +115,10 @@ public class Myclasscount extends JFrame {
                         }catch(InterruptedException e){
                             System.out.println("Erro: "+e.getMessage());
                         }
-                        for(Component cmp:container.getComponents()){
-                            cmp.setSize(container.getSize());
+                        for(Component cmp:getComponents()){
+                            cmp.setSize(getSize());
                         }
-                        container.revalidate();
+                        revalidate();
                     }
                 }
             }
@@ -127,12 +127,6 @@ public class Myclasscount extends JFrame {
     
     
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(
-            new Runnable(){
-                public void run(){
-                    new Myclasscount();
-                }
-            }
-        );
+        SwingUtilities.invokeLater(Myclasscount::new);
     }
 }

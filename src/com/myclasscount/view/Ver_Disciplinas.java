@@ -36,7 +36,7 @@ public class Ver_Disciplinas extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome","Carga Horaria","Secçao","-.",".-"};
+        String colunas[]={"Nome","Carga Horaria","Secçao",""," "};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
@@ -51,8 +51,8 @@ public class Ver_Disciplinas extends JPanel {
         }
         
         tabela.setTableData(dados);
-        tabela.setButton("-.","Modificar",Color.green);
-        tabela.setButton(".-","Remover",Color.red);
+        tabela.setButton("","Modificar",Color.green);
+        tabela.setButton(" ","Remover",Color.red);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
         src.getViewport().setBackground(Color.white);

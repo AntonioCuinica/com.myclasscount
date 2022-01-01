@@ -18,84 +18,68 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
-public class MainFramee extends JPanel {
+public final class MainFramee extends JPanel {
     private Color backColor=new Color(33,80,172);
     private Container container;
     
     public MainFramee(){        
-        this.setLayout(null);
+        setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        setBackground(backColor);
+        setBorder(new EmptyBorder(30,30,30,30));
         container=this;
-        container.setBackground(backColor);
-        this.mainBar(); 
-        this.mainPane();
-        this.setVisible(true);
+        mainBar(); 
+        add(Box.createRigidArea(new Dimension(0,30)));
+        mainPane();
+        setVisible(true);
     }
     
     public void mainBar(){
+        
         Panel pane= new Panel(new Color(0,24,242),false);
-        pane.setLayout(null);
+        pane.setLayout(new BoxLayout(pane,BoxLayout.X_AXIS));
+        pane.setPreferredSize(new Dimension(getWidth()-60,100));
+        pane.setBorder(new EmptyBorder(30,30,30,30));
         
         MyLabell logo=new MyLabell("img/logo.png");
-        JTextField search=new JTextField("Buscar estudante");
+        JPanel lg=new JPanel(new GridLayout());
+        lg.setPreferredSize(new Dimension(300,50));
+        lg.setOpaque(false);
+        lg.add(logo);
+        JTextField search=new JTextField();
+        search.setPreferredSize(new Dimension(100,50));
+        search.add(new JLabel());
         MyButtonn btnSearch=new MyButtonn("Buscar",false);
+        btnSearch.setPreferredSize(new Dimension(100,50));
         
         /**Adding components */
-        pane.add(logo);
+        pane.add(lg);
+        pane.add(Box.createRigidArea(new Dimension(100,0)));
         pane.add(search);
+        pane.add(Box.createRigidArea(new Dimension(30,0)));
         pane.add(btnSearch);
+        
         container.add(pane);
   
-        
-        new Thread(
-            new Runnable(){
-                public void run(){
-                    while(true){
-                        try{
-                            Thread.sleep(50);
-                        }catch(InterruptedException e){
-                            System.out.println("Erro: "+e.getMessage());
-                        }
-                        int x=0,y=0;
-                        
-                        /** pane location */
-                        int width=getWidth()-60;
-                        int height=getHeight()/7;
-                        x=30;
-                        pane.setBounds(x,20,width,height); 
-                        
-                        /** logo location*/
-                        logo.setSize(new Dimension(300,50));
-                        x=20;
-                        y=(pane.getHeight()/2)-(logo.getHeight()/2);
-                        logo.setLocation(x,y);
-                        
-                        
-                        /** btnSearch location*/
-                        btnSearch.setSize(new Dimension(85,25));
-                        x=(pane.getWidth()-(btnSearch.getWidth()+25));
-                        y=(pane.getHeight()/2)-(btnSearch.getHeight()/2);
-                        btnSearch.setLocation(x,y);
-                        
-                        /** search location*/
-                        search.setSize(new Dimension(300,40));
-                        x=btnSearch.getX()-(search.getWidth()+30);
-                        y=(pane.getHeight()/2)-(search.getHeight()/2);
-                        search.setLocation(x,y);   
-                    }
-                }
-            }
-        ).start();
     }
+    
     public void mainPane(){
         /**main panel*/
         Panel pane= new Panel(new Color(0,24,242),false);
         pane.setBorderColor(new Color(0,24,242));
-        pane.setLayout(null);
+        pane.setLayout(new BorderLayout());
+        pane.setPreferredSize(new Dimension(getWidth()-60,600));
+      
+        
         /**out(sair) button*/
-        MyButtonn out=new MyButtonn("Sair",false);
+        MyButtonn out=new MyButtonn("Logout",false);
         out.addActionListener(new clique(out,(byte)-1));
         out.setActionCommand("out");
+        JPanel pan3=new JPanel(new FlowLayout(2));
+        pan3.setBorder(new EmptyBorder(0,20,20,20));
+        pan3.setOpaque(false);
+        pan3.add(out);
         
         /**menu buttons names */
         String btnName[]={"Alunos","Professor","Categoria","Observações","Disciplina","Turma","Mensalidade"};
@@ -118,6 +102,8 @@ public class MainFramee extends JPanel {
         Panel pan2=new Panel(Color.lightGray,false);
         pan2.invisible(true,true);
         pan2.setLayout(new GridLayout(1,cards.length-1,18,1));
+        pan2.setBorder(new EmptyBorder(20,20,20,20));
+        
         for(int i=0;i<cards.length;i++){
             cards[i]=new mycard(cardName[i],"img/card"+(i+1)+".png");
             cards[i].addMouseListener(new clique(cards[i]));
@@ -126,84 +112,40 @@ public class MainFramee extends JPanel {
             pan2.add(cards[i]);
         }
                 
-        pane.add(pan);
-        pane.add(pan2);
-        pane.add(out);
+        pane.add(pan,BorderLayout.NORTH);
+        pane.add(pan2,BorderLayout.CENTER);
+        pane.add(pan3,BorderLayout.SOUTH);
         container.add(pane);
         
-        new Thread(
-            new Runnable(){
-                public void run(){
-                    while(true){
-                        try{
-                            Thread.sleep(50);
-                        }catch(InterruptedException e){
-                            System.out.println("Erro: "+e.getMessage());
-                        }
-                        int x=0,y=0;
-                        
-                        /** pane location */
-                        Component cmp=container.getComponent(0);
-                        int width=getWidth()-60;
-                        int height=getHeight()-(cmp.getHeight()+100);
-                        x=30;
-                        y=cmp.getY()+cmp.getHeight()+20;
-                        pane.setBounds(x,y,width,height);  
-                        
-                        /**pan location*/
-                        pan.setBounds(0,0,pane.getWidth(),30);
-                        pan.repaint();
-                        
-                        /**pan2 Location*/
-                        pan2.setSize(850,280);
-                        
-                        //pan2.setSize(pane.getWidth()-(2*x),280);
-                        x=(pane.getWidth()/2)-(pan2.getWidth()/2);
-                        y=(pane.getHeight()/2)-(pan2.getHeight()/2);
-                        pan2.setLocation(x,y);
-                        for(int i=0;i<cards.length;i++){
-                            cards[i].setSize(200,pan2.getHeight());
-                        }
-                        
-                        /**out location*/
-                        out.setSize(65,25);
-                        x=pane.getWidth()-(out.getWidth()+20);
-                        y=pane.getHeight()-(out.getHeight()+20);
-                        out.setLocation(x,y);
- 
-                        repaint();
-                        revalidate();
-                        
-                    }
-                }
-            }
-        ).start();
     }
     
     private class mycard extends JButton{
         String name="New Card";String URL;
         boolean needImage;
         private Color barColor=Color.DARK_GRAY;
+        
         public mycard(String name,String URL){
             this.name=name;
             this.URL=URL;
-            this.needImage=true;
-            this.setOpaque(false);
+            needImage=true;
+            setOpaque(false);
         }
         
         public mycard(String name){
             this.name=name;
-            this.needImage=false;
-            this.setOpaque(false);
+            needImage=false;
+            setOpaque(false);
         }
         
         public void setBarColor(Color color){
-            this.barColor=color;
-            this.repaint();
+            barColor=color;
+            repaint();
         }
+        
         public Color getBarColor(){
             return this.barColor;
         }
+        
         public void paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D gr=(Graphics2D)g;
@@ -224,7 +166,6 @@ public class MainFramee extends JPanel {
             gr.drawString(this.name,x,y+20);
         }
         
-        
     }
     
     private class clique extends MouseAdapter implements ActionListener {
@@ -232,6 +173,7 @@ public class MainFramee extends JPanel {
             private JButton btn2=null;
             private Color color;
             private byte type=0;
+            
             public clique(mycard btn){
                 this.btn=btn;
                 color=btn.getBarColor();
@@ -256,7 +198,7 @@ public class MainFramee extends JPanel {
                 else if(e.getActionCommand().equals("card4")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"crirTurma");
                 }else if(e.getActionCommand().equals("out")){
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja sair ?",true);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
                     if(dialog.getSimTeste())Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                 }
             }

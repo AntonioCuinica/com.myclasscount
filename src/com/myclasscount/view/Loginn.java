@@ -35,6 +35,7 @@ public class Loginn extends JPanel {
     private JLabel labels[];
     private int countFalhas=0;
     private JButton esqueceu;
+    private JButton sair;
     
     public Loginn(){
         setLayout(null);
@@ -52,7 +53,7 @@ public class Loginn extends JPanel {
         container.getComponent(container.getComponentCount()-1).setVisible(false);
         container.getComponent(container.getComponentCount()-2).setVisible(false);
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(7,1));
+        pan1.setLayout(new GridLayout(8,1));
         pan1.invisible(true, true);
         
         txtF=new JTextField();
@@ -72,6 +73,15 @@ public class Loginn extends JPanel {
         esqueceu.setForeground(Color.white);
         esqueceu.addMouseListener(new Clique());
         
+        sair=new JButton();
+        sair.setLayout(new GridLayout());
+        JLabel sairN=new JLabel("Sair",SwingConstants.RIGHT);
+        sairN.setForeground(Color.white);
+        sair.add(sairN);
+        sair.setContentAreaFilled(false);
+        sair.setBorderPainted(false);
+        sair.addMouseListener(new Clique());
+        
         pan1.add(labels[0]); 
         pan1.add(labels[1]);
         pan1.add(txtF);
@@ -79,6 +89,7 @@ public class Loginn extends JPanel {
         pan1.add(pswF);
         pan1.add(esqueceu);
         pan1.add(entrar);
+        pan1.add(sair);
         
         mainPane.add(pan1);
         
@@ -113,6 +124,11 @@ public class Loginn extends JPanel {
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"recuperarSenha");
                 countFalhas=0;
                 esqueceu.setVisible(false);
+            }else if(e.getSource().equals(sair)){
+                MyDialogg sair=new MyDialogg(Myclasscount.getFrame(),2,"Deseja sair ?", true);
+                if(sair.getSimTeste()){
+                    System.exit(0);
+                }
             }
         }
     }

@@ -34,7 +34,7 @@ public class Ver_Categoria extends JPanel {
     private MyDialogg ver_dialog;
     
     public Ver_Categoria(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Categorias",this);
