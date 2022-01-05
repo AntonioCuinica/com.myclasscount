@@ -209,7 +209,15 @@ public class AdicionarAluno extends JPanel {
                         txtF[3].grabFocus();
                     }
                 }else{
+                    
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
+                    
+                    for(JTextField txtF:txtF){  txtF.setText(""); }
+                    
+                    for(JComboBox combbx:combbx){ combbx.setSelectedIndex(0); }
+                    
+                    andress.setText("");
+                    
                     Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
                     v.updateComponents();
                 }

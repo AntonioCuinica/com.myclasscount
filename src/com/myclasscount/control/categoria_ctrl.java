@@ -40,6 +40,10 @@ public class categoria_ctrl {
         return Categoriaa_dao.getCategoria(nome);
     }
     
+    public static Categoria getCategoria(int idt){
+        return Categoriaa_dao.getCategoria(idt);
+    }
+    
     public static ArrayList<Categoria> getCategorias(){
         return Categoriaa_dao.getCategorias();
     }

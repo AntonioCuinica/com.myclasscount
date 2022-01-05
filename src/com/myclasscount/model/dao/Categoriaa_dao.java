@@ -43,6 +43,31 @@ public class Categoriaa_dao {
         return categoria;
     }
     
+    public static Categoria getCategoria(int id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM myclasscount.categoria_aluno WHERE id=?";
+        Categoria categoria=null;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(id));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                categoria=new Categoria();
+                categoria.setId(Integer.parseInt(rs.getString("id")));
+                categoria.setNome(rs.getString("nome"));
+                categoria.setTipoEnsino(rs.getString("tipo_ensino"));
+                categoria.setClasse(rs.getString("class"));
+                categoria.setPreco(Double.parseDouble(rs.getString("preco")));
+                categoria.setDescricao(rs.getString("descricao"));
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return categoria;
+    }
+    
     public static ArrayList<Categoria> getCategorias(){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.categoria_aluno";

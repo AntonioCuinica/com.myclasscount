@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *
@@ -143,5 +144,51 @@ public class Aluno_dao {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+    
+    public static String[] pagamento(int aluno_id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM pagamento WHERE id=?;";
+        String pag[]=new String[3];
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1, String.valueOf(aluno_id));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                pag[0]=rs.getString("id");
+                pag[1]=rs.getString("aluno");
+                pag[2]=rs.getString("pagamento");
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return pag;
+    }
+    
+    public static Vector<String[]> inscricao(int aluno_id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM myclasscount.inscricoes WHERE id=?;";
+        Vector inscricoes=new Vector();
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1, String.valueOf(aluno_id));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                String pag[]=new String[5];
+                pag[0]=rs.getString("id");
+                pag[1]=rs.getString("aluno");
+                pag[2]=rs.getString("categoria");
+                pag[3]=rs.getString("disciplina");
+                pag[4]=rs.getString("preco");
+                inscricoes.add(pag);
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return inscricoes;
     }
 }
