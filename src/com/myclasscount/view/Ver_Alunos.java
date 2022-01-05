@@ -5,10 +5,14 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.model.Aluno;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -21,6 +25,7 @@ public class Ver_Alunos extends JPanel {
     private MyButtonn btns[];
     private Panel title;
     private Table tabela;
+    private ArrayList<Aluno> alunos;
     
     public Ver_Alunos(){
         this.setLayout(null);
@@ -38,11 +43,20 @@ public class Ver_Alunos extends JPanel {
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
-        String dados[][]=new String[30][colunas.length];
-         for(int i=0;i<dados.length;i++){
-            for(int j=0;j<dados[0].length;j++){
-                dados[i][j]=""+i*j;
-            }
+        alunos=Aluno_ctrl.getAlunos();
+        
+        String dados[][]=new String[alunos.size()][colunas.length];
+        for(int i=0;i<dados.length;i++){
+            dados[i][0]=alunos.get(i).getNome();
+            dados[i][1]=alunos.get(i).getApelido();
+            dados[i][2]=alunos.get(i).getBI();
+            //DateFormat datF=DateFormat.getDateInstance();
+            //int idade=(datF.getCalendar()-alunos.get(i).getNascimento());
+            dados[i][3]="";
+            dados[i][4]="";
+            dados[i][5]=alunos.get(i).getSexo();
+            dados[i][6]=alunos.get(i).getNivel();
+            dados[i][7]="";
         }
         tabela.setTableData(dados);
         JScrollPane src=new JScrollPane(tabela);
@@ -73,6 +87,7 @@ public class Ver_Alunos extends JPanel {
             }
         ).start();
     }
+    
     public void verAlunos(JFrame frame){
         tabela.addMouseListener(
             new MouseAdapter(){
@@ -87,6 +102,13 @@ public class Ver_Alunos extends JPanel {
             }
         );
     }
+    
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addTable();
+    }
+    
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
