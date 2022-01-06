@@ -8,6 +8,7 @@ package com.myclasscount.control;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.dao.Aluno_dao;
 import com.myclasscount.model.validar.ValidarAluno;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -30,13 +31,22 @@ public class Aluno_ctrl {
         return Aluno_dao.getAlunos();
     }
     
+    public static Aluno getAluno(String BI){
+        return Aluno_dao.getAluno(BI);
+    }
+    
+    public static boolean delAluno(int aluno_id){
+        return Aluno_dao.delAluno(aluno_id);
+    }
+    
     public static String[] pagamento(int aluno_id){
         return Aluno_dao.pagamento(aluno_id);
     }
     
-    public static Vector inscricao(int aluno_id){
+    public static ArrayList inscricao(int aluno_id){
         return Aluno_dao.inscricao(aluno_id);
     }
+    
     
     public static String getErro(){
         return ValidarAluno.getErro();

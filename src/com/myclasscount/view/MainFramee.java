@@ -208,6 +208,7 @@ public final class MainFramee extends JPanel {
                     btn.setBarColor(color.brighter());
                 }
             }
+            
             public void mouseExited(MouseEvent e){
                 if(type==0){
                     btn.setBarColor(color.darker());

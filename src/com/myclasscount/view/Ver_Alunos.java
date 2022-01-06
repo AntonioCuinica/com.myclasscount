@@ -19,7 +19,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -34,6 +33,8 @@ public class Ver_Alunos extends JPanel {
     private Panel title;
     private Table tabela;
     private ArrayList<Aluno> alunos;
+    private Aluno aluno=null;
+    private MyDialogg ver_dialog;
     
     public Ver_Alunos(){
         this.setLayout(null);
@@ -119,14 +120,13 @@ public class Ver_Alunos extends JPanel {
                 public void mouseClicked(MouseEvent evento){
                     if(evento.getClickCount()==2){
                         int linha=tabela.getSelectedRow();
-                        Aluno aluno=null;
                         for(Aluno a:alunos){
                             if(a.getBI().equals(tabela.getValueAt(linha,2).toString())){
                                 aluno=a;
                             }
                         }
                         
-                        MyDialogg ver_dialog=new MyDialogg(frame,true);
+                        ver_dialog=new MyDialogg(frame,true);
                         ver_dialog.setLayout(new GridLayout(1,2));
                         ver_dialog.setSize(750,600);
                         ver_dialog.setLocationRelativeTo(frame);
@@ -154,7 +154,7 @@ public class Ver_Alunos extends JPanel {
                         MyButtonn modificar=new MyButtonn("Modificar",false);
                         //modificar.addMouseListener(new Ver_Categoria.Clique(modificar));
                         MyButtonn remover=new MyButtonn("Remover",false);
-                        //remover.addMouseListener(new Ver_Categoria.Clique(remover));
+                        remover.addMouseListener(new Clique());
                         pan2.add(modificar);
                         pan2.add(remover);
                         
@@ -163,7 +163,7 @@ public class Ver_Alunos extends JPanel {
                         lado2.setOpaque(false);
                         
                         Table tabela=new Table(new String[]{"Categoria","Disciplina","Preco"});
-                        Vector<String[]> inscricao=Aluno_ctrl.inscricao(aluno.getId());
+                        ArrayList<String[]> inscricao=Aluno_ctrl.inscricao(aluno.getId());
                         String dados[][]=new String[inscricao.size()][3];
                         for(int i=0;i<dados.length;i++){
                             dados[i][0]=inscricao.get(i)[2];
@@ -173,12 +173,13 @@ public class Ver_Alunos extends JPanel {
                         
                         tabela.setTableData(dados);
                         JScrollPane src=new JScrollPane(tabela);
-                        
+                        src.getViewport().setBackground(new Color(82,79,250).darker().darker());
+                       
                         JPanel panBtn=new JPanel(new FlowLayout());
                         panBtn.setOpaque(false);
                         MyButtonn inscrever=new MyButtonn("Inscrever",false);
                         //modificar.addMouseListener(new Ver_Categoria.Clique(modificar));
-                        MyButtonn removerI=new MyButtonn("Remover",false);
+                        MyButtonn removerI=new MyButtonn("Eliminar",false);
                         //remover.addMouseListener(new Ver_Categoria.Clique(remover));
                         panBtn.add(inscrever);
                         panBtn.add(removerI);
@@ -214,7 +215,31 @@ public class Ver_Alunos extends JPanel {
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            if(e.getComponent().toString().contains("Voltar")){
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            }
+            else if(e.getComponent().toString().contains("Modificar")){
+            
+            }else if(e.getComponent().toString().contains("Remover")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover estudante?",true);
+                if(dialog.getSimTeste()){
+                    if(Aluno_ctrl.delAluno(aluno.getId())){
+                        updateComponents();
+                        MyDialogg resp=new MyDialogg(Myclasscount.getFrame(),1,"Removido com sucesso",true);
+                        ver_dialog.dispose();
+                    }else{
+                        MyDialogg resp=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
+                    }
+                }
+                
+            }else if(e.getComponent().toString().contains("Inscrever")){
+            
+            }else if(e.getComponent().toString().contains("Eliminar")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscriçao",true);
+                if(dialog.getSimTeste()){
+                
+                }
+            }
         }
     }
     

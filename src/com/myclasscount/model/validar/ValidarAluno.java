@@ -5,6 +5,7 @@
  */
 package com.myclasscount.model.validar;
 
+import com.myclasscount.control.Aluno_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.view.MyDialogg;
 import com.myclasscount.view.Myclasscount;
@@ -42,7 +43,6 @@ public class ValidarAluno {
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1, resultado, true);
             return false;
         }
-        
         return true;
     }
     
@@ -76,8 +76,12 @@ public class ValidarAluno {
                 int numero=Integer.parseInt(BI.substring(12,13));
                 System.out.println("13 invalido: "+numero);
                 return "Erro, BI invalido";
-            }catch(NumberFormatException n){
+            }catch(RuntimeException n){
                 if(!valido)return "Erro, BI invalido";
+                Aluno a = Aluno_ctrl.getAluno(BI);
+                if(a!=null){
+                    return "Erro, BI existente";
+                }
             }
         }
         return "valido";

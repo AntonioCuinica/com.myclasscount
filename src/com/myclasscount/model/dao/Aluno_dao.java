@@ -10,9 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *
@@ -21,7 +19,7 @@ import java.util.Vector;
 
 public class Aluno_dao {
     
-    public static Aluno getAluno(final String BI) throws ParseException{
+    public static Aluno getAluno(final String BI){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.aluno WHERE BI=?";
         Aluno aluno=null;
@@ -128,12 +126,12 @@ public class Aluno_dao {
         }
     }
     
-    public static boolean delCategoria(Aluno aluno){
+    public static boolean delAluno(int aluno_id){
         Connection con=Conexaoo.getConnection();
         String select="DELETE FROM `myclasscount`.`aluno` WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(aluno.getId()));
+            stmt.setString(1,String.valueOf(aluno_id));
             stmt.execute(); 
             
             stmt.close();
@@ -167,10 +165,10 @@ public class Aluno_dao {
         return pag;
     }
     
-    public static Vector<String[]> inscricao(int aluno_id){
+    public static ArrayList<String[]> inscricao(int aluno_id){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.inscricoes WHERE id=?;";
-        Vector inscricoes=new Vector();
+        ArrayList inscricoes=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1, String.valueOf(aluno_id));
@@ -191,4 +189,24 @@ public class Aluno_dao {
         }
         return inscricoes;
     }
+    
+    public static boolean delAlunoInscricao(int aluno_id, int disc_id){
+        Connection con=Conexaoo.getConnection();
+        String select="DELETE FROM myclasscount.inscricao WHERE aluno_id=? and disciplina_id=?;";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(aluno_id));
+            stmt.setString(2,String.valueOf(disc_id));
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+            
+            return true;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+   
 }
