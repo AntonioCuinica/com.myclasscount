@@ -6,7 +6,9 @@
 package com.myclasscount.control;
 
 import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.dao.Aluno_dao;
+import com.myclasscount.model.dao.Disciplina_dao;
 import com.myclasscount.model.validar.ValidarAluno;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -44,9 +46,19 @@ public class Aluno_ctrl {
     }
     
     public static ArrayList inscricao(int aluno_id){
-        return Aluno_dao.inscricao(aluno_id);
+        return Aluno_dao.inscricoes(aluno_id);
     }
     
+    public static void setInscricao(int aluno_id, String disc){
+        Disciplina disciplina=Disciplina_dao.getDisciplina(disc);
+        Aluno_dao.setInscricao(aluno_id,disciplina.getId());
+    }
+    
+    public static boolean delAlunoInscricao(int aluno_id,String disc){
+        int disc_id=0;
+        Disciplina disciplina=Disciplina_dao.getDisciplina(disc);
+        return Aluno_dao.delAlunoInscricao(aluno_id,disciplina.getId());
+    }
     
     public static String getErro(){
         return ValidarAluno.getErro();

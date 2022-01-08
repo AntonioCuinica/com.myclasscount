@@ -35,7 +35,11 @@ public class Ver_Alunos extends JPanel {
     private ArrayList<Aluno> alunos;
     private Aluno aluno=null;
     private MyDialogg ver_dialog;
+    private Table tabInscricao;
     
+    public JDialog getVer_dialog(){
+        return ver_dialog;
+    }
     public Ver_Alunos(){
         this.setLayout(null);
         container=this;
@@ -162,7 +166,7 @@ public class Ver_Alunos extends JPanel {
                         lado2.setBorder(new EmptyBorder(15,15,15,15));
                         lado2.setOpaque(false);
                         
-                        Table tabela=new Table(new String[]{"Categoria","Disciplina","Preco"});
+                        tabInscricao=new Table(new String[]{"Categoria","Disciplina","Preco"});
                         ArrayList<String[]> inscricao=Aluno_ctrl.inscricao(aluno.getId());
                         String dados[][]=new String[inscricao.size()][3];
                         for(int i=0;i<dados.length;i++){
@@ -171,16 +175,16 @@ public class Ver_Alunos extends JPanel {
                             dados[i][2]=inscricao.get(i)[4];
                         }
                         
-                        tabela.setTableData(dados);
-                        JScrollPane src=new JScrollPane(tabela);
+                        tabInscricao.setTableData(dados);
+                        JScrollPane src=new JScrollPane(tabInscricao);
                         src.getViewport().setBackground(new Color(82,79,250).darker().darker());
                        
                         JPanel panBtn=new JPanel(new FlowLayout());
                         panBtn.setOpaque(false);
                         MyButtonn inscrever=new MyButtonn("Inscrever",false);
-                        //modificar.addMouseListener(new Ver_Categoria.Clique(modificar));
+                        inscrever.addMouseListener(new Clique());
                         MyButtonn removerI=new MyButtonn("Eliminar",false);
-                        //remover.addMouseListener(new Ver_Categoria.Clique(remover));
+                        removerI.addMouseListener(new Clique());
                         panBtn.add(inscrever);
                         panBtn.add(removerI);
                         
@@ -207,7 +211,7 @@ public class Ver_Alunos extends JPanel {
         );
     }
     
-    public void updateComponents(){
+    public  void updateComponents(){
         removeAll();
         container.add(title);
         addTable();
@@ -225,19 +229,31 @@ public class Ver_Alunos extends JPanel {
                 if(dialog.getSimTeste()){
                     if(Aluno_ctrl.delAluno(aluno.getId())){
                         updateComponents();
-                        MyDialogg resp=new MyDialogg(Myclasscount.getFrame(),1,"Removido com sucesso",true);
+                        MyDialogg resp1=new MyDialogg(Myclasscount.getFrame(),1,"Removido com sucesso",true);
                         ver_dialog.dispose();
                     }else{
-                        MyDialogg resp=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
+                        MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
                     }
                 }
-                
             }else if(e.getComponent().toString().contains("Inscrever")){
-            
+                Inscrever inscrever=new Inscrever(Myclasscount.getFrame(),Ver_Alunos.this,aluno,true);
+                inscrever.setVisible(true);
             }else if(e.getComponent().toString().contains("Eliminar")){
                 MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscriçao",true);
                 if(dialog.getSimTeste()){
-                
+                    int linha=tabInscricao.getSelectedRow();
+                    if(linha>-1){
+                        String nome=tabInscricao.getValueAt(linha,1).toString();
+                        if(Aluno_ctrl.delAlunoInscricao(aluno.getId(), nome)){
+                            MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Eliminada com sucesso",true);
+                            updateComponents();
+                            ver_dialog.dispose();
+                        }else {
+                            MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
+                        }
+                    }else {
+                        MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Escolha uma disciplina",true);
+                    }
                 }
             }
         }

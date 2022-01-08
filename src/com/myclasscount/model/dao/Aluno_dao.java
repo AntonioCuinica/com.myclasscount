@@ -165,7 +165,7 @@ public class Aluno_dao {
         return pag;
     }
     
-    public static ArrayList<String[]> inscricao(int aluno_id){
+    public static ArrayList<String[]> inscricoes(int aluno_id){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.inscricoes WHERE id=?;";
         ArrayList inscricoes=new ArrayList();
@@ -188,6 +188,23 @@ public class Aluno_dao {
             System.out.println(e.getMessage());
         }
         return inscricoes;
+    }
+    
+    public static void setInscricao(int aluno_id,int disc_id){
+        Connection con=Conexaoo.getConnection();
+        String select="call myclasscount.inscrever_aluno_disciplina(?, ?, ?);";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(aluno_id));
+            stmt.setString(2,String.valueOf(disc_id));
+            stmt.setString(3,String.valueOf(0.0));
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
     
     public static boolean delAlunoInscricao(int aluno_id, int disc_id){

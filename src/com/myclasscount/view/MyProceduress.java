@@ -86,6 +86,7 @@ public class MyProceduress {
         btns[0].setActionCommand("Voltar");
         btns[1].addActionListener(new Clique(depois));
         btns[1].setActionCommand("Proximo");
+        
         container.add(pane);
         container.add(btns[0]);
         container.add(btns[1]);
@@ -122,6 +123,7 @@ public class MyProceduress {
                 }
             }
         ).start();
+        
         return pane;
     }
 

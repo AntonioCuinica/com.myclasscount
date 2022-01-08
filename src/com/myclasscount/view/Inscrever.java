@@ -5,88 +5,92 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Disciplina;
+import com.myclasscount.model.dao.Disciplina_dao;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 /**
  *
  * @author CUINIC4
  */
 
-public class Inscrever extends JPanel {
+public class Inscrever extends JDialog {
+    
     private Color backColor=new Color(0,24,242);
-    private Container container;
     private MyButtonn btns[];
     private Panel title;
-    public Inscrever(){
-        this.setLayout(null);
-        container=this;
-        container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Inscriçao",this);
-        container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","verAlunos",container));
-        this.setVisible(true);
+    private MyProceduress myProc;
+    private Panel back;
+    private Aluno aluno;
+    private  JComboBox disciplina;
+    private Ver_Alunos verAlunos;
+    
+    public Inscrever(JFrame frame,Ver_Alunos verAlunos,Aluno aluno, boolean modal){
+        super(frame,modal);
+        setSize(400,350);
+        setUndecorated(true);
+        setOpacity(0.92f);
+        setMinimumSize(new Dimension(400,350));
+        setLocationRelativeTo(frame);
+        this.verAlunos=verAlunos;
+        this.aluno=aluno;
+        back=new Panel(backColor.darker(),true,true);
+        back.setLayout(null);
+        back.setBorderColor(Color.WHITE);
+        title=MyProceduress.barName("Inscricao",back);
+        back.add(title);
+        title.setVisible(false);
+        myProc=new MyProceduress();
+        addComponentToMainPane(myProc.mainPane("verAlunos","verAlunos",back));
+        setContentPane(back);
     }
     
    
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(11,1));
+        pan1.setLayout(new FlowLayout());
         pan1.invisible(true, true);
-     
-        String nome[]={"António","Jessica","Eduardo","Daniel"};
-        String  Disciplina[]={"Matemática","Física","Quimica","Inglês"};
-        String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe",
-                         "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
-        JComboBox combbx[]={new JComboBox(nome),new JComboBox(Disciplina),new JComboBox(classe)};
-        JRadioButton yes=new JRadioButton("Sim");
-        yes.setOpaque(false);
-        yes.setForeground(Color.white);
-        JRadioButton no=new JRadioButton("Nao");
-        no.setOpaque(false);
-        no.setForeground(Color.white);
-        ButtonGroup btnG=new ButtonGroup();
-        btnG.add(yes);btnG.add(no);
-        Panel tax=new Panel(Color.black,false);
-        tax.setLayout(new GridLayout(1,2));
-        tax.invisible(true,true);
-        tax.add(yes);tax.add(no);
-        JLabel labels[]={new JLabel("Nome"),new JLabel("Disciplina"),new JLabel("Classe"),new JLabel("Data"),
-                  new JLabel("Taxa"),new JLabel("Mês"),new JLabel("Dia"),new JLabel("Ano")};
-        for(int i=0;i<labels.length;i++){labels[i].setForeground(Color.white);}
-        String day[]={"Janeiro", "Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
-        String month[]=new String[31];
-        for(int i=0;i<month.length;i++){
-            month[i]=""+(i+1);
+        
+        myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[1].addMouseListener(new Clique());
+        myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[0].addMouseListener(new Clique());
+        
+        ArrayList<Disciplina> disc=Disciplina_dao.getDisciplinas();
+        String  disciplinas[]=new String[disc.size()];
+        for(int i=0;i<disc.size();i++){
+            disciplinas[i]=disc.get(i).getNome();
         }
-        String year[]=new String[30];
-        for(int i=0;i<year.length;i++){
-            year[i]=""+(i+1990);
-        }
-        JComboBox data[]={new JComboBox(day),new JComboBox(month),new JComboBox(year)};
-        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
-        dataN.setOpaque(false);
-        dataN.add(labels[5]);
-        dataN.add(labels[6]);
-        dataN.add(labels[7]);
-        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
-        dataN1.setOpaque(false);
-        dataN1.add(data[0]);
-        dataN1.add(data[1]);
-        dataN1.add(data[2]);
+        
+        
+        disciplina=new JComboBox(disciplinas);
+        JLabel discText=new JLabel("Disciplina",SwingConstants.CENTER);
+        discText.setForeground(Color.white);
+        
+        JPanel pan=new JPanel(new GridLayout(2,1,30,10));
+        pan.setOpaque(false);
+        pan.add(discText);
+        pan.add(disciplina);
        
-        pan1.add(labels[0]); pan1.add(combbx[0]);
-        pan1.add(labels[1]); pan1.add(combbx[1]);
-        pan1.add(labels[2]); pan1.add(combbx[2]);
+        pan1.add(pan);
 
-        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
-        pan1.add(labels[4]);pan1.add(tax);
         
         mainPane.add(pan1);
         
@@ -100,18 +104,33 @@ public class Inscrever extends JPanel {
                             System.out.println("Erro: "+e.getMessage());
                         }
                         int x=50,y=50;
-                        x=container.getWidth()/2-title.getWidth()/2;
+                        x=getWidth()/2-title.getWidth()/2;
                         title.setLocation(x,y);
                         pan1.setSize((int)(mainPane.getWidth()*0.60),(int)(mainPane.getHeight()*0.75));
                         x=mainPane.getWidth()/2-pan1.getWidth()/2;
                         y=mainPane.getHeight()/2-pan1.getHeight()/2;
                         pan1.setLocation(x,y);
                         mainPane.revalidate();
-                        
                     }
                 }
             }
         ).start();
+    }
+    
+    private  class Clique extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getComponent().toString().contains("Proximo")){
+                Aluno_ctrl.setInscricao(aluno.getId(),String.valueOf(disciplina.getSelectedItem()));
+                verAlunos.updateComponents();
+                verAlunos.getVer_dialog().dispose();
+                MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Inscrito com sucesso",true);
+                disciplina.setSelectedIndex(0);
+            }else if(e.getComponent().toString().contains("Voltar")){
+                dispose();
+            }
+        }
     }
 }
 
