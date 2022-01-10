@@ -28,7 +28,7 @@ public class ValidarAluno {
         
         if(!erro(validarTexto(aluno.getApelido(),"apelido")))return false;
         
-        if(!erro(validarBI(aluno.getBI())))return false;
+        if(!erro(validarBI(aluno.getBI(),aluno.getId())))return false;
         
         if(!erro(validarTelefone(aluno.getTelefone())))return false;
         
@@ -60,12 +60,10 @@ public class ValidarAluno {
         return "valido";
     }
     
-    public static String validarBI(String BI){
+    public static String validarBI(String BI, int aluno_id){
         if(BI.isBlank()){
             return "Erro, BI vazio";
         }else if(BI.length()!=13){
-            System.out.println(BI.length());
-            System.out.println("Falhe aquiiiiiii");
             return "Erro, BI invalido";
         }else{
             boolean valido=false;
@@ -79,7 +77,9 @@ public class ValidarAluno {
             }catch(RuntimeException n){
                 if(!valido)return "Erro, BI invalido";
                 Aluno a = Aluno_ctrl.getAluno(BI);
-                if(a!=null){
+                System.out.println("a: "+a.getId());
+                System.out.println("aluno:"+aluno_id);
+                if(a!=null && a.getId()!=aluno_id){
                     return "Erro, BI existente";
                 }
             }

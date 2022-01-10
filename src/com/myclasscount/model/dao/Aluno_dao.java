@@ -93,6 +93,7 @@ public class Aluno_dao {
             stmt.setString(7,aluno.getMorada());
             stmt.setString(8,aluno.getTelefone());
             stmt.setString(9,aluno.getEmail());
+            stmt.setString(10,String.valueOf(aluno.getId()));
             stmt.execute();
             
             stmt.close();

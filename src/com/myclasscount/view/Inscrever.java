@@ -40,16 +40,14 @@ public class Inscrever extends JDialog {
     private Panel back;
     private Aluno aluno;
     private  JComboBox disciplina;
-    private Ver_Alunos verAlunos;
     
-    public Inscrever(JFrame frame,Ver_Alunos verAlunos,Aluno aluno, boolean modal){
+    public Inscrever(JFrame frame,Aluno aluno, boolean modal){
         super(frame,modal);
         setSize(400,350);
         setUndecorated(true);
         setOpacity(0.92f);
         setMinimumSize(new Dimension(400,350));
         setLocationRelativeTo(frame);
-        this.verAlunos=verAlunos;
         this.aluno=aluno;
         back=new Panel(backColor.darker(),true,true);
         back.setLayout(null);
@@ -123,10 +121,14 @@ public class Inscrever extends JDialog {
         public void mouseClicked(MouseEvent e) {
             if(e.getComponent().toString().contains("Proximo")){
                 Aluno_ctrl.setInscricao(aluno.getId(),String.valueOf(disciplina.getSelectedItem()));
-                verAlunos.updateComponents();
-                verAlunos.getVer_dialog().dispose();
                 MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Inscrito com sucesso",true);
                 disciplina.setSelectedIndex(0);
+                
+                Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+                v.updateComponents();
+                v.updateVer_dialog(Myclasscount.getFrame());
+                
+                dispose();
             }else if(e.getComponent().toString().contains("Voltar")){
                 dispose();
             }

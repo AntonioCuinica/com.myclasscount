@@ -29,6 +29,14 @@ public class Aluno_ctrl {
         return false;
     }
     
+    public static boolean updateAluno(Aluno aluno){
+        if(ValidarAluno.validarAluno(aluno)){
+            Aluno_dao.updateAluno(aluno);
+            return true;
+        }
+        return false;
+    }
+    
     public static ArrayList<Aluno> getAlunos(){
         return Aluno_dao.getAlunos();
     }
