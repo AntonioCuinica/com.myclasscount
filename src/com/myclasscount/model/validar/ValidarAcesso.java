@@ -16,6 +16,6 @@ public class ValidarAcesso {
     
     public static boolean temAcesso(String user, String psw){
         Acesso acesso=Acesso_dao.getAcesso(user,psw);
-        return !(acesso==null);
+        return acesso!=null;
     }
 }

@@ -10,6 +10,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -33,69 +34,69 @@ public class Myclasscount extends JFrame {
     }
     
     public Myclasscount(){
-        this.setSize(940,650);
-        this.setMinimumSize(new Dimension(860,600));
+        setSize(940,650);
+        setMinimumSize(new Dimension(940,650));
         layout=new CardLayout();
-        this.setLayout(layout);
-        this.setLocationRelativeTo(null);
-        container=this.getContentPane();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(layout);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addViews();
+        container=getContentPane();
         frame=this;
-        this.setVisible(true);
+        setVisible(true);
     }
     
     public void addViews(){
-        login login=new login();
-        container.add(login,"login");
+        Loginn login=new Loginn();
+        add(login,"login");
         
-        mainFrame mainF=new mainFrame();
-        container.add(mainF,"mainFrame");
+        MainFramee mainF=new MainFramee();
+        add(mainF,"mainFrame");
         
-        verAlunos verA=new verAlunos();
-        container.add(verA,"verAlunos");
+        Ver_Alunos verA=new Ver_Alunos();
+        add(verA,"verAlunos");
         
-        verProfessores verP=new verProfessores();
-        container.add(verP,"verProfessores");
+        Ver_Professores verP=new Ver_Professores();
+        add(verP,"verProfessores");
         
-        Categoria cat=new Categoria();
-        container.add(cat,"categoria");
+        Ver_Categoria cat=new Ver_Categoria();
+        add(cat,"categoria");
         
-        VerTurmas verT=new VerTurmas();
-        container.add(verT,"verTurmas");
+        Ver_Turmas verT=new Ver_Turmas();
+        add(verT,"verTurmas");
         
-        VerTurmas2 verT2=new VerTurmas2();
-        container.add(verT2,"verTurmas2");
+        Ver_Turmas2 verT2=new Ver_Turmas2();
+        add(verT2,"verTurmas2");
         
-        verObservacoes verO=new verObservacoes();
-        container.add(verO,"verObservacoes");
+        Ver_Observacoes verO=new Ver_Observacoes();
+        add(verO,"verObservacoes");
         
-        verDisciplinas verD=new verDisciplinas();
-        container.add(verD,"verDisciplinas");
+        Ver_Disciplinas verD=new Ver_Disciplinas();
+        add(verD,"verDisciplinas");
         
         AdicionarProfessor addP=new AdicionarProfessor();
-        container.add(addP,"adicionarProfessor");
+        add(addP,"adicionarProfessor");
         
         AdicionarAluno addE=new AdicionarAluno();
-        container.add(addE,"addStudent");
+        add(addE,"addStudent");
         
         AdicionarDisciplina addD=new AdicionarDisciplina();
-        container.add(addD,"registSubject");
+        add(addD,"registSubject");
         
         CriarTurma criarT=new CriarTurma();
-        container.add(criarT,"crirTurma");
+        add(criarT,"crirTurma");
         
         CriarHorario criarH=new CriarHorario();
-        container.add(criarH,"crirHorario");
-        
-        Inscricao inscricao=new Inscricao();
-        container.add(inscricao,"inscricao");
+        add(criarH,"crirHorario");
         
         RecuperarSenha recupS=new RecuperarSenha();
-        container.add(recupS,"recuperarSenha");
+        add(recupS,"recuperarSenha");
         
         CriarSenha criarS=new CriarSenha();
-        container.add(criarS,"criarSenha");
+        add(criarS,"criarSenha");
+        
+        CriarCategoria criarC=new CriarCategoria();
+        add(criarC,"CriarCat");
         
         resizing();
     }
@@ -111,10 +112,10 @@ public class Myclasscount extends JFrame {
                         }catch(InterruptedException e){
                             System.out.println("Erro: "+e.getMessage());
                         }
-                        for(Component cmp:container.getComponents()){
-                            cmp.setSize(container.getSize());
+                        for(Component cmp:getComponents()){
+                            cmp.setSize(getSize());
                         }
-                        container.revalidate();
+                        revalidate();
                     }
                 }
             }
@@ -123,6 +124,6 @@ public class Myclasscount extends JFrame {
     
     
     public static void main(String[] args) {
-        new Myclasscount();
+        SwingUtilities.invokeLater(Myclasscount::new);
     }
 }

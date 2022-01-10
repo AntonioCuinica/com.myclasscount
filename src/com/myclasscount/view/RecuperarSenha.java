@@ -1,15 +1,23 @@
+
 /*
  * To change this license header, choose License Headers in Project Propertie
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.view;
 
+import com.myclasscount.model.Acesso;
+import com.myclasscount.model.dao.Acesso_dao;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JFrame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -19,31 +27,48 @@ import javax.swing.JTextField;
  *
  * @author CUINIC4
  */
+
 public class RecuperarSenha extends JPanel {
+    
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButtonn btns[];
     private Panel title;
+    private MyProceduress myProc;
+    private JTextField txtF[];
+    private JPasswordField pswF[];
+    private JLabel labels[];
+    private Acesso acesso=null;
+    
     public RecuperarSenha(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Recuperar Senha",this);
+        title=MyProceduress.barName("Recuperar Senha",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("login","login",container));
+        myProc=new MyProceduress();
+        this.addComponentToMainPane(myProc.mainPane("login","login", container));
         this.setVisible(true);
     }
     
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(10,1));
-        pan1.invisible(true, true);
+        pan1.invisible(true,true);
        
-        JTextField txtF[]={new JTextField(),new JTextField(),new JTextField()};
-        JPasswordField pswF[]={new JPasswordField(),new JPasswordField()};
-        JLabel labels[]={new JLabel("Username"),new JLabel("Nova Senha"),new JLabel("Confirmar Senha"),
+        //System.out.println("Size: "+myProc.getBtns()[1].getMouseListeners()[1]);
+        myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[1].addMouseListener(new Clique());
+        
+        txtF=new JTextField[]{new JTextField(),new JTextField()};
+        txtF[0].addKeyListener(new Clique());
+        pswF=new JPasswordField[]{new JPasswordField(),new JPasswordField()};
+        
+        labels=new JLabel[]{new JLabel("Usuario"),new JLabel("Nova Senha"),new JLabel("Confirmar Senha"),
                          new JLabel("Qual é o seu nome")};
+        
         for(JLabel lb:labels)lb.setForeground(Color.white);
+        
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(pswF[0]);
         pan1.add(labels[2]); pan1.add(pswF[1]);
@@ -73,5 +98,48 @@ public class RecuperarSenha extends JPanel {
             }
         ).start();
     }
-            
+    
+    private class Clique extends MouseAdapter implements KeyListener{
+        public void mouseClicked(MouseEvent e){
+            String nPsw=new String(pswF[0].getPassword());
+            String cPsw=new String(pswF[1].getPassword());
+            if(!(acesso==null)){
+                if(nPsw.equals(cPsw) && !nPsw.isBlank()){
+                    if(acesso.getResposta().equals(txtF[1].getText())){
+                        Acesso_dao.mudarSenha(nPsw,acesso.getId());
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
+                    }else{
+                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Resposta errada !!",true);
+                        txtF[1].setText("");
+                        txtF[1].grabFocus();
+                    }
+                }else if(nPsw.isBlank()){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, senha vazia",true);
+                    pswF[0].grabFocus();
+                }else{
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
+                    pswF[1].setText("");
+                    pswF[1].grabFocus();
+                }
+            }else{
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
+                txtF[0].setText("");
+                txtF[0].grabFocus();
+            }
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e){}
+
+        @Override
+        public void keyPressed(KeyEvent e) {}
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            acesso=Acesso_dao.getAcesso(txtF[0].getText());
+            if(!(acesso==null)){
+                labels[3].setText(acesso.getPergunta());
+            }
+        }
+    }
 }

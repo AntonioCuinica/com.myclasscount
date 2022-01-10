@@ -5,10 +5,20 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.categoria_ctrl;
+import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Categoria;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -18,44 +28,60 @@ import javax.swing.*;
 public class AdicionarAluno extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButtonn btns[];
     private Panel title;
+    private MyProceduress myProc;
+    private JTextField txtF[];
+    private JTextArea andress;
+    private JComboBox combbx[];
+    private JRadioButton male,female;
+    private JComboBox data[];
     
     public AdicionarAluno(){
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        this.title=myProcedures.barName("Cadastrar Alunos",this);
+        this.title=MyProceduress.barName("Cadastrar Alunos",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","inscricao",container));
+        myProc=new MyProceduress();
+        this.addComponentToMainPane(myProc.mainPane("mainFrame","verAlunos",container));
         this.setVisible(true);
     }
     
    
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(12,1));
+        pan1.setLayout(new GridLayout(13,1));
         pan1.invisible(true, true);
         Panel pan2=new Panel(Color.black,false);
         pan2.setLayout(null);
         pan2.invisible(true, true);
         
-        JTextField txtF[]={new JTextField(),new JTextField(),new JTextField(),
+         
+        myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[1].addMouseListener(new Clique());
+        myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[0].addMouseListener(new Clique());
+     
+        txtF=new JTextField[]{new JTextField(),new JTextField(),new JTextField(),
                            new JTextField(),new JTextField(),new JTextField()};
         
-        JTextArea andress=new JTextArea();
+        andress=new JTextArea();
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
-        String  categoria[]={"Normal","Domiciliar","Misto"};
-        String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe",
-                         "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
-        JComboBox combbx[]={new JComboBox(nivel),new JComboBox(categoria),new JComboBox(classe)};
-        JRadioButton male=new JRadioButton("Masculino");
+        String nivel[]={"Primario","Secondario","Técnico","Universitario"};
+        ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
+        String  categoria[]=new String[categorias.size()];
+        for(int i=0;i<categoria.length;i++){
+            categoria[i]=categorias.get(i).getNome();
+        }
+        
+        combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox(categoria)};
+        male = new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);
-        JRadioButton female=new JRadioButton("Feminino");
+        female=new JRadioButton("Feminino");
         female.setOpaque(false);
         female.setForeground(Color.white);
         ButtonGroup btnG=new ButtonGroup();
@@ -64,32 +90,41 @@ public class AdicionarAluno extends JPanel {
         sexo.setLayout(new GridLayout(1,2));
         sexo.invisible(true,true);
         sexo.add(male);sexo.add(female);
+        
         JLabel labels[]={new JLabel("Nome"),new JLabel("Apelido"),new JLabel("Nr BI"),new JLabel("Nascimento"),
                   new JLabel("Sexo"),new JLabel("Nivel Academico"),new JLabel("Morada"),new JLabel("Telefone"),
-                  new JLabel("Email"),new JLabel("Categoria"),new JLabel("Classe"),new JLabel("Mês"),new JLabel("Dia"),new JLabel("Ano")};
+                  new JLabel("Email"),new JLabel("Categoria"),new JLabel("Mês"),new JLabel("Dia"),new JLabel("Ano")};
         for(int i=0;i<labels.length;i++){labels[i].setForeground(Color.white);}
+        
         String mes[]={"Janeiro", "Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
+        
         String dia[]=new String[31];
         for(int i=0;i<dia.length;i++){
             dia[i]=""+(i+1);
         }
+        
         String ano[]=new String[30];
         for(int i=0;i<ano.length;i++){
             ano[i]=""+(i+1990);
         }
-        JComboBox data[]={new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        JPanel dataN=new JPanel(new GridLayout(2,3,20,1));
+        
+        data=new JComboBox[]{new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
+        
+        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
         dataN.setOpaque(false);
+        dataN.add(labels[10]);
         dataN.add(labels[11]);
         dataN.add(labels[12]);
-        dataN.add(labels[13]);
-        dataN.add(data[0]);
-        dataN.add(data[1]);
-        dataN.add(data[2]);
+        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
+        dataN1.setOpaque(false);
+        dataN1.add(data[0]);
+        dataN1.add(data[1]);
+        dataN1.add(data[2]);
+        
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
         pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(dataN);
+        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx[0]);
         
@@ -97,7 +132,6 @@ public class AdicionarAluno extends JPanel {
         pan2.add(labels[7]); pan2.add(txtF[3]);
         pan2.add(labels[8]); pan2.add(txtF[4]);
         pan2.add(labels[9]); pan2.add(combbx[1]);
-        pan2.add(labels[10]);pan2.add(combbx[2]);
         
         mainPane.add(pan1);
         mainPane.add(pan2);
@@ -116,16 +150,21 @@ public class AdicionarAluno extends JPanel {
                         title.setLocation(x,y);
                         pan1.setBounds(50,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
                         pan2.setBounds(mainPane.getWidth()/2+25,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
-                        labels[10].setBounds(labels[5].getBounds());
-                        combbx[2].setBounds(combbx[0].getBounds());
-                        labels[9].setBounds(labels[4].getBounds());
-                        combbx[1].setBounds(sexo.getBounds());
-                        labels[8].setBounds(labels[3].getBounds());
-                        txtF[4].setBounds(pan1.getComponent(7).getBounds());
-                        labels[7].setBounds(labels[2].getBounds());
-                        txtF[3].setBounds(txtF[2].getBounds());
+
+                        labels[9].setBounds(labels[5].getBounds());
+                        combbx[1].setBounds(combbx[0].getBounds());
+                        
+                        labels[8].setBounds(labels[4].getBounds());
+                        labels[8].setLocation(labels[8].getX(),(labels[8].getY()-(int)(labels[8].getY()*0.05)));
+                        txtF[4].setBounds(sexo.getBounds());
+                        txtF[4].setLocation(txtF[4].getX(),(txtF[4].getY()-(int)(txtF[4].getY()*0.05)));
+                        
+                        labels[7].setBounds(labels[3].getBounds());
+                        txtF[3].setBounds(pan1.getComponent(7).getBounds());
+                        
+                        
                         labels[6].setBounds(labels[0].getBounds());
-                        morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),3*txtF[0].getHeight());
+                        morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),5*txtF[0].getHeight());
                       
                         mainPane.revalidate();
                     }
@@ -133,7 +172,60 @@ public class AdicionarAluno extends JPanel {
             }
         ).start();
     }
-   
     
-  
+    private class Clique extends MouseAdapter{
+        
+        public void mouseClicked(MouseEvent e){
+            if(e.getComponent().toString().contains("Proximo")){
+                Aluno aluno=new Aluno();
+                aluno.setNome(txtF[0].getText());
+                aluno.setApelido(txtF[1].getText());
+                aluno.setBI(txtF[2].getText());
+                aluno.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
+                if(male.isSelected()){
+                    aluno.setSexo("M");
+                }else{
+                    aluno.setSexo("F");
+                }
+                
+                aluno.setNivel((String) combbx[0].getSelectedItem());
+                aluno.setMorada(andress.getText());
+                aluno.setTelefone(txtF[3].getText());
+                aluno.setEmail(txtF[4].getText());
+                aluno.setCategoria_id(categoria_ctrl.getCategoria(""+combbx[1].getSelectedItem()).getId());
+                
+                if(!Aluno_ctrl.setAluno(aluno)){
+                    if(Aluno_ctrl.getErro().contains("nome")){
+                        txtF[0].setText("");
+                        txtF[0].grabFocus();
+                    }else if(Aluno_ctrl.getErro().contains("apelido")){
+                        txtF[1].setText("");
+                        txtF[1].grabFocus();
+                    }else if(Aluno_ctrl.getErro().contains("BI")){
+                        txtF[2].setText("");
+                        txtF[2].grabFocus();
+                    }else if(Aluno_ctrl.getErro().contains("telefone")){
+                        txtF[3].setText("");
+                        txtF[3].grabFocus();
+                    }
+                }else{
+                    
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
+                    
+                    for(JTextField txtF:txtF){  txtF.setText(""); }
+                    
+                    for(JComboBox combbx:combbx){ combbx.setSelectedIndex(0); }
+                    
+                    andress.setText("");
+                    
+                    Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+                    v.updateComponents();
+                }
+            
+            }else if(e.getComponent().toString().contains("Voltar")){
+                
+            }
+        }
+        
+    }   
 }

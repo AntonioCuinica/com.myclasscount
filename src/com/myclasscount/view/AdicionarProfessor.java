@@ -19,7 +19,7 @@ import javax.swing.*;
 public class AdicionarProfessor extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private mybutton btns[];
+    private MyButtonn btns[];
     private Panel title;
     
    
@@ -27,16 +27,16 @@ public class AdicionarProfessor extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=myProcedures.barName("Cadastrar Professor",this);
+        title=MyProceduress.barName("Cadastrar Professor",this);
         container.add(title);
-        this.addComponentToMainPane(new myProcedures().mainPane("mainFrame","criarSenha",container));
+        this.addComponentToMainPane(new MyProceduress().mainPane("mainFrame","criarSenha",container));
         this.setVisible(true);
     }
     
    
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(14,1));
+        pan1.setLayout(new GridLayout(15,1));
         pan1.invisible(true, true);
         Panel pan2=new Panel(Color.black,false);
         pan2.setLayout(null);
@@ -81,19 +81,21 @@ public class AdicionarProfessor extends JPanel {
         }
         
         JComboBox data[]={new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        JPanel dataN=new JPanel(new GridLayout(2,3,20,1));
+        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
         dataN.setOpaque(false);
         dataN.add(labels[12]);
         dataN.add(labels[13]);
         dataN.add(labels[14]);
-        dataN.add(data[0]);
-        dataN.add(data[1]);
-        dataN.add(data[2]);
+        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
+        dataN1.setOpaque(false);
+        dataN1.add(data[0]);
+        dataN1.add(data[1]);
+        dataN1.add(data[2]);
         
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
         pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(dataN);
+        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx);
         pan1.add(labels[6]);pan1.add(txtF[3]);
