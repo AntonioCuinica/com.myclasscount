@@ -81,7 +81,7 @@ public class Aluno_dao {
     
     public static void updateAluno(Aluno aluno){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE myclasscount.aluno SET nome=?,apelido=?,BI=?,nascimento=?,sexo=?,nivel=?,morada=?,telefone=?,email=? WHERE id=?;";
+        String select="UPDATE myclasscount.aluno SET nome=?,apelido=?,BI=?,nascimento=?,sexo=?,nivel=?,morada=?,telefone=?,email=?,categoria_id=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,aluno.getNome());
@@ -93,7 +93,8 @@ public class Aluno_dao {
             stmt.setString(7,aluno.getMorada());
             stmt.setString(8,aluno.getTelefone());
             stmt.setString(9,aluno.getEmail());
-            stmt.setString(10,String.valueOf(aluno.getId()));
+            stmt.setString(10,String.valueOf(aluno.getCategoria_id()));
+            stmt.setString(11,String.valueOf(aluno.getId()));
             stmt.execute();
             
             stmt.close();

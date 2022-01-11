@@ -17,8 +17,8 @@ public class Professor {
     private int id;
     private String nome;
     private String apelido;
-    private long BI;
-    private Date nascimento;
+    private String BI;
+    private String nascimento;
     private String sexo;
     private String nivel;
     private String morada;
@@ -51,19 +51,19 @@ public class Professor {
         this.apelido = apelido;
     }
 
-    public long getBI() {
+    public String getBI() {
         return BI;
     }
 
-    public void setBI(long BI) {
+    public void setBI(String BI) {
         this.BI = BI;
     }
 
-    public Date getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
 

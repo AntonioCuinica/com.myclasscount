@@ -5,11 +5,15 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Professor_ctrl;
+import com.myclasscount.model.Professor;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.*;
 
 /**
@@ -22,6 +26,8 @@ public class Ver_Professores extends JPanel {
     private MyButtonn btns[];
     private Panel title;
     private Table tabela;
+    private ArrayList<Professor> professores;
+    private Professor professor;
     
     public Ver_Professores(){
         this.setLayout(null);
@@ -39,11 +45,18 @@ public class Ver_Professores extends JPanel {
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         tabela=new Table(colunas);
-        String dados[][]=new String[30][colunas.length];
+        professores=Professor_ctrl.getProfessores();
+        String dados[][]=new String[professores.size()][colunas.length];
          for(int i=0;i<dados.length;i++){
-            for(int j=0;j<dados[0].length;j++){
-                dados[i][j]=""+i*j;
-            }
+            dados[i][0]=professores.get(i).getNome()+" "+professores.get(i).getApelido();
+            dados[i][1]=professores.get(i).getBI();
+            Calendar cal=Calendar.getInstance();
+            int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(professores.get(i).getNascimento().split("-")[0]));
+            dados[i][2]=String.valueOf(idade);
+            dados[i][3]=professores.get(i).getSexo();
+            dados[i][4]=professores.get(i).getNivel();
+            dados[i][5]=professores.get(i).getTelefone();
+            dados[i][6]=String.valueOf(professores.get(i).getSalario());
         }
         tabela.setTableData(dados);
         JScrollPane src=new JScrollPane(tabela);
