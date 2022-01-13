@@ -9,7 +9,9 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -51,7 +53,9 @@ public class Myclasscount extends JFrame {
         add(login,"login");
         
         MainFramee mainF=new MainFramee();
-        add(mainF,"mainFrame");
+        JPanel panel=new JPanel(new GridLayout());
+        panel.add(mainF);
+        add(panel,"mainFrame");
         
         Ver_Alunos verA=new Ver_Alunos();
         add(verA,"verAlunos");

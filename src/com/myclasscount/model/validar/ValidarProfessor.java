@@ -7,7 +7,6 @@ package com.myclasscount.model.validar;
 
 import com.myclasscount.control.Aluno_ctrl;
 import com.myclasscount.control.Professor_ctrl;
-import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Professor;
 import com.myclasscount.view.MyDialogg;
 import com.myclasscount.view.Myclasscount;
@@ -30,9 +29,9 @@ public class ValidarProfessor {
         
         if(!erro(validarTexto(professor.getApelido(),"apelido")))return false;
         
-        if(!erro(validarNumero(String.valueOf(professor.getSalario()),"salario")))return false;              
-        
         if(!erro(validarBI(professor.getBI(),professor.getId())))return false;
+        
+        if(!erro(validarNumero(String.valueOf(professor.getSalario()),"salario")))return false;              
         
         if(!erro(validarNUIT(professor.getNUIT(),professor.getId())))return false;
         
@@ -66,7 +65,7 @@ public class ValidarProfessor {
         return "valido";
     }
     
-    public static String validarBI(String BI, int aluno_id){
+    public static String validarBI(String BI, int prof_id){
         if(BI.isBlank()){
             return "Erro, BI vazio";
         }else if(BI.length()!=13){
@@ -82,10 +81,8 @@ public class ValidarProfessor {
                 return "Erro, BI invalido";
             }catch(RuntimeException n){
                 if(!valido)return "Erro, BI invalido";
-                Aluno a = Aluno_ctrl.getAluno(BI);
-                System.out.println("a: "+a.getId());
-                System.out.println("aluno:"+aluno_id);
-                if(a!=null && a.getId()!=aluno_id){
+                Professor prof = Professor_ctrl.getProfessor(BI);
+                if(prof!=null && prof.getId()!=prof_id){
                     return "Erro, BI existente";
                 }
             }
@@ -97,28 +94,30 @@ public class ValidarProfessor {
         if(numero.isBlank()){
             return "Erro, "+tipo+" vazio";
         }else{
-            if(numero.matches("[a-zA-Z]*")){
-                return "Erro, "+tipo+" vazio";
-            }else if(!numero.matches("[0-9]*")){
-                return "Erro, "+tipo+" vazio";
+            for(int i=0;i<numero.length();i++){
+                if(numero.substring(i,(i+1)).matches("[a-zA-Z]*")){
+                    return "Erro, "+tipo+" contem letras";
+                }else if(Double.parseDouble(numero)<0){
+                    return "Erro, "+tipo+" invalido";
+                }
             }
         }
         return "valido";
     }
     
-    public static String validarNUIT(String BI, int prof_id){
-        if(BI.isBlank()){
+    public static String validarNUIT(String NUTI, int prof_id){
+        if(NUTI.isBlank()){
             return "Erro, NUIT vazio";
-        }else if(BI.length()!=13){
+        }else if(NUTI.length()!=13){
             return "Erro, NUIT invalido";
         }else{
             boolean valido=false;
             try{
-                Long texto=Long.parseLong(BI.substring(0,13));
+                Long texto=Long.parseLong(NUTI.substring(0,13));
                 valido=true;
             }catch(RuntimeException n){
                 if(!valido)return "Erro, NUIT invalido";
-                Professor prof = Professor_ctrl.getProfessor(BI);
+                Professor prof = Professor_ctrl.getProfessorNUIT(NUTI);
                 System.out.println("prof: "+prof.getId());
                 System.out.println("professor:"+prof_id);
                 if(prof!=null && prof.getId()!=prof_id){

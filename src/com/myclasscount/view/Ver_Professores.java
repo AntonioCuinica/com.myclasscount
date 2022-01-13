@@ -9,7 +9,6 @@ import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Professor;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -28,6 +27,7 @@ public class Ver_Professores extends JPanel {
     private Table tabela;
     private ArrayList<Professor> professores;
     private Professor professor;
+    private int linhaSelecionada;
     
     public Ver_Professores(){
         this.setLayout(null);
@@ -58,6 +58,7 @@ public class Ver_Professores extends JPanel {
             dados[i][5]=professores.get(i).getTelefone();
             dados[i][6]=String.valueOf(professores.get(i).getSalario());
         }
+         
         tabela.setTableData(dados);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
@@ -65,6 +66,7 @@ public class Ver_Professores extends JPanel {
         container.add(src);
         container.add(voltar);
         verProfessores(Myclasscount.getFrame());
+        
         new Thread(
             new Runnable(){
                 public void run(){
@@ -87,20 +89,34 @@ public class Ver_Professores extends JPanel {
             }
         ).start();
     }
+    
     public void verProfessores(JFrame frame){
         tabela.addMouseListener(
             new MouseAdapter(){
                 public void mouseClicked(MouseEvent evento){
                     if(evento.getClickCount()==2){
-                        int linha=tabela.getSelectedRow();
-                        String txt=tabela.getValueAt(linha,0).toString()+" | "+tabela.getValueAt(linha,1).toString()+
-                             " | "+tabela.getValueAt(linha,2).toString()+" | "+tabela.getValueAt(linha,3).toString();
+                        linhaSelecionada=tabela.getSelectedRow();
+                        String txt=tabela.getValueAt(linhaSelecionada,0).toString()+" | "+tabela.getValueAt(linhaSelecionada,1).toString()+
+                             " | "+tabela.getValueAt(linhaSelecionada,2).toString()+" | "+tabela.getValueAt(linhaSelecionada,3).toString();
                         MyDialogg dialog=new MyDialogg(frame,true);
                     }
                 }
             }
         );
     }
+    
+    public  void updateComponents(){
+        removeAll();
+        professores=Professor_ctrl.getProfessores();
+        for(Professor a:professores){
+            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                professor=a;
+            }
+        }
+        container.add(title);
+        addTable();
+    }
+    
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");

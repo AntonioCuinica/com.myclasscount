@@ -20,7 +20,7 @@ public class Professor_ctrl {
     
     public static boolean setProfessor(Professor professor){
         if(ValidarProfessor.validarProfessor(professor)){
-            Professor_dao.setProfeesor(professor);
+            Professor_dao.setProfessor(professor);
             return true;
         }
         return false;
@@ -42,12 +42,20 @@ public class Professor_ctrl {
         return Professor_dao.getProfessor(BI);
     }
     
+    public static Professor getProfessorNUIT(String NUIT){
+        return Professor_dao.getProfessorNUIT(NUIT);
+    }
+    
     public static boolean delProfessor(int prof_id){
         return Professor_dao.delProfessor(prof_id);
     }
     
+    public static void inscricaoProfessorDisc(Professor professor, int disc_id){
+        Professor_dao.inscricaoProfessorDisc(professor, disc_id);
+    }
+    
     public static String getErro(){
-        return ValidarAluno.getErro();
+        return ValidarProfessor.getErro();
     }
     
 }

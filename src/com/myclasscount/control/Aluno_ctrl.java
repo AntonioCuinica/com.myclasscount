@@ -10,9 +10,7 @@ import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.dao.Aluno_dao;
 import com.myclasscount.model.dao.Disciplina_dao;
 import com.myclasscount.model.validar.ValidarAluno;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  *

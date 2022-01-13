@@ -51,6 +51,37 @@ public class Professor_dao {
         return professor;
     }
     
+    public static Professor getProfessorNUIT(final String NUIT){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM myclasscount.professor WHERE NUIT=?";
+        Professor professor=null;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,NUIT);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                professor=new Professor();
+                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setNome(rs.getString("nome"));
+                professor.setApelido(rs.getString("apelido"));
+                professor.setBI(rs.getString("BI"));
+                professor.setNascimento(rs.getString("nascimento"));
+                professor.setSexo(rs.getString("sexo"));
+                professor.setNivel(rs.getString("nivel"));
+                professor.setMorada(rs.getString("morada"));
+                professor.setTelefone(rs.getString("telefone"));
+                professor.setEmail(rs.getString("email"));
+                professor.setNUIT(rs.getString("NUIT"));
+                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return professor;
+    }
+    
     public static ArrayList<Professor> getProfessores(){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.professor;";
@@ -108,7 +139,7 @@ public class Professor_dao {
         }
     }
     
-    public static void setProfeesor(Professor professor){
+    public static void setProfessor(Professor professor){
         Connection con=Conexaoo.getConnection();
         String select="call myclasscount.inserir_professor('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');";
         try{
@@ -123,7 +154,7 @@ public class Professor_dao {
             stmt.setString(8,professor.getTelefone());
             stmt.setString(9,professor.getEmail());
             stmt.setString(10,String.valueOf(professor.getNUIT()));
-            stmt.setString(10,String.valueOf(professor.getSalario()));
+            stmt.setString(11,String.valueOf(professor.getSalario()));
             stmt.execute(); 
             
             stmt.close();
@@ -148,6 +179,23 @@ public class Professor_dao {
         }catch(SQLException e){
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+    
+    public static void inscricaoProfessorDisc(Professor professor,int disc_id){
+        Connection con=Conexaoo.getConnection();
+        String select="call myclasscount.inscrever_professor_disciplina(?, ?);";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(professor.getId()));
+            stmt.setString(2,String.valueOf(disc_id));
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+            
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
         }
     }
    

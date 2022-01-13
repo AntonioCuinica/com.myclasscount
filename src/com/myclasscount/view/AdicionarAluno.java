@@ -44,8 +44,8 @@ public class AdicionarAluno extends JPanel {
         this.title=MyProceduress.barName("Cadastrar Alunos",this);
         container.add(title);
         myProc=new MyProceduress();
-        this.addComponentToMainPane(myProc.mainPane("mainFrame","verAlunos",container));
-        this.setVisible(true);
+        addComponentToMainPane(myProc.mainPane("mainFrame","verAlunos",container));
+        setVisible(true);
     }
     
    
