@@ -5,13 +5,19 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Acesso_ctrl;
+import com.myclasscount.model.Acesso;
+import com.myclasscount.model.dao.Acesso_dao;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import javax.swing.JFrame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -23,23 +29,41 @@ public class CriarSenha extends JPanel {
     private Container container;
     private MyButtonn btns[];
     private Panel title;
+    private MyProceduress myProc;
+    private JTextField txtF[];
+    private JLabel labels[];
+    private Acesso acesso=null;
+    private String prof_BI="";
+    
+    public  void setProf_BI(String prof_BI){
+        this.prof_BI=prof_BI;
+    }
+    
+    public String getProf_BI(){
+        return prof_BI;
+    }
+    
     public CriarSenha(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Criar Senha",this);
         container.add(title);
-        this.addComponentToMainPane(new MyProceduress().mainPane("adicionarProfessor","login",container));
-        this.setVisible(true);
+        myProc=new MyProceduress();
+        addComponentToMainPane(myProc.mainPane("adicionarProfessor","verProfessores",container));
+        setVisible(true);
     }
     
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(10,1));
         pan1.invisible(true, true);
-       
-        JTextField txtF[]={new JTextField(),new JTextField(),new JTextField(),new JTextField(),new JTextField()};
-        JLabel labels[]={new JLabel("Username"),new JLabel("Criar Senha"),new JLabel("Confirmar Senha"),
+        
+        myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
+        myProc.getBtns()[1].addMouseListener(new Clique());
+        
+        txtF=new JTextField[]{new JTextField(),new JTextField(),new JTextField(),new JTextField(),new JTextField()};
+        labels=new JLabel[]{new JLabel("Username"),new JLabel("Criar Senha"),new JLabel("Confirmar Senha"),
                          new JLabel("Pergunta de Recuperaçao"),new JLabel("Resposta")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         pan1.add(labels[0]); pan1.add(txtF[0]);
@@ -49,7 +73,6 @@ public class CriarSenha extends JPanel {
         pan1.add(labels[4]); pan1.add(txtF[4]);
         
         mainPane.add(pan1);
-        //mainPane.add(pan2);
         
         new Thread(
             new Runnable(){
@@ -73,5 +96,50 @@ public class CriarSenha extends JPanel {
             }
         ).start();
     }
+    
+    
+    private class Clique extends MouseAdapter{
+        public void mouseClicked(MouseEvent e){
+            acesso=new Acesso();
+            acesso.setUsername(txtF[0].getText());
+            String nPsw=txtF[1].getText();
+            String cPsw=txtF[2].getText();
+            if(nPsw.equals(cPsw)){
+                acesso.setCodigo(cPsw);
+            }else{
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Senha incorreta !!",true);
+                txtF[1].getText();
+                txtF[1].grabFocus();
+                txtF[2].getText();
+                txtF[2].grabFocus();
+            }
+            acesso.setPergunta(txtF[3].getText());
+            acesso.setResposta(txtF[4].getText());
             
+            String resultado=Acesso_ctrl.setAcesso(acesso,prof_BI);
+            if(resultado.equals("valido")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
+                
+                for(JTextField txt:txtF){
+                    txt.setText("");
+                }
+                
+            }else {
+                if(resultado.contains("1")){
+                    txtF[0].setText("");
+                    txtF[0].grabFocus();
+                }else if(resultado.contains("2")){
+                    txtF[1].setText("");txtF[1].grabFocus();
+                    txtF[2].setText("");txtF[2].grabFocus();
+                }else if(resultado.contains("3")){
+                    txtF[3].setText("");
+                    txtF[3].grabFocus();
+                }else if(resultado.contains("4")){
+                    txtF[4].setText("");
+                    txtF[4].grabFocus();
+                }
+            }
+        }
+    }
 }

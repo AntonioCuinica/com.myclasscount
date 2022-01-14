@@ -88,6 +88,7 @@ public class ModificarEstudante extends JDialog {
         String nivel[]={"Primario","Secondario","Técnico","Universitario"};
         ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
         String  categoria[]=new String[categorias.size()];
+        
         for(int i=0;i<categoria.length;i++){
             categoria[i]=categorias.get(i).getNome();
         }

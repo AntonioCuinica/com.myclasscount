@@ -9,13 +9,11 @@ import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.Professor;
-import com.myclasscount.model.validar.ValidarProfessor;
 import java.awt.Color;
-import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -23,9 +21,9 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
-public class AdicionarProfessor extends JPanel {
+public class ModificarrProfessor extends JDialog {
     private Color backColor=new Color(0,24,242);
-    private Container container;
+    private Panel back;
     private MyButtonn btns[];
     private Panel title;
     private MyProceduress myProc;
@@ -36,16 +34,25 @@ public class AdicionarProfessor extends JPanel {
     private JComboBox data[];
     private JRadioButton male;
     private JRadioButton female;
+    private Professor professor;
     
-    public AdicionarProfessor(){
-        setLayout(null);
-        container=this;
-        container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Cadastrar Professor",this);
-        container.add(title);
+    public ModificarrProfessor(JFrame frame,Professor professor,boolean modal){
+        super(frame,modal);
+        setSize(700,500);
+        setUndecorated(true);
+        setOpacity(0.92f);
+        setMinimumSize(new Dimension(700,500));
+        setLocationRelativeTo(frame);
+        this.professor=professor;
+        back=new Panel(backColor.darker(),true,true);
+        back.setLayout(null);
+        back.setBorderColor(Color.WHITE);
+        title=MyProceduress.barName("Modificar Professor",back);
+        back.add(title);
+        title.setVisible(false);
         myProc=new MyProceduress();
-        addComponentToMainPane(myProc.mainPane("mainFrame","criarSenha",container));
-        setVisible(true);
+        addComponentToMainPane(myProc.mainPane("verProfessores","verProfessores", back));
+        setContentPane(back);
     }
     
    
@@ -62,10 +69,10 @@ public class AdicionarProfessor extends JPanel {
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[0].addMouseListener(new Clique());
      
-        txtF=new JTextField[]{new JTextField(),new JTextField(),new JTextField(),
-                           new JTextField(),new JTextField(),new JTextField(),
-                           new JTextField()};
-        andress=new JTextArea();
+        txtF=new JTextField[]{new JTextField(professor.getNome()),new JTextField(professor.getApelido()),new JTextField(professor.getBI()),
+                           new JTextField(""+professor.getSalario()),new JTextField(professor.getNUIT()),new JTextField(professor.getTelefone()),
+                           new JTextField(professor.getEmail())};
+        andress=new JTextArea(professor.getMorada());
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
@@ -75,8 +82,19 @@ public class AdicionarProfessor extends JPanel {
         for(int i=0;i<disciplina.length;i++){
             disciplina[i]=disciplinas.get(i).getNome();
         }
+        ArrayList<Disciplina> discs=Disciplina_ctrl.getDisciplinas(professor.getId());
         combbx=new JComboBox(nivel);
         discList=new JList(disciplina);
+        int indices[]=new int[discs.size()];
+        int c=0;
+        for(int i=0;i<discs.size();i++){
+            Disciplina d=discs.get(i);
+            if(discList.getModel().getElementAt(i).equals(d.getNome())){
+                indices[c++]=i;
+                System.out.println("Indices selecionados: "+i);
+            }
+        }
+        discList.setSelectedIndices(indices);
         JScrollPane disc=new JScrollPane(discList);
         male=new JRadioButton("Masculino");
         male.setOpaque(false);
@@ -84,6 +102,11 @@ public class AdicionarProfessor extends JPanel {
         female=new JRadioButton("Feminino");
         female.setOpaque(false);
         female.setForeground(Color.white);
+        if(professor.getSexo().contains("F")){
+            female.setSelected(true);
+        }else{
+            male.setSelected(true);
+        }
         ButtonGroup btnG=new ButtonGroup();
         btnG.add(male);btnG.add(female);
         Panel sexo=new Panel(Color.black,false);
@@ -109,6 +132,10 @@ public class AdicionarProfessor extends JPanel {
         }
         
         data=new JComboBox[]{new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
+        String dt[]=professor.getNascimento().split("-");
+        data[0].setSelectedItem(dt[1]);
+        data[1].setSelectedItem(dt[2]);
+        data[2].setSelectedItem(dt[0]);
         JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
         dataN.setOpaque(false);
         dataN.add(labels[12]);
@@ -147,7 +174,7 @@ public class AdicionarProfessor extends JPanel {
                             System.out.println("Erro: "+e.getMessage());
                         }
                         int x=50,y=50;
-                        x=container.getWidth()/2-title.getWidth()/2;
+                        x=getWidth()/2-title.getWidth()/2;
                         title.setLocation(x,y);
                         pan1.setBounds(50,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
                         pan2.setBounds(mainPane.getWidth()/2+25,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
@@ -177,6 +204,7 @@ public class AdicionarProfessor extends JPanel {
                 professor.setApelido(txtF[1].getText());
                 professor.setBI(txtF[2].getText());
                 professor.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
+                
                 if(male.isSelected()){
                     professor.setSexo("M");
                 }else{
@@ -198,7 +226,7 @@ public class AdicionarProfessor extends JPanel {
                 professor.setEmail(txtF[6].getText());
                 
                 
-                if(!Professor_ctrl.setProfessor(professor)){
+                if(!Professor_ctrl.updateProfessor(professor)){
                     if(Professor_ctrl.getErro().contains("nome")){
                         txtF[0].setText("");
                         txtF[0].grabFocus();
@@ -219,6 +247,7 @@ public class AdicionarProfessor extends JPanel {
                         txtF[5].grabFocus();
                     }
                 }else{
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Modificado com sucesso !!", true);
                     
                     for(int i:discList.getSelectedIndices()){
                         if(!(i<0)){
@@ -237,16 +266,13 @@ public class AdicionarProfessor extends JPanel {
                     
                     Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
                     v.updateComponents();
+                    v.updateVer_dialog(Myclasscount.getFrame());
                     
-                    CriarSenha cS=(CriarSenha)Myclasscount.getContainer().getComponent(15);
-                    cS.setProf_BI(professor.getBI());
-                    
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarSenha");
-                    
+                    dispose();
                 }
             
             }else if(e.getComponent().toString().contains("Voltar")){
-                
+                dispose();
             }
         }
     }

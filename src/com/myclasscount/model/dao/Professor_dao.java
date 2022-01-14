@@ -141,7 +141,7 @@ public class Professor_dao {
     
     public static void setProfessor(Professor professor){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_professor('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');";
+        String select="call myclasscount.inserir_professor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
@@ -160,7 +160,7 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("setProfessor: "+e.getMessage());
         }
     }
     
@@ -195,8 +195,26 @@ public class Professor_dao {
             con.close();
             
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("inscrever professor: "+e.getMessage());
         }
     }
-   
+    
+    public static boolean delInscricaoProfDisc(int prof_id, int disc_id){
+        Connection con=Conexaoo.getConnection();
+        String select="DELETE FROM ensina WHERE professor_id=? and disciplina_id=?;";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(prof_id));
+            stmt.setString(2,String.valueOf(disc_id));
+            stmt.execute(); 
+            
+            stmt.close();
+            con.close();
+            
+            return true;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 }

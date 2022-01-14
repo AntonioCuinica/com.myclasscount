@@ -104,20 +104,7 @@ public class Ver_Alunos extends JPanel {
             }
         ).start();
     }
-    public JPanel info(String n,String v){
-        JPanel panel=new JPanel(new GridLayout(1,2));
-        panel.setOpaque(false);
-        JLabel name=new JLabel(n);
-        name.setForeground(Color.white);
-        name.setFont(new Font("Arial",Font.BOLD,18));
-        JLabel value=new JLabel(v);
-        value.setForeground(Color.white);
-        value.setFont(new Font("Arial",Font.PLAIN,18));
-        value.setToolTipText(v);
-        panel.add(name);
-        panel.add(value);
-        return panel;
-    }
+    
     
     public void verAlunos(JFrame frame){
         tabela.addMouseListener(
@@ -166,18 +153,18 @@ public class Ver_Alunos extends JPanel {
                         
         JPanel pan1=new JPanel(new GridLayout(10,1));
         pan1.setOpaque(false);
-        pan1.add(info("Nome",": "+aluno.getNome()));
-        pan1.add(info("Apelido",": "+aluno.getApelido()));
-        pan1.add(info("BI",": "+aluno.getBI()));
+        pan1.add(MyProceduress.info("Nome",": "+aluno.getNome()));
+        pan1.add(MyProceduress.info("Apelido",": "+aluno.getApelido()));
+        pan1.add(MyProceduress.info("BI",": "+aluno.getBI()));
         Calendar cal=Calendar.getInstance();
         int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(aluno.getNascimento().split("-")[0]));
-        pan1.add(info("Idade",": "+idade));
-        pan1.add(info("Sexo",": "+aluno.getSexo()));
-        pan1.add(info("Nível",": "+aluno.getNivel()));
-        pan1.add(info("Morada",": "+aluno.getMorada()));
-        pan1.add(info("Telefone",": "+aluno.getTelefone()));
-        pan1.add(info("Email",": "+aluno.getEmail()));
-        pan1.add(info("Pagamento",": "+Aluno_ctrl.pagamento(aluno.getId())[2]));
+        pan1.add(MyProceduress.info("Idade",": "+idade));
+        pan1.add(MyProceduress.info("Sexo",": "+aluno.getSexo()));
+        pan1.add(MyProceduress.info("Nível",": "+aluno.getNivel()));
+        pan1.add(MyProceduress.info("Morada",": "+aluno.getMorada()));
+        pan1.add(MyProceduress.info("Telefone",": "+aluno.getTelefone()));
+        pan1.add(MyProceduress.info("Email",": "+aluno.getEmail()));
+        pan1.add(MyProceduress.info("Pagamento",": "+Aluno_ctrl.pagamento(aluno.getId())[2]));
                         
         JPanel pan2=new JPanel(new FlowLayout());
         pan2.setOpaque(false);

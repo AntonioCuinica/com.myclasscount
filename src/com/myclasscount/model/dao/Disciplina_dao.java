@@ -66,6 +66,31 @@ public class Disciplina_dao {
     
     }
     
+    public static ArrayList<Disciplina> getDisciplinas(int prof_id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM disciplina d join ensina e on d.id=e.disciplina_id where e.professor_id=?;";
+        ArrayList<Disciplina> disciplina=new ArrayList();
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(prof_id));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                Disciplina disc=new Disciplina();
+                disc.setId(Integer.parseInt(rs.getString("id")));
+                disc.setNome(rs.getString("nome"));
+                disc.setCarga_horaria(rs.getString("carga_horaria"));
+                disc.setSeccao(rs.getString("seccao"));
+                disciplina.add(disc);
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return disciplina;
+    
+    }
+    
     public static void updateDisciplina(Disciplina disc){
         Connection con=Conexaoo.getConnection();
         String select="UPDATE myclasscount.disciplina SET nome=?,carga_horaria=?,seccao=? WHERE id=?;";

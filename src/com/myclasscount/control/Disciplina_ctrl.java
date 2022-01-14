@@ -26,6 +26,10 @@ public class Disciplina_ctrl {
         return Disciplina_dao.getDisciplinas();
     }
     
+    public static ArrayList<Disciplina> getDisciplinas(int prof_id){
+        return Disciplina_dao.getDisciplinas(prof_id);
+    }
+    
     public static boolean setDisciplina(Disciplina disc){
         String resultado=ValidarDisciplina.validarDisciplina(disc.getNome());
         if(resultado.equals("valida")){

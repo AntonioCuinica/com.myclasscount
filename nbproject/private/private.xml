@@ -12,14 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Professor_dao.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Myclasscount.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/Professor.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/AdicionarProfessor.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/AdicionarAluno.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/validar/ValidarProfessor.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MainFramee.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Professor_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Acesso_dao.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/validar/ValidarAcesso.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Acesso_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/CriarSenha.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/RecuperarSenha.java</file>
         </group>
     </open-files>
 </project-private>

@@ -72,6 +72,25 @@ public class Acesso_dao {
         return acesso;
     }
     
+    public static void setAcesso(Acesso acesso,int prof_id){
+        Connection con=Conexaoo.getConnection();
+        String select="call myclasscount.inserir_professor_acesso(?, ?, ?, ?, ?);";
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(prof_id));
+            stmt.setString(2,acesso.getUsername());
+            stmt.setString(3,acesso.getCodigo());
+            stmt.setString(4,acesso.getPergunta());
+            stmt.setString(5,acesso.getResposta());
+            
+            stmt.execute();
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+        
+        }
+    }
+    
     public static void mudarSenha(String codigo,int id){
         Connection con=Conexaoo.getConnection();
         String select="UPDATE acesso SET codigo=? WHERE id=?";
@@ -85,7 +104,6 @@ public class Acesso_dao {
         }catch(SQLException e){
         
         }
-        
     }
     
 }

@@ -7,6 +7,7 @@
 
 package com.myclasscount.view;
 
+import com.myclasscount.control.Acesso_ctrl;
 import com.myclasscount.model.Acesso;
 import com.myclasscount.model.dao.Acesso_dao;
 import java.awt.BorderLayout;
@@ -106,7 +107,7 @@ public class RecuperarSenha extends JPanel {
             if(!(acesso==null)){
                 if(nPsw.equals(cPsw) && !nPsw.isBlank()){
                     if(acesso.getResposta().equals(txtF[1].getText())){
-                        Acesso_dao.mudarSenha(nPsw,acesso.getId());
+                        Acesso_ctrl.mudarSenha(nPsw,acesso.getId());
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                     }else{
                         MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Resposta errada !!",true);
@@ -136,7 +137,7 @@ public class RecuperarSenha extends JPanel {
 
         @Override
         public void keyReleased(KeyEvent e) {
-            acesso=Acesso_dao.getAcesso(txtF[0].getText());
+            acesso=Acesso_ctrl.getAcesso(txtF[0].getText());
             if(!(acesso==null)){
                 labels[3].setText(acesso.getPergunta());
             }

@@ -8,6 +8,8 @@ package com.myclasscount.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -127,6 +129,21 @@ public class MyProceduress {
         return pane;
     }
 
+    public static JPanel info(String n,String v){
+        JPanel panel=new JPanel(new GridLayout(1,2));
+        panel.setOpaque(false);
+        JLabel name=new JLabel(n);
+        name.setForeground(Color.white);
+        name.setFont(new Font("Arial",Font.BOLD,18));
+        JLabel value=new JLabel(v);
+        value.setForeground(Color.white);
+        value.setFont(new Font("Arial",Font.PLAIN,18));
+        value.setToolTipText(v);
+        panel.add(name);
+        panel.add(value);
+        return panel;
+    }
+    
     
     private class Clique implements ActionListener{
         private String dir; 

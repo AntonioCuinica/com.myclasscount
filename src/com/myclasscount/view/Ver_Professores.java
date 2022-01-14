@@ -5,15 +5,22 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
+import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.Professor;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -28,15 +35,17 @@ public class Ver_Professores extends JPanel {
     private ArrayList<Professor> professores;
     private Professor professor;
     private int linhaSelecionada;
+    private MyDialogg ver_dialog;
+    private Table tabInscricao;
     
     public Ver_Professores(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Professores",this);
         container.add(title);
-        this.addTable();
-        this.setVisible(true);
+        addTable();
+        setVisible(true);
     }
     
     public void addTable(){
@@ -95,15 +104,102 @@ public class Ver_Professores extends JPanel {
             new MouseAdapter(){
                 public void mouseClicked(MouseEvent evento){
                     if(evento.getClickCount()==2){
-                        linhaSelecionada=tabela.getSelectedRow();
-                        String txt=tabela.getValueAt(linhaSelecionada,0).toString()+" | "+tabela.getValueAt(linhaSelecionada,1).toString()+
-                             " | "+tabela.getValueAt(linhaSelecionada,2).toString()+" | "+tabela.getValueAt(linhaSelecionada,3).toString();
-                        MyDialogg dialog=new MyDialogg(frame,true);
+                       linhaSelecionada=tabela.getSelectedRow();
+                       for(Professor a:professores){
+                            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,1).toString())){
+                                professor=a;
+                            }
+                        }
+                        ver_dialog(frame);
                     }
                 }
             }
         );
     }
+    
+    public void updateVer_dialog(JFrame frame){
+        ver_dialog.removeAll();
+        ver_dialog.dispose();
+        ver_dialog(frame);
+    }
+    
+    public void ver_dialog(JFrame frame){
+        ver_dialog=new MyDialogg(frame,true);
+        ver_dialog.setLayout(new GridLayout(1,2));
+        ver_dialog.setSize(750,600);
+        ver_dialog.setLocationRelativeTo(frame);
+        
+        JPanel lado1=new JPanel(new BorderLayout());
+        lado1.setBorder(new EmptyBorder(15,15,15,15));
+        lado1.setOpaque(false);
+                        
+        JPanel pan1=new JPanel(new GridLayout(12,1));
+        pan1.setOpaque(false);
+        pan1.add(MyProceduress.info("Nome",": "+professor.getNome()));
+        pan1.add(MyProceduress.info("Apelido",": "+professor.getApelido()));
+        pan1.add(MyProceduress.info("BI",": "+professor.getBI()));
+        Calendar cal=Calendar.getInstance();
+        int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(professor.getNascimento().split("-")[0]));
+        pan1.add(MyProceduress.info("Idade",": "+idade));
+        pan1.add(MyProceduress.info("Sexo",": "+professor.getSexo()));
+        pan1.add(MyProceduress.info("Nível",": "+professor.getNivel()));
+        pan1.add(MyProceduress.info("Morada",": "+professor.getMorada()));
+        pan1.add(MyProceduress.info("Telefone",": "+professor.getTelefone()));
+        pan1.add(MyProceduress.info("Email",": "+professor.getEmail()));
+        pan1.add(MyProceduress.info("NUIT",": "+professor.getNUIT()));
+        pan1.add(MyProceduress.info("Salario",": "+professor.getSalario()));
+                        
+        JPanel pan2=new JPanel(new FlowLayout());
+        pan2.setOpaque(false);
+        MyButtonn modificar=new MyButtonn("Modificar",false);
+        modificar.addMouseListener(new Clique());
+        MyButtonn remover=new MyButtonn("Remover",false);
+        remover.addMouseListener(new Clique());
+        pan2.add(modificar);
+        pan2.add(remover);
+                        
+        JPanel lado2=new JPanel(new BorderLayout());
+        lado2.setBorder(new EmptyBorder(15,15,15,15));
+        lado2.setOpaque(false);
+                        
+        tabInscricao=new Table(new String[]{"Disciplina","Carga horaria","Secçao"});
+        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas(professor.getId());
+        String dados[][]=new String[disciplinas.size()][3];
+        for(int i=0;i<dados.length;i++){
+            dados[i][0]=disciplinas.get(i).getNome();
+            dados[i][1]=disciplinas.get(i).getCarga_horaria();
+            dados[i][2]=disciplinas.get(i).getSeccao();
+        }
+                        
+        tabInscricao.setTableData(dados);
+        JScrollPane src=new JScrollPane(tabInscricao);
+        src.getViewport().setBackground(new Color(82,79,250).darker().darker());
+                       
+        JPanel panBtn=new JPanel(new FlowLayout());
+        panBtn.setOpaque(false);
+        MyButtonn removerI=new MyButtonn("Eliminar",false);
+        removerI.addMouseListener(new Clique());
+        panBtn.add(removerI);
+                        
+        JPanel titulo=new JPanel();
+        titulo.setOpaque(false);
+        JLabel texto=new JLabel("Inscricoes",SwingConstants.CENTER);
+        texto.setForeground(Color.white);
+        texto.setFont(new Font("Arial",Font.BOLD,18));
+        titulo.add(texto);
+                        
+        lado2.add(titulo,BorderLayout.NORTH);
+        lado2.add(src,BorderLayout.CENTER);
+        lado2.add(panBtn,BorderLayout.SOUTH);
+
+        lado1.add(pan1,BorderLayout.CENTER);
+        lado1.add(pan2,BorderLayout.SOUTH);
+                        
+        ver_dialog.add(lado1);
+        ver_dialog.add(lado2);
+        ver_dialog.setVisible(true);
+    }
+    
     
     public  void updateComponents(){
         removeAll();
@@ -119,7 +215,43 @@ public class Ver_Professores extends JPanel {
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            if(e.getComponent().toString().contains("Voltar")){
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            }else if(e.getComponent().toString().contains("Modificar")){
+                ModificarrProfessor modP=new ModificarrProfessor(Myclasscount.getFrame(),professor,true);
+                modP.setVisible(true);
+            }else if(e.getComponent().toString().contains("Remover")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover professor?",true);
+                if(dialog.getSimTeste()){
+                    dialog.dispose();
+                    if(Professor_ctrl.delProfessor(professor.getId())){
+                        updateComponents();
+                        ver_dialog.dispose();
+                        MyDialogg resp1=new MyDialogg(Myclasscount.getFrame(),1,"Removido com sucesso",true);
+                    }else{
+                        MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
+                    }
+                }
+            }else if(e.getComponent().toString().contains("Eliminar")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscriçao",true);
+                if(dialog.getSimTeste()){
+                    dialog.dispose();
+                    int linha=tabInscricao.getSelectedRow();
+                    if(linha>-1){
+                        String nome=tabInscricao.getValueAt(linha,0).toString();
+                        Disciplina disc=Disciplina_ctrl.getDisciplina(nome);
+                        if(Professor_ctrl.delInscricaoProfDisc(professor.getId(),disc.getId())){
+                            MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Eliminada com sucesso",true);
+                            updateComponents();
+                            updateVer_dialog(Myclasscount.getFrame());
+                        }else {
+                            MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Ocorreu um erro !!",true);
+                        }
+                    }else {
+                        MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Escolha uma disciplina",true);
+                    }
+                }
+            }
         }
     }
     

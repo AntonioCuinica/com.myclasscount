@@ -7,7 +7,6 @@ package com.myclasscount.control;
 
 import com.myclasscount.model.Professor;
 import com.myclasscount.model.dao.Professor_dao;
-import com.myclasscount.model.validar.ValidarAluno;
 import com.myclasscount.model.validar.ValidarProfessor;
 import java.util.ArrayList;
 
@@ -26,7 +25,7 @@ public class Professor_ctrl {
         return false;
     }
     
-    public static boolean updateAluno(Professor professor){
+    public static boolean updateProfessor(Professor professor){
         if(ValidarProfessor.validarProfessor(professor)){
             Professor_dao.updateProfessor(professor);
             return true;
@@ -51,11 +50,20 @@ public class Professor_ctrl {
     }
     
     public static void inscricaoProfessorDisc(Professor professor, int disc_id){
-        Professor_dao.inscricaoProfessorDisc(professor, disc_id);
+        Professor prof=Professor_ctrl.getProfessor(professor.getBI());
+        Professor_dao.inscricaoProfessorDisc(prof, disc_id);
     }
+    
+    public static boolean delInscricaoProfDisc(int prof_id,int disc_id){
+        return Professor_dao.delInscricaoProfDisc(prof_id, disc_id);
+    }
+    
     
     public static String getErro(){
         return ValidarProfessor.getErro();
     }
     
+    public static String validarNumero (String texto,String tipo){
+        return ValidarProfessor.validarNumero(texto,tipo);
+    }
 }
