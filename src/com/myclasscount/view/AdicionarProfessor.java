@@ -15,7 +15,6 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import javax.swing.*;
 

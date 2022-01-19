@@ -12,12 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Professor_dao.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/MyProceduress.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/AdicionarProfessor.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Acesso_dao.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/validar/ValidarAcesso.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Acesso_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Disciplina_dao.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/ModificarrProfessor.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/ModificarEstudante.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Ver_Professores.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/CriarSenha.java</file>
             <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/RecuperarSenha.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Professor_ctrl.java</file>
         </group>
     </open-files>
 </project-private>

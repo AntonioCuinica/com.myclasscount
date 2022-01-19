@@ -12,6 +12,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -163,5 +164,10 @@ public class MyProceduress {
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),dir);
             }      
         }
+    }
+    
+    public static int idade(String ano){
+        Calendar cal=Calendar.getInstance();
+        return cal.get(Calendar.YEAR)-(Integer.parseInt(ano));
     }
 }

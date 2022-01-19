@@ -18,7 +18,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -59,9 +58,7 @@ public class Ver_Professores extends JPanel {
          for(int i=0;i<dados.length;i++){
             dados[i][0]=professores.get(i).getNome()+" "+professores.get(i).getApelido();
             dados[i][1]=professores.get(i).getBI();
-            Calendar cal=Calendar.getInstance();
-            int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(professores.get(i).getNascimento().split("-")[0]));
-            dados[i][2]=String.valueOf(idade);
+            dados[i][2]=String.valueOf(MyProceduress.idade(professores.get(i).getNascimento().split("-")[0]));
             dados[i][3]=professores.get(i).getSexo();
             dados[i][4]=professores.get(i).getNivel();
             dados[i][5]=professores.get(i).getTelefone();
@@ -116,8 +113,20 @@ public class Ver_Professores extends JPanel {
             }
         );
     }
+    public  void updateComponents(){
+        removeAll();
+        professores=Professor_ctrl.getProfessores();
+        for(Professor a:professores){
+            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                professor=a;
+            }
+        }
+        container.add(title);
+        addTable();
+    }
     
     public void updateVer_dialog(JFrame frame){
+        updateComponents();
         ver_dialog.removeAll();
         ver_dialog.dispose();
         ver_dialog(frame);
@@ -138,9 +147,16 @@ public class Ver_Professores extends JPanel {
         pan1.add(MyProceduress.info("Nome",": "+professor.getNome()));
         pan1.add(MyProceduress.info("Apelido",": "+professor.getApelido()));
         pan1.add(MyProceduress.info("BI",": "+professor.getBI()));
-        Calendar cal=Calendar.getInstance();
-        int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(professor.getNascimento().split("-")[0]));
-        pan1.add(MyProceduress.info("Idade",": "+idade));
+        try{
+            System.out.println("Nasc1: "+professor.getNascimento().split("-")[0]);
+            String dt=professor.getNascimento().substring(0,4);
+            System.out.println("Nascimento: "+professor.getNascimento());
+            System.out.println("Idade : "+dt);
+            pan1.add(MyProceduress.info("Idade",": "+MyProceduress.idade(dt)));
+            System.out.println("Idade : "+dt);
+        }catch(NumberFormatException e){
+            System.out.println("Erro, data: "+e.getMessage());
+        }
         pan1.add(MyProceduress.info("Sexo",": "+professor.getSexo()));
         pan1.add(MyProceduress.info("Nível",": "+professor.getNivel()));
         pan1.add(MyProceduress.info("Morada",": "+professor.getMorada()));
@@ -201,17 +217,7 @@ public class Ver_Professores extends JPanel {
     }
     
     
-    public  void updateComponents(){
-        removeAll();
-        professores=Professor_ctrl.getProfessores();
-        for(Professor a:professores){
-            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
-                professor=a;
-            }
-        }
-        container.add(title);
-        addTable();
-    }
+   
     
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
@@ -254,5 +260,4 @@ public class Ver_Professores extends JPanel {
             }
         }
     }
-    
 }

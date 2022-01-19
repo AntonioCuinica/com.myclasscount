@@ -132,7 +132,14 @@ public class ModificarrProfessor extends JDialog {
         }
         
         data=new JComboBox[]{new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        String dt[]=professor.getNascimento().split("-");
+        String dt[]=null;
+        if(professor.getNascimento().contains("-")){
+            dt=professor.getNascimento().split("-");
+        }else if(professor.getNascimento().contains("/")){
+            dt=professor.getNascimento().split("/");
+        }
+        
+        System.out.println("modifcar nascimento prof: "+professor.getNascimento());
         data[0].setSelectedItem(dt[1]);
         data[1].setSelectedItem(dt[2]);
         data[2].setSelectedItem(dt[0]);
@@ -199,12 +206,11 @@ public class ModificarrProfessor extends JDialog {
         
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Proximo")){
-                Professor professor=new Professor();
                 professor.setNome(txtF[0].getText());
                 professor.setApelido(txtF[1].getText());
                 professor.setBI(txtF[2].getText());
                 professor.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
-                
+
                 if(male.isSelected()){
                     professor.setSexo("M");
                 }else{
@@ -265,7 +271,6 @@ public class ModificarrProfessor extends JDialog {
                     andress.setText("");
                     
                     Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
-                    v.updateComponents();
                     v.updateVer_dialog(Myclasscount.getFrame());
                     
                     dispose();

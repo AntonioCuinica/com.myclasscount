@@ -5,7 +5,6 @@
  */
 package com.myclasscount.model.validar;
 
-import com.myclasscount.control.Aluno_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Professor;
 import com.myclasscount.view.MyDialogg;
@@ -39,6 +38,7 @@ public class ValidarProfessor {
         
         return true;
     }
+    
     
     public static boolean erro(String resultado){
         
@@ -75,9 +75,7 @@ public class ValidarProfessor {
             try{
                 Long texto=Long.parseLong(BI.substring(0,12));
                 valido=true;
-                System.out.println("12 valido: "+texto);
                 int numero=Integer.parseInt(BI.substring(12,13));
-                System.out.println("13 invalido: "+numero);
                 return "Erro, BI invalido";
             }catch(RuntimeException n){
                 if(!valido)return "Erro, BI invalido";
@@ -89,6 +87,7 @@ public class ValidarProfessor {
         }
         return "valido";
     }
+    
     
     public static String validarNumero(String numero,String tipo){
         if(numero.isBlank()){
@@ -118,8 +117,6 @@ public class ValidarProfessor {
             }catch(RuntimeException n){
                 if(!valido)return "Erro, NUIT invalido";
                 Professor prof = Professor_ctrl.getProfessorNUIT(NUTI);
-                System.out.println("prof: "+prof.getId());
-                System.out.println("professor:"+prof_id);
                 if(prof!=null && prof.getId()!=prof_id){
                     return "Erro, NUIT existente";
                 }

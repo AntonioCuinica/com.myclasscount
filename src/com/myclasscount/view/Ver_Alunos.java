@@ -65,9 +65,9 @@ public class Ver_Alunos extends JPanel {
             dados[i][0]=alunos.get(i).getNome();
             dados[i][1]=alunos.get(i).getApelido();
             dados[i][2]=alunos.get(i).getBI();
-            Calendar cal=Calendar.getInstance();
-            int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(alunos.get(i).getNascimento().split("-")[0]));
-            dados[i][3]=String.valueOf(idade);
+            //Calendar cal=Calendar.getInstance();
+            //int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(alunos.get(i).getNascimento().split("-")[0]));
+            dados[i][3]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
             Categoria cat=categoria_ctrl.getCategoria(alunos.get(i).getCategoria_id());
             dados[i][4]=cat.getClasse();
             dados[i][5]=alunos.get(i).getSexo();
@@ -137,6 +137,7 @@ public class Ver_Alunos extends JPanel {
     }
     
     public void updateVer_dialog(JFrame frame){
+        updateComponents();
         ver_dialog.removeAll();
         ver_dialog.dispose();
         ver_dialog(frame);
@@ -156,9 +157,7 @@ public class Ver_Alunos extends JPanel {
         pan1.add(MyProceduress.info("Nome",": "+aluno.getNome()));
         pan1.add(MyProceduress.info("Apelido",": "+aluno.getApelido()));
         pan1.add(MyProceduress.info("BI",": "+aluno.getBI()));
-        Calendar cal=Calendar.getInstance();
-        int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(aluno.getNascimento().split("-")[0]));
-        pan1.add(MyProceduress.info("Idade",": "+idade));
+        pan1.add(MyProceduress.info("Idade",": "+MyProceduress.idade(aluno.getNascimento().split("-")[0])));
         pan1.add(MyProceduress.info("Sexo",": "+aluno.getSexo()));
         pan1.add(MyProceduress.info("Nível",": "+aluno.getNivel()));
         pan1.add(MyProceduress.info("Morada",": "+aluno.getMorada()));

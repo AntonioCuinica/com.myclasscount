@@ -29,6 +29,9 @@ public class Professor_ctrl {
         if(ValidarProfessor.validarProfessor(professor)){
             Professor_dao.updateProfessor(professor);
             return true;
+        }else if(ValidarProfessor.getErro().equals("Erro, BI existente")){
+            Professor_dao.updateProfessor(professor);
+            return true;
         }
         return false;
     }

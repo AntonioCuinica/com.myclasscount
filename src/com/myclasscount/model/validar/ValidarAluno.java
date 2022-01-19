@@ -77,8 +77,6 @@ public class ValidarAluno {
             }catch(RuntimeException n){
                 if(!valido)return "Erro, BI invalido";
                 Aluno a = Aluno_ctrl.getAluno(BI);
-                System.out.println("a: "+a.getId());
-                System.out.println("aluno:"+aluno_id);
                 if(a!=null && a.getId()!=aluno_id){
                     return "Erro, BI existente";
                 }

@@ -10,7 +10,6 @@ import com.myclasscount.control.categoria_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Categoria;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -210,6 +209,7 @@ public class ModificarEstudante extends JDialog {
                 aluno.setApelido(txtF[1].getText());
                 aluno.setBI(txtF[2].getText());
                 aluno.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
+                
                 if(male.isSelected()){
                     aluno.setSexo("M");
                 }else{
@@ -247,10 +247,11 @@ public class ModificarEstudante extends JDialog {
                     andress.setText("");
                     
                     Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
-                    v.updateComponents();
                     v.updateVer_dialog(Myclasscount.getFrame());
                     
                     dispose();
+                    
+                   
                 }
             
             }else if(e.getComponent().toString().contains("Voltar")){
