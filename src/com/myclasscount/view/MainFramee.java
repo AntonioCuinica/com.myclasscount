@@ -188,8 +188,10 @@ public final class MainFramee extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getActionCommand().equals("card1")){
+                    MyProceduress.updateVerProfessores();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
                 }else if(e.getActionCommand().equals("card2")){
+                    MyProceduress.updateVerAlunos();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
                 }
                 else if(e.getActionCommand().equals("card3")){
@@ -218,9 +220,11 @@ public final class MainFramee extends JPanel {
             public void mouseClicked(MouseEvent e){
                 
                 if(type==1){
+                    MyProceduress.updateVerAlunos();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
                 }
                 else if(type==2){
+                    MyProceduress.updateVerProfessores();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
                 }
                 else if(type==3){

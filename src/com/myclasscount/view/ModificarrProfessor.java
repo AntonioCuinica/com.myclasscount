@@ -195,6 +195,9 @@ public class ModificarrProfessor extends JDialog {
                         txtF[4].setBounds(txtF[2].getBounds());
                         labels[7].setBounds(labels[0].getBounds());
                         morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),3*txtF[0].getHeight());
+                        
+                        myProc.getBtns()[0].setVisible(true);
+                        myProc.getBtns()[1].setVisible(true);
                         mainPane.revalidate();
                     }
                 }

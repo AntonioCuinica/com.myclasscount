@@ -89,7 +89,8 @@ public class MyProceduress {
         btns[0].setActionCommand("Voltar");
         btns[1].addActionListener(new Clique(depois));
         btns[1].setActionCommand("Proximo");
-        
+        btns[0].setVisible(false);
+        btns[1].setVisible(false);
         container.add(pane);
         container.add(btns[0]);
         container.add(btns[1]);
@@ -143,6 +144,16 @@ public class MyProceduress {
         panel.add(name);
         panel.add(value);
         return panel;
+    }
+    
+    public static void updateVerAlunos(){
+        Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+        v.updateComponents();
+    }
+    
+    public static void updateVerProfessores(){
+        Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
+        v.updateComponents();
     }
     
     

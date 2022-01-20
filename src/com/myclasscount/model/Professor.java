@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 package com.myclasscount.model;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  *
  * @author CUINIC4

@@ -93,9 +93,11 @@ public class Ver_Categoria extends JPanel {
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique(voltar));
+        voltar.setVisible(false);
         MyButtonn criar=new MyButtonn("Criar",false);
         criar.setSize(85,25);
         criar.addMouseListener(new Clique(criar));
+        criar.setVisible(false);
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
@@ -119,6 +121,8 @@ public class Ver_Categoria extends JPanel {
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x-criar.getWidth(),container.getHeight()-y);
                         criar.setLocation(x+10,container.getHeight()-y);
+                        voltar.setVisible(true);
+                        criar.setVisible(true);
                         container.revalidate();
                     }
                 }

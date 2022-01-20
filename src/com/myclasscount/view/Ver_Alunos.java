@@ -18,7 +18,6 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -41,6 +40,7 @@ public class Ver_Alunos extends JPanel {
     public JDialog getVer_dialog(){
         return ver_dialog;
     }
+    
     public Ver_Alunos(){
         this.setLayout(null);
         container=this;
@@ -56,6 +56,7 @@ public class Ver_Alunos extends JPanel {
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
+        voltar.setVisible(false);
         tabela=new Table(colunas);
         alunos=Aluno_ctrl.getAlunos();
         
@@ -98,6 +99,7 @@ public class Ver_Alunos extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setVisible(true);
                         container.revalidate();
                     }
                 }

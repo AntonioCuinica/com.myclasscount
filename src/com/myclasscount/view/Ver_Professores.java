@@ -52,6 +52,7 @@ public class Ver_Professores extends JPanel {
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
+        voltar.setVisible(false);
         tabela=new Table(colunas);
         professores=Professor_ctrl.getProfessores();
         String dados[][]=new String[professores.size()][colunas.length];
@@ -89,6 +90,7 @@ public class Ver_Professores extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setVisible(true);
                         container.revalidate();
                     }
                 }
@@ -113,6 +115,7 @@ public class Ver_Professores extends JPanel {
             }
         );
     }
+    
     public  void updateComponents(){
         removeAll();
         professores=Professor_ctrl.getProfessores();

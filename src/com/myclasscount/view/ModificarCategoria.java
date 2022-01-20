@@ -104,6 +104,9 @@ public class ModificarCategoria extends JDialog {
                         x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
                         y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
                         pan1.setLocation(x,y);
+                        
+                        myProc.getBtns()[0].setVisible(true);
+                        myProc.getBtns()[1].setVisible(true);
                         mainPane.revalidate();
                     }
                 }
@@ -134,8 +137,10 @@ public class ModificarCategoria extends JDialog {
                 }
                 cat.setDescricao(desc.getText());
                 if(categoria_ctrl.updateCategoria(cat)){
+                    
                     Ver_Categoria categoria=(Ver_Categoria)Myclasscount.getContainer().getComponent(4);
                     categoria.updateComponents();
+                    
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
                     txtF[0].setText(""); combbx[0].setSelectedIndex(0);
                     txtF[1].setText(""); combbx[1].setSelectedIndex(0);

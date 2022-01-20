@@ -166,6 +166,8 @@ public class AdicionarAluno extends JPanel {
                         labels[6].setBounds(labels[0].getBounds());
                         morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),5*txtF[0].getHeight());
                       
+                        myProc.getBtns()[0].setVisible(true);
+                        myProc.getBtns()[1].setVisible(true);
                         mainPane.revalidate();
                     }
                 }

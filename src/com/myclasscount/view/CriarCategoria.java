@@ -91,6 +91,9 @@ public class CriarCategoria extends JPanel {
                         x=(mainPane.getWidth()/2)-(pan1.getWidth()/2);
                         y=(mainPane.getHeight()/2)-(pan1.getHeight()/2);
                         pan1.setLocation(x,y);
+                        
+                        myProc.getBtns()[0].setVisible(true);
+                        myProc.getBtns()[1].setVisible(true);
                         mainPane.revalidate();
                     }
                 }
