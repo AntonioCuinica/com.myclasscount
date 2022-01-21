@@ -6,15 +6,11 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.categoria_ctrl;
-import com.myclasscount.model.validar.ValidarCategoria;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.InputMismatchException;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

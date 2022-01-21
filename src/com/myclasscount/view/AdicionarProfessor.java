@@ -31,7 +31,7 @@ public class AdicionarProfessor extends JPanel {
     private JTextField txtF[];
     private JTextArea andress;
     private JComboBox combbx;
-    private JList discList;
+    private JCheckBox checks[];
     private JComboBox data[];
     private JRadioButton male;
     private JRadioButton female;
@@ -69,14 +69,18 @@ public class AdicionarProfessor extends JPanel {
         JScrollPane morada=new JScrollPane(andress);
         
         String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
-        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
-        String  disciplina[]=new String[disciplinas.size()];
-        for(int i=0;i<disciplina.length;i++){
-            disciplina[i]=disciplinas.get(i).getNome();
-        }
         combbx=new JComboBox(nivel);
-        discList=new JList(disciplina);
-        JScrollPane disc=new JScrollPane(discList);
+        
+        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
+        checks=new JCheckBox[disciplinas.size()];
+        JPanel checkDiscs=new JPanel();
+        checkDiscs.setLayout(new BoxLayout(checkDiscs,BoxLayout.Y_AXIS));
+        for(int i=0;i<checks.length;i++){
+            checks[i]=new JCheckBox(disciplinas.get(i).getNome());
+            checkDiscs.add(checks[i]);
+        }
+        JScrollPane disc=new JScrollPane(checkDiscs);
+        
         male=new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);
@@ -222,12 +226,10 @@ public class AdicionarProfessor extends JPanel {
                     }
                 }else{
                     
-                    for(int i:discList.getSelectedIndices()){
-                        if(!(i<0)){
-                            String disc=String.valueOf(discList.getModel().getElementAt(i));
-                            Disciplina disciplina=Disciplina_ctrl.getDisciplina(disc);
+                    for(JCheckBox ch:checks){
+                        if(ch.isSelected()){
+                            Disciplina disciplina=Disciplina_ctrl.getDisciplina(ch.getText());
                             Professor_ctrl.inscricaoProfessorDisc(professor,disciplina.getId());
-                            discList.clearSelection();
                         }
                     }
                     

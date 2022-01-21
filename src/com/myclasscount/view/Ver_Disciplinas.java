@@ -40,6 +40,7 @@ public class Ver_Disciplinas extends JPanel {
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
+        voltar.setVisible(false);
         tabela=new Table(colunas);
         ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
         Object dados[][]=new Object[disciplinas.size()][colunas.length];
@@ -75,6 +76,7 @@ public class Ver_Disciplinas extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setVisible(true);
                         container.revalidate();
                     }
                 }

@@ -31,6 +31,7 @@ public class ModificarrProfessor extends JDialog {
     private JTextArea andress;
     private JComboBox combbx;
     private JList discList;
+    JCheckBox checks[];
     private JComboBox data[];
     private JRadioButton male;
     private JRadioButton female;
@@ -38,7 +39,7 @@ public class ModificarrProfessor extends JDialog {
     
     public ModificarrProfessor(JFrame frame,Professor professor,boolean modal){
         super(frame,modal);
-        setSize(700,500);
+        setSize(700,550);
         setUndecorated(true);
         setOpacity(0.92f);
         setMinimumSize(new Dimension(700,500));
@@ -77,25 +78,25 @@ public class ModificarrProfessor extends JDialog {
         JScrollPane morada=new JScrollPane(andress);
         
         String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
-        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
-        String  disciplina[]=new String[disciplinas.size()];
-        for(int i=0;i<disciplina.length;i++){
-            disciplina[i]=disciplinas.get(i).getNome();
-        }
-        ArrayList<Disciplina> discs=Disciplina_ctrl.getDisciplinas(professor.getId());
         combbx=new JComboBox(nivel);
-        discList=new JList(disciplina);
-        int indices[]=new int[discs.size()];
-        int c=0;
-        for(int i=0;i<discs.size();i++){
-            Disciplina d=discs.get(i);
-            if(discList.getModel().getElementAt(i).equals(d.getNome())){
-                indices[c++]=i;
-                System.out.println("Indices selecionados: "+i);
+        
+        ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
+        ArrayList<Disciplina> discIns=Disciplina_ctrl.getDisciplinas(professor.getId());
+        checks=new JCheckBox[disciplinas.size()];
+        JPanel checkDiscs=new JPanel();
+        checkDiscs.setLayout(new BoxLayout(checkDiscs,BoxLayout.Y_AXIS));
+        for(int i=0;i<checks.length;i++){
+            checks[i]=new JCheckBox(disciplinas.get(i).getNome());
+            checkDiscs.add(checks[i]);
+            for(int j=0;j<discIns.size();j++){
+                if(disciplinas.get(i).getNome().equals(discIns.get(j).getNome())){
+                    checks[i].setSelected(true);
+                    checks[i].setEnabled(false);
+                }
             }
         }
-        discList.setSelectedIndices(indices);
-        JScrollPane disc=new JScrollPane(discList);
+        
+        JScrollPane disc=new JScrollPane(checkDiscs);
         male=new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);
@@ -107,6 +108,7 @@ public class ModificarrProfessor extends JDialog {
         }else{
             male.setSelected(true);
         }
+        
         ButtonGroup btnG=new ButtonGroup();
         btnG.add(male);btnG.add(female);
         Panel sexo=new Panel(Color.black,false);
@@ -143,12 +145,12 @@ public class ModificarrProfessor extends JDialog {
         data[0].setSelectedItem(dt[1]);
         data[1].setSelectedItem(dt[2]);
         data[2].setSelectedItem(dt[0]);
-        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
+        JPanel dataN=new JPanel(new GridLayout(1,3,5,1));
         dataN.setOpaque(false);
         dataN.add(labels[12]);
         dataN.add(labels[13]);
         dataN.add(labels[14]);
-        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
+        JPanel dataN1=new JPanel(new GridLayout(1,3,5,1));
         dataN1.setOpaque(false);
         dataN1.add(data[0]);
         dataN1.add(data[1]);
@@ -258,12 +260,10 @@ public class ModificarrProfessor extends JDialog {
                 }else{
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Modificado com sucesso !!", true);
                     
-                    for(int i:discList.getSelectedIndices()){
-                        if(!(i<0)){
-                            String disc=String.valueOf(discList.getModel().getElementAt(i));
-                            Disciplina disciplina=Disciplina_ctrl.getDisciplina(disc);
+                    for(JCheckBox ch:checks){
+                        if(ch.isSelected()){
+                            Disciplina disciplina=Disciplina_ctrl.getDisciplina(ch.getText());
                             Professor_ctrl.inscricaoProfessorDisc(professor,disciplina.getId());
-                            discList.clearSelection();
                         }
                     }
                     
