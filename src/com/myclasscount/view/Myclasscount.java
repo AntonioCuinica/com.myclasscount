@@ -88,10 +88,7 @@ public class Myclasscount extends JFrame {
         add(addD,"registSubject");
         
         CriarTurma criarT=new CriarTurma();
-        add(criarT,"crirTurma");
-        
-        CriarHorario criarH=new CriarHorario();
-        add(criarH,"crirHorario");
+        add(criarT,"criarTurma");
         
         RecuperarSenha recupS=new RecuperarSenha();
         add(recupS,"recuperarSenha");

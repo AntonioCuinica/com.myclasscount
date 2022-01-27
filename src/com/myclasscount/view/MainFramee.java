@@ -32,6 +32,8 @@ public final class MainFramee extends JPanel {
         mainBar(); 
         add(Box.createRigidArea(new Dimension(0,30)));
         mainPane();
+        repaint();
+        revalidate();
         setVisible(true);
     }
     
@@ -198,7 +200,7 @@ public final class MainFramee extends JPanel {
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"registSubject");
                 }
                 else if(e.getActionCommand().equals("card4")){
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"crirTurma");
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
                 }else if(e.getActionCommand().equals("out")){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
                     if(dialog.getSimTeste())Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");

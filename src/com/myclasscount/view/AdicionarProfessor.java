@@ -9,7 +9,6 @@ import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.Professor;
-import com.myclasscount.model.validar.ValidarProfessor;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -118,6 +117,7 @@ public class AdicionarProfessor extends JPanel {
         dataN.add(labels[13]);
         dataN.add(labels[14]);
         JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
+        
         dataN1.setOpaque(false);
         dataN1.add(data[0]);
         dataN1.add(data[1]);
@@ -242,7 +242,7 @@ public class AdicionarProfessor extends JPanel {
                     Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
                     v.updateComponents();
                     
-                    CriarSenha cS=(CriarSenha)Myclasscount.getContainer().getComponent(15);
+                    CriarSenha cS=(CriarSenha)Myclasscount.getContainer().getComponent(14);
                     cS.setProf_BI(professor.getBI());
                     
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarSenha");

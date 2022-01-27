@@ -12,6 +12,8 @@ import com.myclasscount.model.Categoria;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -84,17 +86,30 @@ public class ModificarEstudante extends JDialog {
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Técnico","Universitario"};
+        String nivel[]={"Primario","Secundario","Tecnico","Universitario"};
         ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
-        String  categoria[]=new String[categorias.size()];
-        
-        for(int i=0;i<categoria.length;i++){
-            categoria[i]=categorias.get(i).getNome();
+        combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox()};
+        for(int i=0;i<categorias.size();i++){
+            if(aluno.getNivel().equals(categorias.get(i).getTipoEnsino())){
+                combbx[1].addItem(categorias.get(i).getNome());
+            }
         }
         
-        combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox(categoria)};
         combbx[0].setSelectedItem(aluno.getNivel());
         combbx[1].setSelectedItem(categoria_ctrl.getCategoria(aluno.getCategoria_id()).getNome());
+        combbx[0].addActionListener(
+            new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    combbx[1].removeAllItems();
+                    ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
+                    for(int i=0;i<categorias.size();i++){
+                        if(combbx[0].getSelectedItem().equals(categorias.get(i).getTipoEnsino())){
+                            combbx[1].addItem(categorias.get(i).getNome());
+                        }
+                    }
+                }
+            }
+        );
         male = new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);

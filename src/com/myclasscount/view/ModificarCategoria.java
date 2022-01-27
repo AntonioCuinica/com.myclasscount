@@ -20,6 +20,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import com.myclasscount.model.Categoria;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  *
  * @author CUINIC4
@@ -65,11 +67,36 @@ public class ModificarCategoria extends JDialog {
         myProc.getBtns()[0].addMouseListener(new Clique());
         
         String  tipoEnsino[]={"Primario","Secondario","Tecnico","Universitario"};
-        String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe",
-                         "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
+        String classe[];
+        if(categoria.getTipoEnsino().equals("Primario")){
+            classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
+        }else if(categoria.getTipoEnsino().equals("Secundario")){
+            classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
+        }else{
+            classe=new String[]{"Superior"};
+        }
         combbx=new JComboBox[]{new JComboBox(tipoEnsino),new JComboBox(classe)};
         combbx[0].setSelectedItem(categoria.getTipoEnsino());
         combbx[1].setSelectedItem(categoria.getClasse());
+        combbx[0].addActionListener(
+           new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+                   String classe[];
+                   combbx[1].removeAllItems();
+                   if(combbx[0].getSelectedItem().equals("Primario")){
+                        classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
+                   }else if(combbx[0].getSelectedItem().equals("Secondario")){
+                        classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
+                   }else{
+                        classe=new String[]{"Superior"};
+                   }
+                   for(String item:classe){
+                       combbx[1].addItem(item);
+                   }
+               }
+           }
+        );
+        
         txtF=new JTextField[]{new JTextField(),new JTextField()};
         txtF[0].setText(categoria.getNome());
         txtF[1].setText(String.valueOf(categoria.getPreco()));

@@ -12,6 +12,8 @@ import com.myclasscount.model.Categoria;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -66,14 +68,28 @@ public class AdicionarAluno extends JPanel {
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Técnico","Universitario"};
+        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
         ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
-        String  categoria[]=new String[categorias.size()];
-        for(int i=0;i<categoria.length;i++){
-            categoria[i]=categorias.get(i).getNome();
+        combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox()};
+        for(int i=0;i<categorias.size();i++){
+            if(nivel[0].equals(categorias.get(i).getTipoEnsino())){
+                combbx[1].addItem(categorias.get(i).getNome());
+            }
         }
+        combbx[0].addActionListener(
+            new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    combbx[1].removeAllItems();
+                    ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
+                    for(int i=0;i<categorias.size();i++){
+                        if(combbx[0].getSelectedItem().equals(categorias.get(i).getTipoEnsino())){
+                            combbx[1].addItem(categorias.get(i).getNome());
+                        }
+                    }
+                }
+            }
+        );
         
-        combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox(categoria)};
         male = new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);
@@ -190,7 +206,12 @@ public class AdicionarAluno extends JPanel {
                 aluno.setMorada(andress.getText());
                 aluno.setTelefone(txtF[3].getText());
                 aluno.setEmail(txtF[4].getText());
-                aluno.setCategoria_id(categoria_ctrl.getCategoria(""+combbx[1].getSelectedItem()).getId());
+                String catID=String.valueOf(combbx[1].getSelectedItem());
+                
+                if(!catID.equals("null")){
+                    aluno.setCategoria_id(categoria_ctrl.getCategoria(catID).getId());
+                }
+                
                 
                 if(!Aluno_ctrl.setAluno(aluno)){
                     if(Aluno_ctrl.getErro().contains("nome")){
@@ -206,6 +227,8 @@ public class AdicionarAluno extends JPanel {
                         txtF[3].setText("");
                         txtF[3].grabFocus();
                     }
+                }else if(catID.equals("null")){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, categoria nao definida", true);
                 }else{
                     
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);

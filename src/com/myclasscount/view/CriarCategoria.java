@@ -9,6 +9,8 @@ import com.myclasscount.control.categoria_ctrl;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
@@ -53,9 +55,26 @@ public class CriarCategoria extends JPanel {
         myProc.getBtns()[1].addMouseListener(new Clique());
         
         String  tipoEnsino[]={"Primario","Secondario","Tecnico","Universitario"};
-        String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe",
-                         "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
+        String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
         combbx=new JComboBox[]{new JComboBox(tipoEnsino),new JComboBox(classe)};
+        combbx[0].addActionListener(
+           new ActionListener(){
+               public void actionPerformed(ActionEvent e){
+                   String classe[];
+                   combbx[1].removeAllItems();
+                   if(combbx[0].getSelectedItem().equals("Primario")){
+                        classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
+                   }else if(combbx[0].getSelectedItem().equals("Secondario")){
+                        classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
+                   }else{
+                        classe=new String[]{"Superior"};
+                   }
+                   for(String item:classe){
+                       combbx[1].addItem(item);
+                   }
+               }
+           }
+        );
         txtF=new JTextField[]{new JTextField(),new JTextField()};
         desc=new JTextArea();
         desc.setLineWrap(true);

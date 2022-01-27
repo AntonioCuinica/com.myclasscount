@@ -55,7 +55,6 @@ public class AdicionarDisciplina extends JPanel {
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[0].addMouseListener(new Clique());
      
-        String  categoria[]={"Domiciliar","Normal","Online","Mista"};
         String seccao[]={"Ciências","Letras","Tecnica","Superior"};
         combbx=new JComboBox(seccao);
         txtF=new JTextField();
