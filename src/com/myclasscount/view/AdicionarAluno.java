@@ -6,6 +6,7 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.categoria_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Categoria;
@@ -239,7 +240,7 @@ public class AdicionarAluno extends JPanel {
                     
                     andress.setText("");
                     
-                    Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+                    Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
                     v.updateComponents();
                 }
             

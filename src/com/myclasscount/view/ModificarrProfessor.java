@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
@@ -273,7 +274,7 @@ public class ModificarrProfessor extends JDialog {
                     
                     andress.setText("");
                     
-                    Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
+                    Ver_Professores v=(Ver_Professores)CtrlGeral.getTela("verProfessores");
                     v.updateVer_dialog(Myclasscount.getFrame());
                     
                     dispose();

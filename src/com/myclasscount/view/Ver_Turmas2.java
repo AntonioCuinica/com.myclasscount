@@ -5,6 +5,9 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Turma;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -12,45 +15,52 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
  * @author CUINIC4
  */
 public class Ver_Turmas2 extends JPanel {
-    private Color backColor=new Color(0,24,242);
+    private final Color backColor=new Color(0,24,242);
     private Container container;
     private MyButtonn btns[];
     private Panel title;
     private Table tabela;
     
     public Ver_Turmas2(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Turma A",this);
         container.add(title);
-        this.addTable();
-        this.setVisible(true);
+        setVisible(true);
     }
     
-    public void addTable(){
+    public void addTable(Turma turma){
         Panel mainPane=new Panel(Color.white,false);
         mainPane.setLayout(new BorderLayout());
         
         JPanel pan=new JPanel(new GridLayout());
+        pan.setBackground(backColor.darker());
+        pan.setBorder(new EmptyBorder(15,0,15,0));
         mainPane.add(pan,BorderLayout.NORTH);
         
-        String turma[][]={{"Classe","10a"},{"Turno","Manha"},{"Professor","Ribeiro"}};
+        String turmaTurno[][]={{"Classe",turma.getClasse()},{"Alunos",""+turma.getAlunos().size()},
+                               {"Professor",turma.getProfessor().getNome()+" "+turma.getProfessor().getApelido()}};
         JPanel pan1=new JPanel(new GridLayout(3,1));
-   
-        for(int i=0;i<turma.length;i++){
+        pan1.setBorder(new EmptyBorder(0,15,0,15));
+        pan1.setBackground(new Color(19,46,98).darker());
+        
+        for(int i=0;i<turmaTurno.length;i++){
             Panel pan2=new Panel(new Color(19,46,98).darker(),true);
+            pan2.setBorder(new EmptyBorder(0,15,0,15));
             pan2.invisible(true,true);
             pan2.setLayout(new GridLayout(1,2));
-            for(int j=0;j<turma[0].length;j++){
-                JLabel lbl=new JLabel(turma[i][j]);
+            for(int j=0;j<turmaTurno[0].length;j++){
+                JLabel lbl=new JLabel(turmaTurno[i][j]);
                 lbl.setForeground(Color.white);
                 pan2.add(lbl);
             }
@@ -61,10 +71,38 @@ public class Ver_Turmas2 extends JPanel {
         String colunas1[]={"","S","T","Q","Q","S","S","D"};
         tabela=new Table(colunas1);
         String dados1[][]=new String[2][colunas1.length];
-        for(int i=0;i<dados1.length;i++){
-            for(int j=0;j<dados1[0].length;j++){
-                dados1[i][j]=""+i*j;
-            }
+        for(int i=0; i<turma.getHorarios().size() && i<dados1.length;i++){
+            switch(turma.getHorarios().get(i).getDia_semana()){
+                 case "Segunda":
+                    dados1[0][1]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][1]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Terça":
+                    dados1[0][2]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][2]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Quarta":
+                    dados1[0][3]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][3]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Quinta":
+                    dados1[0][4]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][4]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Sexta":
+                    dados1[0][5]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][5]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Sabado":
+                    dados1[0][6]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][6]=turma.getHorarios().get(i).getHora_fim();
+                break;
+                case "Domingo":
+                    dados1[0][7]=turma.getHorarios().get(i).getHora_inicio();
+                    dados1[1][7]=turma.getHorarios().get(i).getHora_fim();
+                break;
+            } 
+            
         }
         dados1[0][0]="Inicio";
         dados1[1][0]="Fim";
@@ -79,12 +117,25 @@ public class Ver_Turmas2 extends JPanel {
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
+        voltar.setVisible(false);
+        MyButtonn modificar=new MyButtonn("Modificar",false);
+        modificar.setSize(90,25);
+        modificar.addMouseListener(new Clique());
+        modificar.setVisible(false);
+        
         tabela=new Table(colunas);
-        String dados[][]=new String[30][colunas.length];
-         for(int i=0;i<dados.length;i++){
-            for(int j=0;j<dados[0].length;j++){
-                dados[i][j]=""+i*j;
-            }
+        ArrayList<Aluno> alunos=turma.getAlunos();
+        String dados[][]=new String[alunos.size()][colunas.length];
+        for(int i=0;i<dados.length;i++){
+            dados[i][0]=alunos.get(i).getNome();
+            dados[i][1]=alunos.get(i).getApelido();
+            dados[i][2]=alunos.get(i).getBI();
+            dados[i][3]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
+            dados[i][4]=alunos.get(i).getNivel();
+            dados[i][5]=alunos.get(i).getSexo();
+            dados[i][6]=alunos.get(i).getNivel();
+            dados[i][7]=Aluno_ctrl.pagamento(alunos.get(i).getId())[2];
+            
         }
         tabela.setTableData(dados);
         JScrollPane src=new JScrollPane(tabela);
@@ -94,6 +145,7 @@ public class Ver_Turmas2 extends JPanel {
         
         mainPane.add(src,BorderLayout.CENTER);
         container.add(mainPane);
+        container.add(modificar);
         container.add(voltar);
         verAlunos(Myclasscount.getFrame());
         new Thread(
@@ -109,9 +161,13 @@ public class Ver_Turmas2 extends JPanel {
                         x=container.getWidth()/2-title.getWidth()/2;
                         title.setLocation(x,y);
                         mainPane.setBounds(0,title.getY()+y,container.getWidth(),(int)(container.getHeight()*0.75));
-                        y=((container.getHeight()-(mainPane.getHeight()+mainPane.getY())))-(voltar.getHeight()/2);
-                        x=title.getWidth()+title.getX()-voltar.getWidth();
-                        voltar.setLocation(x,container.getHeight()-y);
+                        y=((container.getHeight()-(mainPane.getHeight()+mainPane.getY())))-(modificar.getHeight()/2);
+                        x=title.getWidth()+title.getX()-modificar.getWidth();
+                        modificar.setLocation(x,container.getHeight()-y);
+                        x=modificar.getX()-modificar.getWidth();
+                        voltar.setLocation(x-10,modificar.getY());
+                        voltar.setVisible(true);
+                        modificar.setVisible(true);
                         container.revalidate();
                     }
                 }
@@ -131,6 +187,12 @@ public class Ver_Turmas2 extends JPanel {
                 }
             }
         );
+    }
+
+    void updateComponents(Turma turma) {
+        removeAll();
+        container.add(title);
+        addTable(turma);
     }
     
     private class Clique extends MouseAdapter{

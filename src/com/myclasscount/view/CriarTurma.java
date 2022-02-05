@@ -6,11 +6,14 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Professor_ctrl;
+import com.myclasscount.control.Turma_ctrl;
 import com.myclasscount.control.categoria_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Categoria;
 import com.myclasscount.model.Professor;
+import com.myclasscount.model.Turma;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -46,7 +49,7 @@ public class CriarTurma extends JPanel {
     JComboBox combbx[];
     JTextField txtF;
     MyButtonn defHorario;
-    
+    CriarHorario cTur;
     
     public CriarTurma(){
         this.setLayout(null);
@@ -62,7 +65,7 @@ public class CriarTurma extends JPanel {
    
     public void addComponentToMainPane(Panel mainPane){
         pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(11,1));
+        pan1.setLayout(new GridLayout(9,1));
         pan1.invisible(true, true);
         pan2=new Panel(Color.black,false);
         pan2.setLayout(null);
@@ -73,9 +76,6 @@ public class CriarTurma extends JPanel {
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[0].addMouseListener(new Clique());
      
-        
-        String  turno[]={"Manha","Tarde","Noite"};
-        
         professores=Professor_ctrl.getProfessores();
         String professor[]=new String[professores.size()];
         for(int i=0;i<professor.length;i++){
@@ -84,12 +84,12 @@ public class CriarTurma extends JPanel {
         }
         String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe",
                          "8a Classe","9a Classe","10a Classe","11a Classe","12a Classe","Superior"};
-        combbx=new JComboBox[]{new JComboBox(turno),new JComboBox(professor),new JComboBox(classe)};
-        combbx[2].addActionListener(new Clique());
+        combbx=new JComboBox[]{new JComboBox(professor),new JComboBox(classe)};
+        combbx[1].addActionListener(new Clique());
         txtF=new JTextField();
         defHorario=new MyButtonn("Definir Horario",false);
         defHorario.addActionListener(new Clique());
-        JLabel labels[]={new JLabel("Nome da Turma"),new JLabel("Turno"),new JLabel("Nome do Professor"),
+        JLabel labels[]={new JLabel("Nome da Turma"),new JLabel("Nome do Professor"),
                          new JLabel("Classe")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
@@ -97,7 +97,6 @@ public class CriarTurma extends JPanel {
         pan1.add(labels[0]); pan1.add(txtF);
         pan1.add(labels[1]); pan1.add(combbx[0]);
         pan1.add(labels[2]); pan1.add(combbx[1]);
-        pan1.add(labels[3]); pan1.add(combbx[2]);
         pan1.add(new JLabel());pan1.add(defHorario);
         
         pan2.add(MyProceduress.barName("Adicionar Alunos"));
@@ -169,24 +168,67 @@ public class CriarTurma extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
            if(e.getSource().equals(defHorario)){
-                CriarHorario cTur=new CriarHorario(Myclasscount.getFrame(),true);
+                cTur=new CriarHorario(Myclasscount.getFrame(),true);
                 cTur.setVisible(true);
            }
-           else if(e.getSource().equals(combbx[2])){
+           else if(e.getSource().equals(combbx[1])){
                pan2.remove(1);
-               pan2.add(listaEstudante(String.valueOf(combbx[2].getSelectedItem())));
+               pan2.add(listaEstudante(String.valueOf(combbx[1].getSelectedItem())));
            }
         }
         
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Proximo")){
-                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
+                if(txtF.getText().equals("")){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, nome vazio",true);
+                }else if(Turma_ctrl.getTurma(txtF.getText())!=null){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, nome existente",true);
+                    txtF.setText("");
+                }
+                else if(cTur==null){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, defina um horario",true);
+                }else if(cTur.getHorario()==null){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, defina um horario",true);
+                }else{
+                    Turma turma=new Turma();
+                    turma.setNome(txtF.getText());
+                    turma.setClasse(String.valueOf(combbx[1].getSelectedItem()));
+                    System.out.println("cTur: "+cTur.getHorario());
+                    turma.setHorario(cTur.getHorario());
+                    Turma_ctrl.setTurma(turma);
+                    turma=Turma_ctrl.getTurma(turma.getNome());
+                    for(Professor prof:professores){
+                        String nome=String.valueOf(combbx[0].getSelectedItem());
+                        if(nome.equals(prof.getNome()+" "+prof.getApelido())){
+                            Turma_ctrl.setProfessor_turma(turma.getId(),prof.getId());
+                            turma=Turma_ctrl.getTurma(turma.getId());
+                        }
+                        
+                    }
+                    for(JCheckBox ch:checks){
+                        if(ch!=null){
+                            if(ch.isSelected()){
+                                String nome=String.valueOf(ch.getText());
+                                for(Aluno aluno:alunos){
+                                    if(nome.equals(aluno.getNome()+" "+aluno.getApelido())){
+                                        Turma_ctrl.setAluno_turma(turma.getNome(),aluno.getId());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Turma criada com sucesso",true);
+                    Ver_Turmas v=(Ver_Turmas)CtrlGeral.getTela("verTurmas");
+                    Turma trm=Turma_ctrl.getTurma(turma.getNome());
+                    v.updateComponents();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
+                }
             }else if(e.getComponent().toString().contains("Voltar")){
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
             }else if(e.getComponent().toString().contains("Estudante")){
                 MyButtonn btn=(MyButtonn)e.getComponent();
                 JCheckBox ch=(JCheckBox)btn.getComponent(1);
-                ch.setSelected(ch.isSelected()?false:true);
+                ch.setSelected(!ch.isSelected());
             }    
         }   
     }

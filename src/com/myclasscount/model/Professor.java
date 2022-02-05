@@ -121,7 +121,7 @@ public class Professor {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Aluno\nid=").append(id);
+        sb.append("PROFESSOR\nid=").append(id);
         sb.append("\nnome=").append(nome);
         sb.append("\napelido=").append(apelido);
         sb.append("\nBI=").append(BI);

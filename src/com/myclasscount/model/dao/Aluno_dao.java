@@ -49,6 +49,36 @@ public class Aluno_dao {
         return aluno;
     }
     
+    public static Aluno getAlunoID(int aluno_id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM myclasscount.aluno WHERE id=?";
+        Aluno aluno=null;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(aluno_id));
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                aluno=new Aluno();
+                aluno.setId(Integer.parseInt(rs.getString("id")));
+                aluno.setNome(rs.getString("nome"));
+                aluno.setApelido(rs.getString("apelido"));
+                aluno.setBI(rs.getString("BI"));
+                aluno.setNascimento(rs.getString("nascimento"));
+                aluno.setSexo(rs.getString("sexo"));
+                aluno.setNivel(rs.getString("nivel"));
+                aluno.setMorada(rs.getString("morada"));
+                aluno.setTelefone(rs.getString("telefone"));
+                aluno.setEmail(rs.getString("email"));
+                aluno.setCategoria_id(Integer.parseInt(rs.getString("categoria_id")));
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return aluno;
+    }
+    
     public static ArrayList<Aluno> getAlunos(){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.aluno;";

@@ -43,6 +43,10 @@ public class Aluno_ctrl {
         return Aluno_dao.getAluno(BI);
     }
     
+    public static Aluno getAluno(int aluno_id){
+        return Aluno_dao.getAlunoID(aluno_id);
+    }
+    
     public static boolean delAluno(int aluno_id){
         return Aluno_dao.delAluno(aluno_id);
     }

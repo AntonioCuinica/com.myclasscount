@@ -115,7 +115,7 @@ public class Aluno {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Aluno\nid=").append(id);
+        sb.append("ALUNO\nid=").append(id);
         sb.append("\ncategoria_id=").append(categoria_id);
         sb.append("\nnome=").append(nome);
         sb.append("\napelido=").append(apelido);
@@ -129,14 +129,4 @@ public class Aluno {
         return sb.toString();
     }
     
-   /* 
-    public static void main(String[] args) throws ParseException {
-        Aluno a=new Aluno();
-        a.setNome("Alves");
-        a.setApelido("Cuinica");
-        a.setNascimento(new SimpleDateFormat("dd/MM/yyyy").parse("22/01/2022"));
-        a.setEmail("älves@gmail.com");
-        System.out.println(a);
-    }
-    */
 }

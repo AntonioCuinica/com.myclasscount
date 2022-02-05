@@ -66,8 +66,6 @@ public class Ver_Alunos extends JPanel {
             dados[i][0]=alunos.get(i).getNome();
             dados[i][1]=alunos.get(i).getApelido();
             dados[i][2]=alunos.get(i).getBI();
-            //Calendar cal=Calendar.getInstance();
-            //int idade=cal.get(Calendar.YEAR)-(Integer.parseInt(alunos.get(i).getNascimento().split("-")[0]));
             dados[i][3]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
             Categoria cat=categoria_ctrl.getCategoria(alunos.get(i).getCategoria_id());
             dados[i][4]=cat.getClasse();

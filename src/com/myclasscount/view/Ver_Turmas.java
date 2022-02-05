@@ -5,6 +5,9 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
+import com.myclasscount.control.Turma_ctrl;
+import com.myclasscount.model.Turma;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -12,6 +15,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -19,24 +23,25 @@ import javax.swing.border.EmptyBorder;
  *
  * @author CUINIC4
  */
+
 public class Ver_Turmas extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
-    private MyButtonn btns[];
     private Panel title;
     
     public Ver_Turmas(){
-        this.setLayout(null);
+        setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
         title=MyProceduress.barName("Turmas",this);
         container.add(title);
-        this.addCategoria();
-        this.setVisible(true);
+        addCategoria();
+        setVisible(true);
     }
     
+    
+    
     public void addCategoria(){
-        MyButtonn bts[]=new MyButtonn[6];
         Panel pan=new Panel(Color.white,true);
         GridLayout gLyt=new GridLayout(1,3,15,0);
         BoxLayout bLyt=new BoxLayout(pan,BoxLayout.Y_AXIS);
@@ -44,10 +49,12 @@ public class Ver_Turmas extends JPanel {
         pan.setLayout(bLyt);
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
+        ArrayList<Turma> turmas=Turma_ctrl.getTurmas();
+        MyButtonn bts[]=new MyButtonn[turmas.size()];
         for(int i=0;i<bts.length;i++){
-            bts[i]=new MyButtonn("Turma "+(i+1),false);
-            bts[i].addActionListener(new clique(true,false));
-            bts[i].addMouseListener(new clique(bts[i]));
+            bts[i]=new MyButtonn(turmas.get(i).getNome(),false);
+            bts[i].setText(turmas.get(i).getNome());
+            bts[i].addActionListener(new clique(bts[i],true,false));
         }
         
         Panel pan1=null;
@@ -82,11 +89,12 @@ public class Ver_Turmas extends JPanel {
         
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
-        voltar.addActionListener(new clique(false,true));
+        voltar.addActionListener(new clique(voltar,false,true));
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
         container.add(voltar);
+        
         new Thread(
             new Runnable(){
                 public void run(){
@@ -104,24 +112,25 @@ public class Ver_Turmas extends JPanel {
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
                         container.revalidate();
-                        
                     }
                 }
             }
         ).start();
     }
     
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addCategoria();
+    }
+    
     private class clique extends MouseAdapter implements ActionListener {
             private MyButtonn btn=null;
             private boolean clicarTurma=true;
             private boolean clicarVoltar=true;
-            public clique(MyButtonn btn){
-                this.btn=btn;
-                clicarTurma=false;
-                clicarVoltar=false;
-            }
             
-            public clique(boolean clickT,boolean clickBack){
+            public clique(MyButtonn btn,boolean clickT,boolean clickBack){
+                this.btn=btn;
                 clicarTurma=clickT;
                 clicarVoltar=clickBack;
             }
@@ -129,7 +138,10 @@ public class Ver_Turmas extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(clicarTurma){
-                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
+                    Ver_Turmas2 v=(Ver_Turmas2)CtrlGeral.getTela("verTurmas2");
+                    Turma turma=Turma_ctrl.getTurma(btn.getText());
+                    v.updateComponents(turma);
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
                 }else if(clicarVoltar){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
                 }

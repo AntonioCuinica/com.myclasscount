@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.categoria_ctrl;
 import java.awt.Color;
 import java.awt.Container;
@@ -165,7 +166,7 @@ public class ModificarCategoria extends JDialog {
                 cat.setDescricao(desc.getText());
                 if(categoria_ctrl.updateCategoria(cat)){
                     
-                    Ver_Categoria categoria=(Ver_Categoria)Myclasscount.getContainer().getComponent(4);
+                    Ver_Categoria categoria=(Ver_Categoria)CtrlGeral.getTela("categoria");
                     categoria.updateComponents();
                     
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");

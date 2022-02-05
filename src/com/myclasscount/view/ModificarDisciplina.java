@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Disciplina_ctrl;
 import java.awt.Color;
 import java.awt.Container;
@@ -119,7 +120,7 @@ public class ModificarDisciplina extends JDialog {
                 disc.setCarga_horaria(String.valueOf(carga.getValue()));
                 disc.setSeccao(String.valueOf(combbx.getSelectedItem()));
                 if(Disciplina_ctrl.updateDisciplina(disc)){
-                   Ver_Disciplinas v=(Ver_Disciplinas)Myclasscount.getContainer().getComponent(8);
+                   Ver_Disciplinas v=(Ver_Disciplinas)CtrlGeral.getTela("verDisciplinas");
                    v.updateComponents();
                    txtF.setText("");
                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");

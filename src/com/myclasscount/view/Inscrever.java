@@ -6,6 +6,7 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.dao.Disciplina_dao;
@@ -124,7 +125,7 @@ public class Inscrever extends JDialog {
                 MyDialogg resp2=new MyDialogg(Myclasscount.getFrame(),1,"Inscrito com sucesso",true);
                 disciplina.setSelectedIndex(0);
                 
-                Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+                Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
                 v.updateComponents();
                 v.updateVer_dialog(Myclasscount.getFrame());
                 

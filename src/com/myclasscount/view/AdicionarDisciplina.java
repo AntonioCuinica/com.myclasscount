@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.model.Disciplina;
 import java.awt.Color;
@@ -105,7 +106,7 @@ public class AdicionarDisciplina extends JPanel {
                if(Disciplina_ctrl.setDisciplina(disc)){
                    txtF.setText("");
                    txtF.grabFocus();
-                   Ver_Disciplinas v=(Ver_Disciplinas)Myclasscount.getContainer().getComponent(8);
+                   Ver_Disciplinas v=(Ver_Disciplinas)CtrlGeral.getTela("verDisciplinas");
                    v.updateComponents();
                }
             }else if(e.getComponent().toString().contains("Voltar")){

@@ -13,6 +13,7 @@ public class Horario {
     private int id;
     private String turno;
     private String hora_inicio;
+    private String hora_fim;
     private String dia_semana;
     private int turma_id;
 
@@ -55,17 +56,26 @@ public class Horario {
     public void setTurma_id(int turma_id) {
         this.turma_id = turma_id;
     }
-
+    
+    public void setHora_fim(String hora_fim) {
+        this.hora_fim=hora_fim;
+    }
+    
+    public String getHora_fim(){
+        return hora_fim;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Horario\nid=").append(id);
         sb.append("\nturno=").append(turno);
         sb.append("\nhora_inicio=").append(hora_inicio);
+        sb.append("\nhora_fim=").append(hora_fim);
         sb.append("\ndia_semana=").append(dia_semana);
         sb.append("\nturma_id=").append(turma_id);
         return sb.toString();
     }
-    
+
     
 }

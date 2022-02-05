@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
@@ -239,10 +240,10 @@ public class AdicionarProfessor extends JPanel {
                     
                     andress.setText("");
                     
-                    Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
+                    Ver_Professores v=(Ver_Professores)CtrlGeral.getTela("verProfessores");
                     v.updateComponents();
                     
-                    CriarSenha cS=(CriarSenha)Myclasscount.getContainer().getComponent(14);
+                    CriarSenha cS=(CriarSenha)CtrlGeral.getTela("criarSenha");
                     cS.setProf_BI(professor.getBI());
                     
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarSenha");

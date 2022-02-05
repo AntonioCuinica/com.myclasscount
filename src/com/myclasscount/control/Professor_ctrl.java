@@ -44,6 +44,10 @@ public class Professor_ctrl {
         return Professor_dao.getProfessor(BI);
     }
     
+    public static Professor getProfessor(int prof_id){
+        return Professor_dao.getProfessorID(prof_id);
+    }
+    
     public static Professor getProfessorNUIT(String NUIT){
         return Professor_dao.getProfessorNUIT(NUIT);
     }

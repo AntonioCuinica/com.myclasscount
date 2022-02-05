@@ -20,13 +20,45 @@ import java.util.ArrayList;
 
 public class Professor_dao {
     
-    public static Professor getProfessor(final String BI){
+    public static Professor getProfessor(String BI){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM myclasscount.professor WHERE BI=?";
         Professor professor=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,BI);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                professor=new Professor();
+                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setNome(rs.getString("nome"));
+                professor.setApelido(rs.getString("apelido"));
+                professor.setBI(rs.getString("BI"));
+                professor.setNascimento(rs.getString("nascimento"));
+                professor.setSexo(rs.getString("sexo"));
+                professor.setNivel(rs.getString("nivel"));
+                professor.setMorada(rs.getString("morada"));
+                professor.setTelefone(rs.getString("telefone"));
+                professor.setEmail(rs.getString("email"));
+                professor.setNUIT(rs.getString("NUIT"));
+                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return professor;
+    }
+    
+    
+    public static Professor getProfessorID(int prof_id){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT * FROM myclasscount.professor WHERE id=?";
+        Professor professor=null;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setString(1,String.valueOf(prof_id));
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 professor=new Professor();

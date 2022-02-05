@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -147,12 +148,12 @@ public class MyProceduress {
     }
     
     public static void updateVerAlunos(){
-        Ver_Alunos v=(Ver_Alunos)Myclasscount.getContainer().getComponent(2);
+        Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
         v.updateComponents();
     }
     
     public static void updateVerProfessores(){
-        Ver_Professores v=(Ver_Professores)Myclasscount.getContainer().getComponent(3);
+        Ver_Professores v=(Ver_Professores)CtrlGeral.getTela("verProfessores");
         v.updateComponents();
     }
     
