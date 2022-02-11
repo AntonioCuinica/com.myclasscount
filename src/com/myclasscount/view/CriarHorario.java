@@ -28,12 +28,13 @@ public class CriarHorario extends JDialog {
     private Color backColor=new Color(0,24,242);
     private Panel title;
     private MyProceduress myProc;
-    Panel back;
+    private Panel back;
     private MyButtonn btns[];
-    JComboBox combbx[];
-    JSpinner txtF[];
-    String  turno[];
+    private JComboBox combbx[];
+    private JSpinner txtF[];
+    private String  turno[];
     private Horario horario;
+    private String antes,depois;
     
     public void setHorario(Horario horario){
         this.horario=horario;
@@ -43,13 +44,15 @@ public class CriarHorario extends JDialog {
         return horario;
     }
     
-    public CriarHorario(JFrame frame, boolean modal){
+    public CriarHorario(JFrame frame,String antes,String depois, boolean modal){
         super(frame,modal);
         setSize(600,400);
         setUndecorated(true);
         setOpacity(0.92f);
         setMinimumSize(new Dimension(700,500));
         setLocationRelativeTo(frame);
+        this.antes=antes;
+        this.depois=depois;
         back=new Panel(backColor.darker(),true,true);
         back.setLayout(null);
         back.setBorderColor(Color.WHITE);
@@ -57,7 +60,7 @@ public class CriarHorario extends JDialog {
         back.add(title);
         title.setVisible(false);
         myProc=new MyProceduress();
-        addComponentToMainPane(myProc.mainPane("criarTurma","verTurmas", back));
+        addComponentToMainPane(myProc.mainPane(antes,depois, back));
         setContentPane(back);
     }
     
@@ -112,6 +115,7 @@ public class CriarHorario extends JDialog {
                         
                         myProc.getBtns()[0].setVisible(true);
                         myProc.getBtns()[1].setVisible(true);
+                        
                         mainPane.revalidate();
                     }
                 }
@@ -128,10 +132,10 @@ public class CriarHorario extends JDialog {
                 horario.setHora_inicio(String.valueOf(txtF[0].getValue()));
                 horario.setHora_fim(String.valueOf(txtF[1].getValue()));
                 horario.setDia_semana(String.valueOf(combbx[1].getSelectedItem()));
-                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),depois);
                 dispose();
             }else if(e.getComponent().toString().contains("Voltar")){
-                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),antes);
                 dispose();
             } 
         }   

@@ -34,11 +34,24 @@ public class Turma_ctrl {
         Turma_dao.setAluno_turma(nome, aluno_id);
     }
     
+    public static void delAluno_turma(Turma turma,int aluno_id){
+        Turma_dao.delAluno_turma(turma, aluno_id);
+    }
+    
+    public static void delHorario(Turma turma,String dia_semana){
+        Turma_dao.delHorario(turma, dia_semana);
+    }
+    
+    
     public static void setProfessor_turma(int turma_id, int prof_id){
         Turma_dao.setProfessor_turma(turma_id, prof_id);
     }
     
     public static ArrayList<Turma> getTurmas(){
         return Turma_dao.getTurmas();
+    }
+    
+    public static void updateTurma(Turma turma){
+        Turma_dao.updateTurma(turma);
     }
 }

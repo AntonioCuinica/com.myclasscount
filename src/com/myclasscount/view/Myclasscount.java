@@ -114,6 +114,10 @@ public class Myclasscount extends JFrame {
         add(criarC,"CriarCat");
         CtrlGeral.setTela("CriarCat",criarC);
         
+        Observacoes observ=new Observacoes();
+        add(observ,"observacoes");
+        CtrlGeral.setTela("observacoes",observ);
+        
         resizing();
     }
     
