@@ -54,4 +54,8 @@ public class Turma_ctrl {
     public static void updateTurma(Turma turma){
         Turma_dao.updateTurma(turma);
     }
+
+    public static void removerTurma(Turma turma) {
+        Turma_dao.removerTurma(turma);
+    }
 }

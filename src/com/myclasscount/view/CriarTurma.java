@@ -162,11 +162,17 @@ public class CriarTurma extends JPanel {
         return stud;
     }
     
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addComponentToMainPane(myProc.mainPane("mainFrame","verTurmas", container));
+    }
+    
     private class Clique extends MouseAdapter implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
            if(e.getSource().equals(defHorario)){
-                cTur=new CriarHorario(Myclasscount.getFrame(),"criarTurma","verTurmas",true);
+                cTur=new CriarHorario(Myclasscount.getFrame(),"criarTurma","criarTurma",true);
                 cTur.setVisible(true);
            }
            else if(e.getSource().equals(combbx[1])){

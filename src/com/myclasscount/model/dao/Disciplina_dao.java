@@ -29,7 +29,7 @@ public class Disciplina_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 disciplina=new Disciplina();
-                disciplina.setId(Integer.parseInt(rs.getString("id")));
+                disciplina.setId(rs.getInt("id"));
                 disciplina.setNome(rs.getString("nome"));
                 disciplina.setCarga_horaria(rs.getString("carga_horaria"));
                 disciplina.setSeccao(rs.getString("seccao"));
@@ -44,14 +44,14 @@ public class Disciplina_dao {
     
     public static ArrayList<Disciplina> getDisciplinas(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.disciplina";
+        String select="SELECT * FROM myclasscount.disciplina order by nome";
         ArrayList<Disciplina> disciplina=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Disciplina disc=new Disciplina();
-                disc.setId(Integer.parseInt(rs.getString("id")));
+                disc.setId(rs.getInt("id"));
                 disc.setNome(rs.getString("nome"));
                 disc.setCarga_horaria(rs.getString("carga_horaria"));
                 disc.setSeccao(rs.getString("seccao"));
@@ -72,11 +72,11 @@ public class Disciplina_dao {
         ArrayList<Disciplina> disciplina=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(prof_id));
+            stmt.setInt(1,prof_id);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Disciplina disc=new Disciplina();
-                disc.setId(Integer.parseInt(rs.getString("id")));
+                disc.setId(rs.getInt("id"));
                 disc.setNome(rs.getString("nome"));
                 disc.setCarga_horaria(rs.getString("carga_horaria"));
                 disc.setSeccao(rs.getString("seccao"));
@@ -99,7 +99,7 @@ public class Disciplina_dao {
             stmt.setString(1,disc.getNome());
             stmt.setString(2,disc.getCarga_horaria());
             stmt.setString(3,disc.getSeccao());
-            stmt.setString(4,String.valueOf(disc.getId()));
+            stmt.setInt(4,disc.getId());
             stmt.execute();
             
             stmt.close();
@@ -131,7 +131,7 @@ public class Disciplina_dao {
         String select="DELETE FROM myclasscount.disciplina WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(disc.getId()));
+            stmt.setInt(1,disc.getId());
             stmt.execute(); 
             
             stmt.close();

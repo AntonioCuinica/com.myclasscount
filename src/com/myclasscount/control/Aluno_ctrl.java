@@ -39,6 +39,10 @@ public class Aluno_ctrl {
         return Aluno_dao.getAlunos();
     }
     
+    public static ArrayList<Aluno> getAlunosInscritos(){
+        return Aluno_dao.getAlunosInscritos();
+    }
+    
     public static Aluno getAluno(String BI){
         return Aluno_dao.getAluno(BI);
     }

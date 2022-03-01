@@ -6,9 +6,11 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Turma_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Horario;
+import com.myclasscount.model.Observacao;
 import com.myclasscount.model.Turma;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -130,6 +132,10 @@ public class Ver_Turmas2 extends JPanel {
         modificar.setSize(90,25);
         modificar.addMouseListener(new Clique());
         modificar.setVisible(false);
+        MyButtonn eliminar=new MyButtonn("Eliminar",false);
+        eliminar.setSize(90,25);
+        eliminar.addMouseListener(new Clique());
+        eliminar.setVisible(false);
         
         tabela=new Table(colunas);
         ArrayList<Aluno> alunos=turma.getAlunos();
@@ -152,6 +158,7 @@ public class Ver_Turmas2 extends JPanel {
         
         mainPane.add(src,BorderLayout.CENTER);
         container.add(mainPane);
+        container.add(eliminar);
         container.add(modificar);
         container.add(voltar);
         verAlunos(Myclasscount.getFrame());
@@ -168,13 +175,17 @@ public class Ver_Turmas2 extends JPanel {
                         x=container.getWidth()/2-title.getWidth()/2;
                         title.setLocation(x,y);
                         mainPane.setBounds(0,title.getY()+y,container.getWidth(),(int)(container.getHeight()*0.75));
-                        y=((container.getHeight()-(mainPane.getHeight()+mainPane.getY())))-(modificar.getHeight()/2);
-                        x=title.getWidth()+title.getX()-modificar.getWidth();
-                        modificar.setLocation(x,container.getHeight()-y);
+                        y=((container.getHeight()-(mainPane.getHeight()+mainPane.getY())))-(eliminar.getHeight()/2);
+                        x=title.getWidth()+title.getX()-eliminar.getWidth();
+                        eliminar.setLocation(x,container.getHeight()-y);
+                        x=eliminar.getX()-eliminar.getWidth();
+                        modificar.setLocation(x-10,eliminar.getY());
                         x=modificar.getX()-modificar.getWidth();
                         voltar.setLocation(x-10,modificar.getY());
+                        
                         voltar.setVisible(true);
                         modificar.setVisible(true);
+                        eliminar.setVisible(true);
                         container.revalidate();
                     }
                 }
@@ -186,7 +197,7 @@ public class Ver_Turmas2 extends JPanel {
         horarios.addMouseListener(
             new MouseAdapter(){
                 public void mouseClicked(MouseEvent evento){
-                    if(evento.getClickCount()==2){
+                    if(evento.getClickCount()==2 && horarios.getSelectedColumn()!=0){
                         MyDialogg rm=new MyDialogg(frame,2,"Remover horario?", true);
                         if(rm.getSimTeste()){
                             int coluna=horarios.getSelectedColumn();
@@ -244,7 +255,14 @@ public class Ver_Turmas2 extends JPanel {
                         MyButtonn observacao=new MyButtonn("Adicionar Observacao",false);
                         observacao.addActionListener(
                             (ActionEvent e)->{
-                                System.out.println("Observado com sucessno: "+tabela.getValueAt(linha,2).toString());
+                                Observacoes observ=(Observacoes)CtrlGeral.getTela("observacoes");
+                                turma.getAlunos().forEach(
+                                        aln->{
+                                            if(aluno_bi.equals(aln.getBI())){
+                                                observ.setAluno(aln);
+                                            }
+                                        }
+                                    );
                                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"observacoes");
                                 dialog.dispose();
                             }
@@ -298,6 +316,13 @@ public class Ver_Turmas2 extends JPanel {
             }else if(e.getComponent().toString().contains("Modificar")){
                 ModificarTurma modT=new ModificarTurma(Myclasscount.getFrame(),turma,true);
                 modT.setVisible(true);
+            }else if(e.getComponent().toString().contains("Eliminar")){
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover, "+turma.getNome()+" ?", true);
+                if(dialog.getSimTeste()){
+                    Turma_ctrl.removerTurma(turma);
+                    MyProceduress.updateVerTurmas();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
+                }
             }
         }
     }

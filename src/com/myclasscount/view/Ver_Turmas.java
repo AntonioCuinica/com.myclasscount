@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.view;
 
 import com.myclasscount.control.CtrlGeral;
@@ -12,9 +13,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -51,10 +51,11 @@ public class Ver_Turmas extends JPanel {
         
         ArrayList<Turma> turmas=Turma_ctrl.getTurmas();
         MyButtonn bts[]=new MyButtonn[turmas.size()];
+        
         for(int i=0;i<bts.length;i++){
             bts[i]=new MyButtonn(turmas.get(i).getNome(),false);
             bts[i].setText(turmas.get(i).getNome());
-            bts[i].addActionListener(new clique(bts[i],true,false));
+            bts[i].addMouseListener(new clique(bts[i],true,false));
         }
         
         Panel pan1=null;
@@ -86,10 +87,10 @@ public class Ver_Turmas extends JPanel {
             }
         }
         
-        
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
-        voltar.addActionListener(new clique(voltar,false,true));
+        voltar.addMouseListener(new clique(voltar,false,true));
+        voltar.setVisible(false);
         JScrollPane src=new JScrollPane(pan);
         src.getViewport().setBackground(backColor.darker());
         container.add(src);
@@ -111,6 +112,7 @@ public class Ver_Turmas extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setVisible(true);
                         container.revalidate();
                     }
                 }
@@ -124,29 +126,28 @@ public class Ver_Turmas extends JPanel {
         addCategoria();
     }
     
-    private class clique extends MouseAdapter implements ActionListener {
-            private MyButtonn btn=null;
-            private boolean clicarTurma=true;
-            private boolean clicarVoltar=true;
+    private class clique extends MouseAdapter {
+        private MyButtonn btn=null;
+        private boolean clicarTurma=true;
+        private boolean clicarVoltar=true;
             
-            public clique(MyButtonn btn,boolean clickT,boolean clickBack){
-                this.btn=btn;
-                clicarTurma=clickT;
-                clicarVoltar=clickBack;
-            }
+        public clique(MyButtonn btn,boolean clickT,boolean clickBack){
+            this.btn=btn;
+            clicarTurma=clickT;
+            clicarVoltar=clickBack;
+        }
             
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(clicarTurma){
-                    Ver_Turmas2 v=(Ver_Turmas2)CtrlGeral.getTela("verTurmas2");
-                    Turma turma=Turma_ctrl.getTurma(btn.getText());
-                    v.updateComponents(turma);
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
-                }else if(clicarVoltar){
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
-                }
+        @Override
+        public void mouseClicked(MouseEvent e){
+            if(clicarTurma){
+                Ver_Turmas2 v=(Ver_Turmas2)CtrlGeral.getTela("verTurmas2");
+                Turma turma=Turma_ctrl.getTurma(btn.getText());
+                v.updateComponents(turma);
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas2");
+            }else if(clicarVoltar){
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
             }
-           
+        }
             
     }
     

@@ -30,7 +30,7 @@ public class Professor_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 professor=new Professor();
-                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setId(rs.getInt("id"));
                 professor.setNome(rs.getString("nome"));
                 professor.setApelido(rs.getString("apelido"));
                 professor.setBI(rs.getString("BI"));
@@ -41,7 +41,7 @@ public class Professor_dao {
                 professor.setTelefone(rs.getString("telefone"));
                 professor.setEmail(rs.getString("email"));
                 professor.setNUIT(rs.getString("NUIT"));
-                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+                professor.setSalario(rs.getDouble("salario"));
             }
             stmt.close();
             con.close();
@@ -58,11 +58,11 @@ public class Professor_dao {
         Professor professor=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(prof_id));
+            stmt.setInt(1,prof_id);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 professor=new Professor();
-                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setId(rs.getInt("id"));
                 professor.setNome(rs.getString("nome"));
                 professor.setApelido(rs.getString("apelido"));
                 professor.setBI(rs.getString("BI"));
@@ -73,7 +73,7 @@ public class Professor_dao {
                 professor.setTelefone(rs.getString("telefone"));
                 professor.setEmail(rs.getString("email"));
                 professor.setNUIT(rs.getString("NUIT"));
-                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+                professor.setSalario(rs.getDouble("salario"));
             }
             stmt.close();
             con.close();
@@ -93,7 +93,7 @@ public class Professor_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 professor=new Professor();
-                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setId(rs.getInt("id"));
                 professor.setNome(rs.getString("nome"));
                 professor.setApelido(rs.getString("apelido"));
                 professor.setBI(rs.getString("BI"));
@@ -104,7 +104,7 @@ public class Professor_dao {
                 professor.setTelefone(rs.getString("telefone"));
                 professor.setEmail(rs.getString("email"));
                 professor.setNUIT(rs.getString("NUIT"));
-                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+                professor.setSalario(rs.getDouble("salario"));
             }
             stmt.close();
             con.close();
@@ -116,14 +116,14 @@ public class Professor_dao {
     
     public static ArrayList<Professor> getProfessores(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor;";
+        String select="SELECT * FROM myclasscount.professor order by nome;";
         ArrayList<Professor> professores=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Professor professor=new Professor();
-                professor.setId(Integer.parseInt(rs.getString("id")));
+                professor.setId(rs.getInt("id"));
                 professor.setNome(rs.getString("nome"));
                 professor.setApelido(rs.getString("apelido"));
                 professor.setBI(rs.getString("BI"));
@@ -134,7 +134,7 @@ public class Professor_dao {
                 professor.setTelefone(rs.getString("telefone"));
                 professor.setEmail(rs.getString("email"));
                 professor.setNUIT(rs.getString("NUIT"));
-                professor.setSalario(Double.parseDouble(rs.getString("salario")));
+                professor.setSalario(rs.getDouble("salario"));
                 professores.add(professor);
             }
             stmt.close();
@@ -152,16 +152,16 @@ public class Professor_dao {
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
             stmt.setString(2,professor.getApelido());
-            stmt.setString(3,String.valueOf(professor.getBI()));
-            stmt.setString(4,String.valueOf(professor.getNascimento()));
+            stmt.setString(3,professor.getBI());
+            stmt.setString(4,professor.getNascimento());
             stmt.setString(5,professor.getSexo());
             stmt.setString(6,professor.getNivel());
             stmt.setString(7,professor.getMorada());
             stmt.setString(8,professor.getTelefone());
             stmt.setString(9,professor.getEmail());
-            stmt.setString(10,String.valueOf(professor.getSalario()));
-            stmt.setString(11,String.valueOf(professor.getNUIT()));
-            stmt.setString(12,String.valueOf(professor.getId()));
+            stmt.setDouble(10,professor.getSalario());
+            stmt.setString(11,professor.getNUIT());
+            stmt.setInt(12,professor.getId());
             stmt.execute();
             
             stmt.close();
@@ -178,15 +178,15 @@ public class Professor_dao {
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
             stmt.setString(2,professor.getApelido());
-            stmt.setString(3,String.valueOf(professor.getBI()));
-            stmt.setString(4,String.valueOf(professor.getNascimento()));
+            stmt.setString(3,professor.getBI());
+            stmt.setString(4,professor.getNascimento());
             stmt.setString(5,professor.getSexo());
             stmt.setString(6,professor.getNivel());
             stmt.setString(7,professor.getMorada());
             stmt.setString(8,professor.getTelefone());
             stmt.setString(9,professor.getEmail());
-            stmt.setString(10,String.valueOf(professor.getNUIT()));
-            stmt.setString(11,String.valueOf(professor.getSalario()));
+            stmt.setDouble(10,professor.getSalario());
+            stmt.setString(11,professor.getNUIT());
             stmt.execute(); 
             
             stmt.close();
@@ -198,10 +198,15 @@ public class Professor_dao {
     
     public static boolean delProfessor(int professor_id){
         Connection con=Conexaoo.getConnection();
-        String select="DELETE FROM `myclasscount`.`professor` WHERE id=?;";
+        String delete1="delete from acesso where professor_id=?";
+        String delete2="DELETE FROM `myclasscount`.`professor` WHERE id=?;";
         try{
-            PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(professor_id));
+            PreparedStatement stmt=con.prepareStatement(delete1);
+            stmt.setInt(1,professor_id);
+            stmt.execute();
+            
+            stmt=con.prepareStatement(delete2);
+            stmt.setInt(1,professor_id);
             stmt.execute(); 
             
             stmt.close();
@@ -219,8 +224,8 @@ public class Professor_dao {
         String select="call myclasscount.inscrever_professor_disciplina(?, ?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(professor.getId()));
-            stmt.setString(2,String.valueOf(disc_id));
+            stmt.setInt(1,professor.getId());
+            stmt.setInt(2,disc_id);
             stmt.execute(); 
             
             stmt.close();
@@ -236,8 +241,8 @@ public class Professor_dao {
         String select="DELETE FROM ensina WHERE professor_id=? and disciplina_id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(prof_id));
-            stmt.setString(2,String.valueOf(disc_id));
+            stmt.setInt(1,prof_id);
+            stmt.setInt(2,disc_id);
             stmt.execute(); 
             
             stmt.close();
@@ -249,4 +254,5 @@ public class Professor_dao {
             return false;
         }
     }
+    
 }

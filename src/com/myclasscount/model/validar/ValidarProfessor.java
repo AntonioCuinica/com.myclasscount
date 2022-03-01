@@ -94,11 +94,16 @@ public class ValidarProfessor {
             return "Erro, "+tipo+" vazio";
         }else{
             for(int i=0;i<numero.length();i++){
-                if(numero.substring(i,(i+1)).matches("[a-zA-Z]*")){
+                try{
+                    if(numero.substring(i,(i+1)).matches("[a-zA-Z]*")){
+                        return "Erro, "+tipo+" contem letras";
+                    }else if(Double.parseDouble(numero)<0){
+                        return "Erro, "+tipo+" invalido";
+                    }
+                }catch(NumberFormatException e){
                     return "Erro, "+tipo+" contem letras";
-                }else if(Double.parseDouble(numero)<0){
-                    return "Erro, "+tipo+" invalido";
                 }
+                
             }
         }
         return "valido";

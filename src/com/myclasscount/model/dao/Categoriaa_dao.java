@@ -28,11 +28,11 @@ public class Categoriaa_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 categoria=new Categoria();
-                categoria.setId(Integer.parseInt(rs.getString("id")));
+                categoria.setId(rs.getInt("id"));
                 categoria.setNome(rs.getString("nome"));
                 categoria.setTipoEnsino(rs.getString("tipo_ensino"));
                 categoria.setClasse(rs.getString("class"));
-                categoria.setPreco(Double.parseDouble(rs.getString("preco")));
+                categoria.setPreco(rs.getDouble("preco"));
                 categoria.setDescricao(rs.getString("descricao"));
             }
             stmt.close();
@@ -53,11 +53,11 @@ public class Categoriaa_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 categoria=new Categoria();
-                categoria.setId(Integer.parseInt(rs.getString("id")));
+                categoria.setId(rs.getInt("id"));
                 categoria.setNome(rs.getString("nome"));
                 categoria.setTipoEnsino(rs.getString("tipo_ensino"));
                 categoria.setClasse(rs.getString("class"));
-                categoria.setPreco(Double.parseDouble(rs.getString("preco")));
+                categoria.setPreco(rs.getDouble("preco"));
                 categoria.setDescricao(rs.getString("descricao"));
             }
             stmt.close();
@@ -70,18 +70,18 @@ public class Categoriaa_dao {
     
     public static ArrayList<Categoria> getCategorias(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.categoria_aluno";
+        String select="SELECT * FROM myclasscount.categoria_aluno order by nome";
         ArrayList<Categoria> categoria=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Categoria cat=new Categoria();
-                cat.setId(Integer.parseInt(rs.getString("id")));
+                cat.setId(rs.getInt("id"));
                 cat.setNome(rs.getString("nome"));
                 cat.setTipoEnsino(rs.getString("tipo_ensino"));
                 cat.setClasse(rs.getString("class"));
-                cat.setPreco(Double.parseDouble(rs.getString("preco")));
+                cat.setPreco(rs.getDouble("preco"));
                 cat.setDescricao(rs.getString("descricao"));
                 categoria.add(cat);
             }
@@ -102,9 +102,9 @@ public class Categoriaa_dao {
             stmt.setString(1,cat.getNome());
             stmt.setString(2,cat.getTipoEnsino());
             stmt.setString(3,cat.getClasse());
-            stmt.setString(4,String.valueOf(cat.getPreco()));
+            stmt.setDouble(4,cat.getPreco());
             stmt.setString(5,cat.getDescricao());
-            stmt.setString(6,String.valueOf(cat.getId()));
+            stmt.setInt(6,cat.getId());
             stmt.execute();
             
             stmt.close();
@@ -122,7 +122,7 @@ public class Categoriaa_dao {
             stmt.setString(1,cat.getNome());
             stmt.setString(2,cat.getTipoEnsino());
             stmt.setString(3,cat.getClasse());
-            stmt.setString(4,String.valueOf(cat.getPreco()));
+            stmt.setDouble(4,cat.getPreco());
             stmt.setString(5,cat.getDescricao());
             stmt.execute(); 
             
@@ -138,7 +138,7 @@ public class Categoriaa_dao {
         String select="DELETE FROM `myclasscount`.`categoria_aluno` WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(cat.getId()));
+            stmt.setInt(1,cat.getId());
             stmt.execute(); 
             
             stmt.close();

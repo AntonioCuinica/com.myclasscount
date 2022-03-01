@@ -6,13 +6,12 @@
 package com.myclasscount.view;
 
 import com.myclasscount.control.CtrlGeral;
+import com.myclasscount.control.Mensalidade_ctrl;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -117,6 +116,11 @@ public class Myclasscount extends JFrame {
         Observacoes observ=new Observacoes();
         add(observ,"observacoes");
         CtrlGeral.setTela("observacoes",observ);
+        
+        Ver_Mensalidade verM=new Ver_Mensalidade();
+        add(verM,"verMensalidade");
+        CtrlGeral.setTela("verMensalidade",verM);
+        
         
         resizing();
     }

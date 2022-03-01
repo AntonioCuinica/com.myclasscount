@@ -5,18 +5,28 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
 import com.myclasscount.control.CtrlGeral;
+import com.myclasscount.control.Mensalidade_ctrl;
+import com.myclasscount.model.Aluno;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
  *
@@ -147,6 +157,79 @@ public class MyProceduress {
         return panel;
     }
     
+    public static JPanel info(String n,String v,Color f,int size){
+        JPanel panel=new JPanel(new GridLayout(1,2));
+        panel.setOpaque(false);
+        JLabel name=new JLabel(n);
+        name.setForeground(f);
+        name.setFont(new Font("Arial",Font.BOLD,size));
+        JLabel value=new JLabel(v);
+        value.setForeground(f);
+        value.setFont(new Font("Arial",Font.PLAIN,size));
+        value.setToolTipText(v);
+        panel.add(name);
+        panel.add(value);
+        return panel;
+    }
+    
+    public static MyDialogg ver_dialog(Aluno aluno,JFrame frame){
+        MyDialogg ver_dialog=new MyDialogg(frame,true);
+        ver_dialog.setLayout(new GridLayout(1,2));
+        ver_dialog.setSize(750,600);
+        ver_dialog.setLocationRelativeTo(frame);
+        JPanel lado1=new JPanel(new BorderLayout());
+        lado1.setBorder(new EmptyBorder(15,15,15,15));
+        lado1.setOpaque(false);
+                        
+        JPanel pan1=new JPanel(new GridLayout(10,1));
+        pan1.setOpaque(false);
+        pan1.add(MyProceduress.info("Nome",": "+aluno.getNome()));
+        pan1.add(MyProceduress.info("Apelido",": "+aluno.getApelido()));
+        pan1.add(MyProceduress.info("BI",": "+aluno.getBI()));
+        pan1.add(MyProceduress.info("Idade",": "+MyProceduress.idade(aluno.getNascimento().split("-")[0])));
+        pan1.add(MyProceduress.info("Sexo",": "+aluno.getSexo()));
+        pan1.add(MyProceduress.info("Nível",": "+aluno.getNivel()));
+        pan1.add(MyProceduress.info("Morada",": "+aluno.getMorada()));
+        pan1.add(MyProceduress.info("Telefone",": "+aluno.getTelefone()));
+        pan1.add(MyProceduress.info("Email",": "+aluno.getEmail()));
+        pan1.add(MyProceduress.info("Pagamento",": "+Aluno_ctrl.pagamento(aluno.getId())[2]));
+                        
+        JPanel lado2=new JPanel(new BorderLayout());
+        lado2.setBorder(new EmptyBorder(15,15,15,15));
+        lado2.setOpaque(false);
+                        
+        Table tabInscricao=new Table(new String[]{"Categoria","Disciplina","Preco"});
+        ArrayList<String[]> inscricao=Aluno_ctrl.inscricao(aluno.getId());
+        String dados[][]=new String[inscricao.size()][3];
+        for(int i=0;i<dados.length;i++){
+            dados[i][0]=inscricao.get(i)[2];
+            dados[i][1]=inscricao.get(i)[3];
+            dados[i][2]=inscricao.get(i)[4];
+        }
+                        
+        tabInscricao.setTableData(dados);
+        JScrollPane src=new JScrollPane(tabInscricao);
+        src.getViewport().setBackground(new Color(82,79,250).darker().darker());
+                       
+        JPanel titulo=new JPanel();
+        titulo.setOpaque(false);
+        JLabel texto=new JLabel("Inscricoes",SwingConstants.CENTER);
+        texto.setForeground(Color.white);
+        texto.setFont(new Font("Arial",Font.BOLD,18));
+        titulo.add(texto);
+                        
+        lado2.add(titulo,BorderLayout.NORTH);
+        lado2.add(src,BorderLayout.CENTER);
+
+        lado1.add(pan1,BorderLayout.CENTER);
+                        
+        ver_dialog.add(lado1);
+        ver_dialog.add(lado2);
+        ver_dialog.setVisible(true);
+        
+        return ver_dialog;
+    }
+    
     public static void updateVerAlunos(){
         Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
         v.updateComponents();
@@ -155,6 +238,46 @@ public class MyProceduress {
     public static void updateVerProfessores(){
         Ver_Professores v=(Ver_Professores)CtrlGeral.getTela("verProfessores");
         v.updateComponents();
+    }
+    
+    public static void updateVerTurmas(){
+        Ver_Turmas v=(Ver_Turmas)CtrlGeral.getTela("verTurmas");
+        v.updateComponents();
+    }
+    
+    public static void updateMainFrame(){
+        MainFramee v=(MainFramee)CtrlGeral.getTela("mainFrame");
+        v.updateComponents();
+    }
+    
+    public static void updateVerObservacoes(){
+        Ver_Observacoes verO=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
+        verO.updateComponents();
+    }
+    
+    public static void updateCategoria(){
+        Ver_Categoria v=(Ver_Categoria)CtrlGeral.getTela("categoria");
+        v.updateComponents();
+    }
+    
+    public static void updateAdicionarAluno(){
+        AdicionarAluno add=(AdicionarAluno)CtrlGeral.getTela("addStudent");
+        add.updateComponents();
+    }
+    
+    public static void updateAdicionarProfessor(){
+        AdicionarProfessor add=(AdicionarProfessor)CtrlGeral.getTela("adicionarProfessor");
+        add.updateComponents();
+    }
+    
+    public static void updateCriarTurma(){
+        CriarTurma criar=(CriarTurma)CtrlGeral.getTela("criarTurma");
+        criar.updateComponents();
+    }
+    
+    public static void updateVerMensalidade(){
+        Ver_Mensalidade verM=(Ver_Mensalidade)CtrlGeral.getTela("verMensalidade");
+        verM.updateComponents();
     }
     
     

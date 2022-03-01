@@ -30,12 +30,12 @@ public class Acesso_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 acesso=new Acesso();
-                acesso.setId(Integer.parseInt(rs.getString("id")));
+                acesso.setId(rs.getInt("id"));
                 acesso.setUsername(rs.getString("username"));
                 acesso.setCodigo(rs.getString("codigo"));
                 acesso.setPergunta(rs.getString("pergunta"));
                 acesso.setResposta(rs.getString("rsposta"));
-                acesso.setProfessor_id(Integer.parseInt("professor_id"));
+                acesso.setProfessor_id(rs.getInt("professor_id"));
             }
             stmt.close();
             rs.close();
@@ -56,12 +56,12 @@ public class Acesso_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 acesso=new Acesso();
-                acesso.setId(Integer.parseInt(rs.getString("id")));
+                acesso.setId(rs.getInt("id"));
                 acesso.setUsername(rs.getString("username"));
                 acesso.setCodigo(rs.getString("codigo"));
                 acesso.setPergunta(rs.getString("pergunta"));
                 acesso.setResposta(rs.getString("resposta"));
-                acesso.setProfessor_id(Integer.parseInt(rs.getString("professor_id")));
+                acesso.setProfessor_id(rs.getInt("professor_id"));
             }
             stmt.close();
             rs.close();
@@ -97,7 +97,7 @@ public class Acesso_dao {
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,codigo);
-            stmt.setString(2,""+id);
+            stmt.setInt(2,id);
             stmt.execute();
             stmt.close();
             con.close();

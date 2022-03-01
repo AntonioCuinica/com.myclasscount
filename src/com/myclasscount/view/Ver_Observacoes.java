@@ -3,13 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.view;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.Observacao_ctrl;
+import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Observacao;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -22,6 +27,12 @@ public class Ver_Observacoes extends JPanel {
     private MyButtonn btns[];
     private Panel title;
     private Table tabela;
+    private ArrayList<Observacao> observacoes;
+    private String voltar="mainFrame";
+    
+    public void setVoltar(String voltar){
+        this.voltar=voltar;
+    }
      
     public Ver_Observacoes(){
         this.setLayout(null);
@@ -34,24 +45,34 @@ public class Ver_Observacoes extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome do Aluno","Titulo","Data","Nota",""};
+        String colunas[]={"Nome do Aluno","Titulo","Nota","Data",""};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
+        voltar.setVisible(false);
         tabela=new Table(colunas);
-        String dados[][]=new String[30][colunas.length];
-         for(int i=0;i<dados.length;i++){
-            for(int j=0;j<dados[0].length;j++){
-                dados[i][j]=""+i*j;
+        observacoes=Observacao_ctrl.getObservacao();
+        ArrayList<Aluno> alunos=Aluno_ctrl.getAlunos();
+        String dados[][]=new String[observacoes.size()][colunas.length];
+        for(int i=0;i<dados.length;i++){
+            int aluno_id=observacoes.get(i).getAluno_id();
+            for(Aluno aluno:alunos){
+                if(aluno.getId()==aluno_id){
+                    dados[i][0]=aluno.getNome()+" "+aluno.getApelido();
+                }
             }
+            dados[i][1]=observacoes.get(i).getTitulo();
+            dados[i][2]=observacoes.get(i).getNota();
+            dados[i][3]=observacoes.get(i).getDataObservacao();
         }
         tabela.setTableData(dados);
+        tabela.setButton("","Eliminar",Color.red);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
         src.getViewport().setBackground(Color.white);
         container.add(src);
         container.add(voltar);
-        verAlunos(Myclasscount.getFrame());
+        removerObservacao(Myclasscount.getFrame());
         new Thread(
             new Runnable(){
                 public void run(){
@@ -68,30 +89,43 @@ public class Ver_Observacoes extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        voltar.setVisible(true);
                         container.revalidate();
                     }
                 }
             }
         ).start();
     }
-    public void verAlunos(JFrame frame){
+    
+    public void updateComponents(){
+        removeAll();
+        add(title);
+        addTable();
+    }
+    
+    public void removerObservacao(JFrame frame){
         tabela.addMouseListener(
             new MouseAdapter(){
                 public void mouseClicked(MouseEvent evento){
-                    if(evento.getClickCount()==2){
+                    if(evento.getClickCount()==1){
                         int linha=tabela.getSelectedRow();
-                        String txt=tabela.getValueAt(linha,0).toString()+" | "+tabela.getValueAt(linha,1).toString()+
-                             " | "+tabela.getValueAt(linha,2).toString()+" | "+tabela.getValueAt(linha,3).toString();
-                        System.out.println("Linha: "+tabela.getSelectedColumn());
-                        if(tabela.getSelectedColumn()==4){MyDialogg dialog=new MyDialogg(frame,true);}
+                        if(tabela.getSelectedColumn()==4){
+                            MyDialogg dialog=new MyDialogg(frame,2,"Deseja remover observaçao ?", true);
+                            if(dialog.getSimTeste()){
+                                Observacao observ=observacoes.get(linha);
+                                Observacao_ctrl.delObservacao(observ.getId());
+                                updateComponents();
+                            }
+                        }
                     }
                 }
             }
         );
     }
+    
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-          Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+          Myclasscount.getCardLayout().show(Myclasscount.getContainer(),voltar);
         }
     }
     

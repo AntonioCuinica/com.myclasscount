@@ -33,6 +33,7 @@ public class Ver_Alunos extends JPanel {
     private Table tabela;
     private ArrayList<Aluno> alunos;
     private Aluno aluno=null;
+    private int aluno_id=0;
     private MyDialogg ver_dialog;
     private Table tabInscricao;
     private  int linhaSelecionada;
@@ -115,6 +116,7 @@ public class Ver_Alunos extends JPanel {
                         for(Aluno a:alunos){
                             if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
                                 aluno=a;
+                                aluno_id=a.getId();
                             }
                         }
                         ver_dialog(frame);
@@ -127,9 +129,16 @@ public class Ver_Alunos extends JPanel {
     public  void updateComponents(){
         removeAll();
         alunos=Aluno_ctrl.getAlunos();
-        for(Aluno a:alunos){
-            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
-                aluno=a;
+        if(alunos!=null){
+            for(Aluno a:alunos){
+                if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                    aluno=a;
+                }else{
+                    Aluno aln=Aluno_ctrl.getAluno(aluno_id);
+                    if(aln!=null){
+                        aluno=aln;
+                    }
+                }
             }
         }
         container.add(title);

@@ -10,6 +10,7 @@ import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.categoria_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Categoria;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
@@ -17,7 +18,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -34,7 +39,7 @@ public class AdicionarAluno extends JPanel {
     private JTextArea andress;
     private JComboBox combbx[];
     private JRadioButton male,female;
-    private JComboBox data[];
+    private JDateChooser data;
     
     public AdicionarAluno(){
         this.setLayout(null);
@@ -109,35 +114,16 @@ public class AdicionarAluno extends JPanel {
                   new JLabel("Email"),new JLabel("Categoria"),new JLabel("Mês"),new JLabel("Dia"),new JLabel("Ano")};
         for(int i=0;i<labels.length;i++){labels[i].setForeground(Color.white);}
         
-        String mes[]={"Janeiro", "Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
-        
-        String dia[]=new String[31];
-        for(int i=0;i<dia.length;i++){
-            dia[i]=""+(i+1);
-        }
-        
-        String ano[]=new String[30];
-        for(int i=0;i<ano.length;i++){
-            ano[i]=""+(i+1990);
-        }
-        
-        data=new JComboBox[]{new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        
-        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
-        dataN.setOpaque(false);
-        dataN.add(labels[10]);
-        dataN.add(labels[11]);
-        dataN.add(labels[12]);
-        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
-        dataN1.setOpaque(false);
-        dataN1.add(data[0]);
-        dataN1.add(data[1]);
-        dataN1.add(data[2]);
+        data=new JDateChooser();
+        Calendar cal=Calendar.getInstance();
+        data.setDate(cal.getTime());
+        data.setLocale(Locale.forLanguageTag("pt-br"));
+        data.setDateFormatString("dd/MM/yyyy");
         
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
         pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
+        pan1.add(labels[3]); pan1.add(data);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx[0]);
         
@@ -168,9 +154,9 @@ public class AdicionarAluno extends JPanel {
                         combbx[1].setBounds(combbx[0].getBounds());
                         
                         labels[8].setBounds(labels[4].getBounds());
-                        labels[8].setLocation(labels[8].getX(),(labels[8].getY()-(int)(labels[8].getY()*0.05)));
+                        labels[8].setLocation(labels[8].getX(),(labels[8].getY()));
                         txtF[4].setBounds(sexo.getBounds());
-                        txtF[4].setLocation(txtF[4].getX(),(txtF[4].getY()-(int)(txtF[4].getY()*0.05)));
+                        txtF[4].setLocation(txtF[4].getX(),(txtF[4].getY()));
                         
                         labels[7].setBounds(labels[3].getBounds());
                         txtF[3].setBounds(pan1.getComponent(7).getBounds());
@@ -188,6 +174,13 @@ public class AdicionarAluno extends JPanel {
         ).start();
     }
     
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addComponentToMainPane(myProc.mainPane("mainFrame","verAlunos",container));
+    }
+    
+    
     private class Clique extends MouseAdapter{
         
         public void mouseClicked(MouseEvent e){
@@ -196,7 +189,15 @@ public class AdicionarAluno extends JPanel {
                 aluno.setNome(txtF[0].getText());
                 aluno.setApelido(txtF[1].getText());
                 aluno.setBI(txtF[2].getText());
-                aluno.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
+                
+                try{
+                    aluno.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(data.getDate()));
+                }catch(NullPointerException n){
+                    System.out.println("Erro, data nula"+n.getMessage());
+                    Calendar cal=Calendar.getInstance();
+                    aluno.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime()));
+                }
+                
                 if(male.isSelected()){
                     aluno.setSexo("M");
                 }else{
@@ -223,6 +224,14 @@ public class AdicionarAluno extends JPanel {
                         txtF[1].grabFocus();
                     }else if(Aluno_ctrl.getErro().contains("BI")){
                         txtF[2].setText("");
+                        if(Aluno_ctrl.getErro().contains("aleatorio")){
+                            Random r=new Random();
+                            Calendar cal=Calendar.getInstance();
+                            String bi=new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+                            bi+=(r.nextInt(1000)+1000)+""+aluno.getNome().charAt(0);
+                            txtF[2].setText(bi);
+                            aluno.setBI(bi);
+                        }
                         txtF[2].grabFocus();
                     }else if(Aluno_ctrl.getErro().contains("telefone")){
                         txtF[3].setText("");
@@ -244,8 +253,6 @@ public class AdicionarAluno extends JPanel {
                     v.updateComponents();
                 }
             
-            }else if(e.getComponent().toString().contains("Voltar")){
-                
             }
         }
         

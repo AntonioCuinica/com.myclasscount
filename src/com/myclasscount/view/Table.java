@@ -7,7 +7,6 @@ package com.myclasscount.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionListener;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,25 +22,31 @@ import javax.swing.table.TableColumn;
  * @author CUINIC4
  */
 public class Table extends JTable {
-    Object td[];
+    private Object td[];
     private int size=0;
-    DefaultTableModel modelo;
+    private DefaultTableModel modelo;
+    private String buttonName="";
+    private Color buttonColor=Color.white;
+    
     public Table(String colunas[]){
-        this.size=colunas.length;
-        this.modelo=(DefaultTableModel)(new DefaultTableModel(){
+        size=colunas.length;
+        modelo=(DefaultTableModel)(new DefaultTableModel(){
             public boolean isCellEditable(int row,int column){
                 return false;
             }
         });
         
-        this.modelo.setColumnIdentifiers(colunas);
-        this.modelo.setRowCount(0);
+        modelo.setColumnIdentifiers(colunas);
+        modelo.setRowCount(0);
         td=new Object[colunas.length];
-        this.setModel(this.modelo);
-        this.setDefaultRenderer(Object.class,new CellTableZebra());
-        this.setHearderColor(Color.blue,Color.white);
-        this.setShowVerticalLines(false);
-        this.setRowHeight(40);
+        setModel(this.modelo);
+        setDefaultRenderer(Object.class,new CellTableZebra());
+        setHearderColor(Color.blue,Color.white);
+        setShowVerticalLines(false);
+        setRowHeight(40);
+        setDragEnabled(false);
+        getTableHeader().setReorderingAllowed(false);
+        getTableHeader().setBounds(0, 0,WIDTH,40);
     }
     
     public void setTableData(Object linhas[][]){
@@ -70,6 +75,8 @@ public class Table extends JTable {
     }
     
     public void setButton(String column,String txt,Color color){
+        buttonName=txt;
+        buttonColor=color;
         MyButtonT button=new MyButtonT(txt,color);
         getColumn(column).setCellRenderer(button);
     }
@@ -151,9 +158,11 @@ public class Table extends JTable {
         
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            MyButtonT button=(MyButtonT)value;
+            MyButtonT button=new MyButtonT(buttonName,buttonColor);
             if(value==null){
                 button=this;
+            }else if(value instanceof MyButtonT){
+               button=(MyButtonT)value;
             }
             return button;
         }

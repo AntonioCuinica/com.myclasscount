@@ -10,12 +10,21 @@ package com.myclasscount.model;
  * @author CUINIC4
  */
 public class Observacao {
+    private int id;
     private int professor_id;
     private int aluno_id;
     private String titulo;
     private String nota;
     private String dataObservacao;
-
+    
+    public int getId(){
+        return id;
+    }
+    
+    public void setId(int id){
+        this.id=id;
+    }
+    
     public int getProfessor_id() {
         return professor_id;
     }

@@ -137,8 +137,7 @@ public class CriarCategoria extends JPanel {
             }
             cat.setDescricao(desc.getText());
             if(categoria_ctrl.inserirCategoria(cat)){
-                Ver_Categoria categoria=(Ver_Categoria)CtrlGeral.getTela("categoria");
-                categoria.updateComponents();
+                MyProceduress.updateCategoria();
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
                 txtF[0].setText(""); combbx[0].setSelectedIndex(0);
                 txtF[1].setText(""); combbx[1].setSelectedIndex(0);

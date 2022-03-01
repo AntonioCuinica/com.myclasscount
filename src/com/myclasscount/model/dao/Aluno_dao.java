@@ -21,7 +21,7 @@ public class Aluno_dao {
     
     public static Aluno getAluno(final String BI){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.aluno WHERE BI=?";
+        String select="SELECT * FROM myclasscount.aluno WHERE BI=? order by categoria_id ,nome ";
         Aluno aluno=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -29,17 +29,17 @@ public class Aluno_dao {
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 aluno=new Aluno();
-                aluno.setId(Integer.parseInt(rs.getString("id")));
+                aluno.setId(rs.getInt("id"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setApelido(rs.getString("apelido"));
                 aluno.setBI(rs.getString("BI"));
-                aluno.setNascimento(rs.getString("nascimento"));
+                aluno.setNascimento(String.valueOf(rs.getDate("nascimento")));
                 aluno.setSexo(rs.getString("sexo"));
                 aluno.setNivel(rs.getString("nivel"));
                 aluno.setMorada(rs.getString("morada"));
                 aluno.setTelefone(rs.getString("telefone"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setCategoria_id(Integer.parseInt(rs.getString("categoria_id")));
+                aluno.setCategoria_id(rs.getInt("categoria_id"));
             }
             stmt.close();
             con.close();
@@ -51,15 +51,15 @@ public class Aluno_dao {
     
     public static Aluno getAlunoID(int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.aluno WHERE id=?";
+        String select="SELECT * FROM myclasscount.aluno WHERE id=? order by categoria_id ,nome ";
         Aluno aluno=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(aluno_id));
+            stmt.setInt(1,aluno_id);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 aluno=new Aluno();
-                aluno.setId(Integer.parseInt(rs.getString("id")));
+                aluno.setId(rs.getInt("id"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setApelido(rs.getString("apelido"));
                 aluno.setBI(rs.getString("BI"));
@@ -69,7 +69,7 @@ public class Aluno_dao {
                 aluno.setMorada(rs.getString("morada"));
                 aluno.setTelefone(rs.getString("telefone"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setCategoria_id(Integer.parseInt(rs.getString("categoria_id")));
+                aluno.setCategoria_id(rs.getInt("categoria_id"));
             }
             stmt.close();
             con.close();
@@ -81,14 +81,14 @@ public class Aluno_dao {
     
     public static ArrayList<Aluno> getAlunos(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.aluno;";
+        String select="SELECT * FROM myclasscount.aluno order by categoria_id ,nome ;";
         ArrayList<Aluno> alunos=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Aluno aluno=new Aluno();
-                aluno.setId(Integer.parseInt(rs.getString("id")));
+                aluno.setId(rs.getInt("id"));
                 aluno.setNome(rs.getString("nome"));
                 aluno.setApelido(rs.getString("apelido"));
                 aluno.setBI(rs.getString("BI"));
@@ -98,7 +98,37 @@ public class Aluno_dao {
                 aluno.setMorada(rs.getString("morada"));
                 aluno.setTelefone(rs.getString("telefone"));
                 aluno.setEmail(rs.getString("email"));
-                aluno.setCategoria_id(Integer.parseInt(rs.getString("categoria_id")));
+                aluno.setCategoria_id(rs.getInt("categoria_id"));
+                alunos.add(aluno);
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return alunos;
+    }
+    
+    public static ArrayList<Aluno> getAlunosInscritos(){
+        Connection con=Conexaoo.getConnection();
+        String select="SELECT a.* FROM aluno a join pagamento p on a.id=p.id order by a.categoria_id ,a.nome  ;";
+        ArrayList<Aluno> alunos=new ArrayList();
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                Aluno aluno=new Aluno();
+                aluno.setId(rs.getInt("id"));
+                aluno.setNome(rs.getString("nome"));
+                aluno.setApelido(rs.getString("apelido"));
+                aluno.setBI(rs.getString("BI"));
+                aluno.setNascimento(rs.getString("nascimento"));
+                aluno.setSexo(rs.getString("sexo"));
+                aluno.setNivel(rs.getString("nivel"));
+                aluno.setMorada(rs.getString("morada"));
+                aluno.setTelefone(rs.getString("telefone"));
+                aluno.setEmail(rs.getString("email"));
+                aluno.setCategoria_id(rs.getInt("categoria_id"));
                 alunos.add(aluno);
             }
             stmt.close();
@@ -116,15 +146,15 @@ public class Aluno_dao {
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,aluno.getNome());
             stmt.setString(2,aluno.getApelido());
-            stmt.setString(3,String.valueOf(aluno.getBI()));
-            stmt.setString(4,String.valueOf(aluno.getNascimento()));
+            stmt.setString(3,aluno.getBI());
+            stmt.setString(4,aluno.getNascimento());
             stmt.setString(5,aluno.getSexo());
             stmt.setString(6,aluno.getNivel());
             stmt.setString(7,aluno.getMorada());
             stmt.setString(8,aluno.getTelefone());
             stmt.setString(9,aluno.getEmail());
-            stmt.setString(10,String.valueOf(aluno.getCategoria_id()));
-            stmt.setString(11,String.valueOf(aluno.getId()));
+            stmt.setInt(10,aluno.getCategoria_id());
+            stmt.setInt(11,aluno.getId());
             stmt.execute();
             
             stmt.close();
@@ -141,14 +171,14 @@ public class Aluno_dao {
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,aluno.getNome());
             stmt.setString(2,aluno.getApelido());
-            stmt.setString(3,String.valueOf(aluno.getBI()));
-            stmt.setString(4,String.valueOf(aluno.getNascimento()));
+            stmt.setString(3,aluno.getBI());
+            stmt.setString(4,aluno.getNascimento());
             stmt.setString(5,aluno.getSexo());
             stmt.setString(6,aluno.getNivel());
             stmt.setString(7,aluno.getMorada());
             stmt.setString(8,aluno.getTelefone());
             stmt.setString(9,aluno.getEmail());
-            stmt.setString(10,String.valueOf(aluno.getCategoria_id()));
+            stmt.setInt(10,aluno.getCategoria_id());
             stmt.execute(); 
             
             stmt.close();
@@ -160,11 +190,16 @@ public class Aluno_dao {
     
     public static boolean delAluno(int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="DELETE FROM `myclasscount`.`aluno` WHERE id=?;";
+        String delete1="delete from observacao where aluno_id=?";
+        String delete2="DELETE FROM `myclasscount`.`aluno` WHERE id=?;";
         try{
-            PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(aluno_id));
-            stmt.execute(); 
+            PreparedStatement stmt=con.prepareStatement(delete1);
+            stmt.setInt(1,aluno_id);
+            stmt.execute();
+            
+            stmt=con.prepareStatement(delete2);
+            stmt.setInt(1,aluno_id);
+            stmt.execute();
             
             stmt.close();
             con.close();
@@ -182,7 +217,7 @@ public class Aluno_dao {
         String pag[]=new String[3];
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1, String.valueOf(aluno_id));
+            stmt.setInt(1,aluno_id);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 pag[0]=rs.getString("id");
@@ -203,7 +238,7 @@ public class Aluno_dao {
         ArrayList inscricoes=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1, String.valueOf(aluno_id));
+            stmt.setInt(1,aluno_id);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 String pag[]=new String[5];
@@ -227,9 +262,9 @@ public class Aluno_dao {
         String select="call myclasscount.inscrever_aluno_disciplina(?, ?, ?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(aluno_id));
-            stmt.setString(2,String.valueOf(disc_id));
-            stmt.setString(3,String.valueOf(0.0));
+            stmt.setInt(1,aluno_id);
+            stmt.setInt(2,disc_id);
+            stmt.setDouble(3,0.0);
             stmt.execute(); 
             
             stmt.close();
@@ -244,8 +279,8 @@ public class Aluno_dao {
         String select="DELETE FROM myclasscount.inscricao WHERE aluno_id=? and disciplina_id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(aluno_id));
-            stmt.setString(2,String.valueOf(disc_id));
+            stmt.setInt(1,aluno_id);
+            stmt.setInt(2,disc_id);
             stmt.execute(); 
             
             stmt.close();

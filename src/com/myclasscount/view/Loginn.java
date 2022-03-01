@@ -5,10 +5,14 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.Acesso_ctrl;
+import com.myclasscount.control.CtrlGeral;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import com.myclasscount.control.Login_ctrl;
+import com.myclasscount.control.Professor_ctrl;
+import com.myclasscount.model.Acesso;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -136,8 +140,13 @@ public class Loginn extends JPanel {
     public void entrar(InputEvent e){
         String psw=new String(pswF.getPassword());
         if(Login_ctrl.login_ctrl(txtF.getText(),psw)){
+            CtrlGeral.carregando();
             countFalhas=0;
+            Acesso acesso=Acesso_ctrl.getAcesso(txtF.getText());
+            CtrlGeral.setProfessor_logado(Professor_ctrl.getProfessor(acesso.getProfessor_id()));
+            MyProceduress.updateMainFrame();
             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+           
         }else{
             esqueceu.setText("Acesso invalido !!");
             esqueceu.setVisible(true);

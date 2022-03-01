@@ -5,6 +5,10 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
+import com.myclasscount.control.Observacao_ctrl;
+import com.myclasscount.model.Aluno;
+import com.myclasscount.model.Observacao;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.MouseAdapter;
@@ -23,6 +27,13 @@ public class Observacoes extends JPanel {
     private Container container;
     private Panel title;
     private MyProceduress myProc;
+    private JTextField txtF=new JTextField();
+    private JTextArea note=new JTextArea();
+    private Aluno aluno;
+    
+    public void setAluno(Aluno aluno){
+        this.aluno=aluno;
+    }
     
     public Observacoes(){
         this.setLayout(null);
@@ -46,17 +57,18 @@ public class Observacoes extends JPanel {
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[0].addMouseListener(new Clique());
        
-        JTextField txtF[]={new JTextField()};
-        JTextArea note=new JTextArea();
+        txtF=new JTextField();
+        note=new JTextArea();
         note.setLineWrap(true);
-        MyButtonn saveNote=new MyButtonn("Gravar",false);
+        MyButtonn gravar=new MyButtonn("Gravar",false);
+        gravar.addMouseListener(new Clique());
         JLabel labels[]={new JLabel("Titulo"),new JLabel("Nota")};
         
         for(JLabel lb:labels)lb.setForeground(Color.white);
         
-        pan1.add(labels[0]); pan1.add(txtF[0]);
+        pan1.add(labels[0]); pan1.add(txtF);
         pan1.add(labels[1]); pan1.add(note);
-        pan1.add(saveNote);
+        pan1.add(gravar);
         
         mainPane.add(pan1);
         
@@ -78,10 +90,10 @@ public class Observacoes extends JPanel {
                         pan1.setLocation(x,y);
                         y=40;
                         labels[0].setBounds(0,0,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
-                        txtF[0].setBounds(0,labels[0].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
-                        labels[1].setBounds(0,txtF[0].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
+                        txtF.setBounds(0,labels[0].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
+                        labels[1].setBounds(0,txtF.getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         note.setBounds(0,labels[1].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.5));
-                        saveNote.setBounds(0,note.getHeight()+note.getY()+10,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
+                        gravar.setBounds(0,note.getHeight()+note.getY()+10,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         
                         myProc.getBtns()[0].setVisible(true);
                         myProc.getBtns()[1].setVisible(true);
@@ -94,9 +106,40 @@ public class Observacoes extends JPanel {
     }
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
-            if(e.getComponent().toString().contains("Proximo")){
-                
-            
+            if(e.getComponent().toString().contains("Gravar")){
+                if(txtF.getText().isBlank()){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, titulo vazio",true);
+                    txtF.grabFocus();
+                }else if(note.getText().isBlank()){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, nota vazia",true);
+                    note.grabFocus();
+                }else{
+                    Observacao observ=new Observacao();
+                    if(CtrlGeral.getProfessor_logado()!=null){
+                        observ.setProfessor_id(CtrlGeral.getProfessor_logado().getId());
+                    }
+                    if(aluno!=null){
+                        observ.setAluno_id(aluno.getId());
+                    }
+                    observ.setTitulo(txtF.getText());
+                    observ.setNota(note.getText());
+                    Observacao_ctrl.setObservacao(observ);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Observaçao gravada !!",true);
+                    MyProceduress.updateVerObservacoes();
+                    txtF.setText("");
+                    note.setText("");
+                }
+            }else if(e.getComponent().toString().contains("Proximo")){
+                if(txtF.getText().isBlank() && note.getText().isBlank()){
+                    Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
+                    v.setVoltar("observacoes");
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
+                }else{
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Nota nao gravada, continuar ?",true);
+                    if(dialog.getSimTeste()){
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
+                    }
+                }
             }else if(e.getComponent().toString().contains("Voltar")){
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
             } 

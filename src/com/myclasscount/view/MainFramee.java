@@ -10,6 +10,8 @@ package com.myclasscount.view;
  * @author CUINIC4
  */
 
+import com.myclasscount.control.CtrlGeral;
+import com.myclasscount.model.Professor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,23 +24,19 @@ import javax.swing.border.EmptyBorder;
 
 public final class MainFramee extends JPanel {
     private Color backColor=new Color(33,80,172);
-    private Container container;
     
     public MainFramee(){        
         setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         setBackground(backColor);
         setBorder(new EmptyBorder(30,30,30,30));
-        container=this;
         mainBar(); 
         add(Box.createRigidArea(new Dimension(0,30)));
         mainPane();
-        repaint();
-        revalidate();
         setVisible(true);
     }
     
     public void mainBar(){
-        
+        Professor professor=CtrlGeral.getProfessor_logado();
         Panel pane= new Panel(new Color(0,24,242),false);
         pane.setLayout(new BoxLayout(pane,BoxLayout.X_AXIS));
         pane.setPreferredSize(new Dimension(getWidth()-60,100));
@@ -46,23 +44,35 @@ public final class MainFramee extends JPanel {
         
         MyLabell logo=new MyLabell("img/logo.png");
         JPanel lg=new JPanel(new GridLayout());
-        lg.setPreferredSize(new Dimension(300,50));
+        lg.setPreferredSize(new Dimension(400,50));
+        lg.setMaximumSize(new Dimension(400,50));
         lg.setOpaque(false);
         lg.add(logo);
-        JTextField search=new JTextField();
-        search.setPreferredSize(new Dimension(100,50));
-        search.add(new JLabel());
-        MyButtonn btnSearch=new MyButtonn("Buscar",false);
-        btnSearch.setPreferredSize(new Dimension(100,50));
+        
+        JLabel btnSearch=new JLabel();
+        if(professor!=null){
+            btnSearch.setText(professor.getNome()+" "+professor.getApelido());
+        }
+        btnSearch.setFont(new Font("Arial",Font.BOLD,25));
+        btnSearch.setForeground(Color.white);
+        
+        MyLabell usuario=new MyLabell("img/user.png");
+        JPanel user=new JPanel(new GridLayout());
+        user.setPreferredSize(new Dimension(40,50));
+        user.setMaximumSize(new Dimension(40,50));
+        user.setOpaque(false);
+        user.add(usuario);
         
         /**Adding components */
         pane.add(lg);
-        pane.add(Box.createRigidArea(new Dimension(100,0)));
-        pane.add(search);
-        pane.add(Box.createRigidArea(new Dimension(30,0)));
+        JPanel separador=new JPanel(new GridLayout());
+        separador.setPreferredSize(new Dimension(100,50));
+        separador.setOpaque(false);
+        pane.add(separador);
         pane.add(btnSearch);
+        pane.add(user);
         
-        container.add(pane);
+        add(pane);
   
     }
     
@@ -75,20 +85,20 @@ public final class MainFramee extends JPanel {
       
         
         /**out(sair) button*/
-        MyButtonn out=new MyButtonn("Logout",false);
-        out.addActionListener(new clique(out,(byte)-1));
-        out.setActionCommand("out");
+        MyButtonn sair=new MyButtonn("Logout",false);
+        sair.addActionListener(new clique(sair,(byte)-1));
+        sair.setActionCommand("out");
         JPanel pan3=new JPanel(new FlowLayout(2));
         pan3.setBorder(new EmptyBorder(0,20,20,20));
         pan3.setOpaque(false);
-        pan3.add(out);
+        pan3.add(sair);
         
         /**menu buttons names */
         String btnName[]={"Alunos","Professor","Categoria","Observações","Disciplina","Turma","Mensalidade"};
         JButton btn[]=new JButton[btnName.length];
         Panel pan=new Panel(new Color(104,97,138),true);
         pan.setBorderColor(new Color(0,24,242));
-        pan.setLayout(new GridLayout(1,btnName.length,4,1));
+        pan.setLayout(new GridLayout(1,btn.length,4,0));
         
         for(int i=0;i<btn.length;i++){
             btn[i]=new JButton(btnName[i]);
@@ -103,7 +113,7 @@ public final class MainFramee extends JPanel {
         mycard cards[]=new mycard[cardName.length];
         Panel pan2=new Panel(Color.lightGray,false);
         pan2.invisible(true,true);
-        pan2.setLayout(new GridLayout(1,cards.length-1,18,1));
+        pan2.setLayout(new GridLayout(1,cards.length,18,0));
         pan2.setBorder(new EmptyBorder(20,20,20,20));
         
         for(int i=0;i<cards.length;i++){
@@ -117,12 +127,14 @@ public final class MainFramee extends JPanel {
         pane.add(pan,BorderLayout.NORTH);
         pane.add(pan2,BorderLayout.CENTER);
         pane.add(pan3,BorderLayout.SOUTH);
-        container.add(pane);
+        
+        add(pane);
         
     }
     
     private class mycard extends JButton{
-        String name="New Card";String URL;
+        String name="New Card";
+        String URL;
         boolean needImage;
         private Color barColor=Color.DARK_GRAY;
         
@@ -170,6 +182,13 @@ public final class MainFramee extends JPanel {
         
     }
     
+    public void updateComponents(){
+        removeAll();
+        mainBar(); 
+        add(Box.createRigidArea(new Dimension(0,30)));
+        mainPane();
+    }
+    
     private class clique extends MouseAdapter implements ActionListener {
             private mycard btn=null;
             private JButton btn2=null;
@@ -190,20 +209,24 @@ public final class MainFramee extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getActionCommand().equals("card1")){
-                    MyProceduress.updateVerProfessores();
+                    MyProceduress.updateAdicionarProfessor();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
                 }else if(e.getActionCommand().equals("card2")){
-                    MyProceduress.updateVerAlunos();
+                    MyProceduress.updateAdicionarAluno();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
                 }
                 else if(e.getActionCommand().equals("card3")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"registSubject");
                 }
                 else if(e.getActionCommand().equals("card4")){
+                    MyProceduress.updateCriarTurma();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
                 }else if(e.getActionCommand().equals("out")){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
-                    if(dialog.getSimTeste())Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
+                    if(dialog.getSimTeste()){
+                        CtrlGeral.setProfessor_logado(null);
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
+                    }
                 }
             }
             
@@ -233,13 +256,21 @@ public final class MainFramee extends JPanel {
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
                 }
                 else if(type==4){
+                    Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
+                    v.setVoltar("mainFrame");
+                    MyProceduress.updateVerObservacoes();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
                 }
                 else if(type==5){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
                 }
                 else if(type==6){
+                    MyProceduress.updateVerTurmas();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
+                }
+                else if(type==7){
+                    MyProceduress.updateVerMensalidade();
+                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verMensalidade");
                 }
                 
             }

@@ -9,8 +9,6 @@ import com.myclasscount.model.Horario;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
@@ -78,7 +76,6 @@ public class CriarHorario extends JDialog {
         turno=new String[]{"Manha","Tarde","Noite"};
         String diaSemana[]={"Domingo","Segunda","Terça","Quarta","Quinta","Sexta","Sabado"};
         combbx=new JComboBox[]{new JComboBox(turno),new JComboBox(diaSemana)};
-        combbx[0].addActionListener(new Clique());
         Integer hora[]=new Integer[24];
         for(int i=0;i<hora.length;i++){
             hora[i]=i;
@@ -123,14 +120,14 @@ public class CriarHorario extends JDialog {
         ).start();
         
     }
-    private class Clique extends MouseAdapter implements ActionListener{
+    private class Clique extends MouseAdapter {
         
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Proximo")){
                 horario=new Horario();
                 horario.setTurno(String.valueOf(combbx[0].getSelectedItem()));
-                horario.setHora_inicio(String.valueOf(txtF[0].getValue()));
-                horario.setHora_fim(String.valueOf(txtF[1].getValue()));
+                horario.setHora_inicio(String.valueOf(txtF[0].getValue()+":00:00"));
+                horario.setHora_fim(String.valueOf(txtF[1].getValue())+":00:00");
                 horario.setDia_semana(String.valueOf(combbx[1].getSelectedItem()));
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),depois);
                 dispose();
@@ -140,10 +137,6 @@ public class CriarHorario extends JDialog {
             } 
         }   
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-        }
     }
     
 }

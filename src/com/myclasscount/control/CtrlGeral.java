@@ -5,7 +5,8 @@
  */
 package com.myclasscount.control;
 
-import java.awt.Component;
+import com.myclasscount.model.Professor;
+import com.myclasscount.model.validar.ValidarProfessor;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import java.util.Map;
 
 public class CtrlGeral {
     private static ArrayList<Map>telas=new ArrayList();
+    private static Professor professor;
     
     public static void setTela(String nome,Object tela){
         Map novaTela=Map.of(nome,tela);
@@ -30,5 +32,23 @@ public class CtrlGeral {
         }
         return null;
     }
-
+    
+    public static void setProfessor_logado(Professor professor){
+        CtrlGeral.professor=professor;
+    }
+    
+    public static Professor getProfessor_logado(){
+        return professor;
+    }
+    
+    public static void carregando(){
+         /** inserindo mensalidades*/
+        Mensalidade_ctrl.inserirMensalidades();
+    }
+    
+    public static String validarNumero(String numero,String tipo){
+        return ValidarProfessor.validarNumero(numero,tipo);
+    }
+    
+    
 }

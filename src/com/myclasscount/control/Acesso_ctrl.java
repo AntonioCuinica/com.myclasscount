@@ -15,8 +15,8 @@ import com.myclasscount.model.validar.ValidarAcesso;
  * @author CUINIC4
  */
 public class Acesso_ctrl {
-    public static Acesso getAcesso(String value){
-        return Acesso_dao.getAcesso(value);
+    public static Acesso getAcesso(String user){
+        return Acesso_dao.getAcesso(user);
     }
     
     public static void mudarSenha(String codigo,int prof_id){

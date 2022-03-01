@@ -10,12 +10,16 @@ import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.Professor;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import javax.swing.*;
 
 /**
@@ -32,9 +36,9 @@ public class AdicionarProfessor extends JPanel {
     private JTextArea andress;
     private JComboBox combbx;
     private JCheckBox checks[];
-    private JComboBox data[];
     private JRadioButton male;
     private JRadioButton female;
+    private JDateChooser data;
     
     public AdicionarProfessor(){
         setLayout(null);
@@ -99,35 +103,16 @@ public class AdicionarProfessor extends JPanel {
                   new JLabel("Telefone"),new JLabel("Email"),new JLabel("Disciplina"),new JLabel("Mês"),new JLabel("Dia"),new JLabel("Ano")};
         for(int i=0;i<labels.length;i++){labels[i].setForeground(Color.white);}
         
-        String mes[]={"Janeiro", "Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"};
-        String dia[]=new String[31];
-        
-        for(int i=0;i<dia.length;i++){
-            dia[i]=""+(i+1);
-        }
-        
-        String ano[]=new String[30];
-        for(int i=0;i<ano.length;i++){
-            ano[i]=""+(i+1990);
-        }
-        
-        data=new JComboBox[]{new JComboBox(mes),new JComboBox(dia),new JComboBox(ano)};
-        JPanel dataN=new JPanel(new GridLayout(1,3,20,1));
-        dataN.setOpaque(false);
-        dataN.add(labels[12]);
-        dataN.add(labels[13]);
-        dataN.add(labels[14]);
-        JPanel dataN1=new JPanel(new GridLayout(1,3,20,1));
-        
-        dataN1.setOpaque(false);
-        dataN1.add(data[0]);
-        dataN1.add(data[1]);
-        dataN1.add(data[2]);
+        data=new JDateChooser();
+        Calendar cal=Calendar.getInstance();
+        data.setDate(cal.getTime());
+        data.setLocale(Locale.forLanguageTag("pt-br"));
+        data.setDateFormatString("dd/MM/yyyy");
         
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
         pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(dataN);pan1.add(dataN1);
+        pan1.add(labels[3]); pan1.add(data);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx);
         pan1.add(labels[6]);pan1.add(txtF[3]);
@@ -175,6 +160,12 @@ public class AdicionarProfessor extends JPanel {
         ).start();
     }
     
+    public void updateComponents(){
+        removeAll();
+        container.add(title);
+        addComponentToMainPane(myProc.mainPane("mainFrame","criarSenha",container));
+    }
+    
     private class Clique extends MouseAdapter{
         
         public void mouseClicked(MouseEvent e){
@@ -183,7 +174,13 @@ public class AdicionarProfessor extends JPanel {
                 professor.setNome(txtF[0].getText());
                 professor.setApelido(txtF[1].getText());
                 professor.setBI(txtF[2].getText());
-                professor.setNascimento((data[2].getSelectedItem()+"/"+(data[0].getSelectedIndex()+1)+"/"+data[1].getSelectedItem()));
+                try{
+                    professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(data.getDate()));
+                }catch(NullPointerException n){
+                    System.out.println("Erro, data nula"+n.getMessage());
+                     Calendar cal=Calendar.getInstance();
+                    professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime()));
+                }
                 if(male.isSelected()){
                     professor.setSexo("M");
                 }else{

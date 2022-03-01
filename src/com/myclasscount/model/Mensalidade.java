@@ -5,6 +5,11 @@
  */
 package com.myclasscount.model;
 
+import com.myclasscount.control.Aluno_ctrl;
+import com.myclasscount.control.Mensalidade_ctrl;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -57,7 +62,20 @@ public class Mensalidade {
     public void setAluno_id(int aluno_id) {
         this.aluno_id = aluno_id;
     }
-
+    
+    public void mudarEstado(double pag){
+        if(getValor()==pag){
+            setEstado("paga");
+        }else{
+            Calendar cal=Calendar.getInstance();
+            if(cal.getTime().after(dataPagamento)){
+                setEstado("divida");
+            }else{
+                setEstado("aberta");
+            }
+        }
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -69,5 +87,33 @@ public class Mensalidade {
         return sb.toString();
     }
     
+    public static void updateMensalidades(){
+        String ano=new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+        String mes=new SimpleDateFormat("MM").format(Calendar.getInstance().getTime());
+        ArrayList<com.myclasscount.model.Mensalidade> mensa=Mensalidade_ctrl.getMensalidades(mes,ano);
+        String ultimoMes;
+        ArrayList<Aluno> alunos=Aluno_ctrl.getAlunosInscritos();
+        System.out.println("Ano: "+ano);
+        System.out.println("Mes: "+mes);
+        System.out.println("mensa: "+mensa.size());
+        if(mensa.isEmpty()){
+            for(Aluno a:alunos){
+                Mensalidade_ctrl.setMensalidade(a.getId(),Calendar.getInstance().getTime());
+            }
+        }
+        else{
+            ultimoMes=new SimpleDateFormat("MM").format(mensa.get(mensa.size()-1));
+            if((Integer.parseInt(mes)+2)>Integer.parseInt(ultimoMes)){
+                for(int i=0;i<3;i++){
+                    ArrayList<com.myclasscount.model.Mensalidade> men=Mensalidade_ctrl.getMensalidades(mes,ano);
+                    Date dataInicial=men.get(mensa.size()-1).getDataPagamento();
+                    for(Aluno a:alunos){
+                        Mensalidade_ctrl.setMensalidade(a.getId(),dataInicial);
+                    }
+                }
+            }
+        }
+        
+    }
     
 }

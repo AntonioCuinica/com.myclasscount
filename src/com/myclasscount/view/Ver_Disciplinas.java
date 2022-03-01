@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.view;
 
 import com.myclasscount.control.Disciplina_ctrl;
@@ -18,6 +19,7 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
+
 public class Ver_Disciplinas extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
@@ -52,7 +54,7 @@ public class Ver_Disciplinas extends JPanel {
         }
         
         tabela.setTableData(dados);
-        tabela.setButton("","Modificar",Color.green);
+        tabela.setButton("","Modificar",Color.green.darker());
         tabela.setButton(" ","Remover",Color.red);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
