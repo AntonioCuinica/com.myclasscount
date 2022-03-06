@@ -124,21 +124,40 @@ public class Ver_Mensalidade extends JPanel {
     public void updateComponents(){
         removeAll();
         container.add(title);
+        String esteMes=new SimpleDateFormat("MMMM",Locale.forLanguageTag("PT-BR")).format(Calendar.getInstance().getTime());
         for(Object m[][]:mensAno){
             JTabbedPane tab=(JTabbedPane)m[0][1];
+            tab.addMouseListener(new Clique(true,tab));
             for(Component cmp:tab.getComponents()){
                 Mensalidade m1=(Mensalidade)cmp;
-                m1.updateComponents();
+                if(m1.getMes().equals(esteMes)){
+                    m1.updateComponents();
+                    break;
+                }
             }
         }
         mensalidades();
     }
     
     private class Clique extends MouseAdapter {
+        private  boolean update=false;
+        private JTabbedPane tab;
+        
+        public Clique(){}
+        
+        public Clique(boolean update,JTabbedPane tab){
+            this.update=update;
+            this.tab=tab;
+        }
+        
         @Override
         public void mouseClicked(MouseEvent e){
-            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            if(e.getSource().toString().contains("Voltar")){
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
+            }else if(update){
+                Mensalidade m=(Mensalidade)tab.getComponentAt(tab.getSelectedIndex());
+                m.updateComponents();
+            }
         }
     }
-    
 }

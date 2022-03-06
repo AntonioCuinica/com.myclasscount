@@ -106,6 +106,11 @@ public final class MainFramee extends JPanel {
             btn[i].setForeground(Color.white);
             btn[i].addMouseListener(new clique(btn[i],(byte)(i+1)));
             pan.add(btn[i]);
+             if(CtrlGeral.getNivel_acesso().equals("normal")){
+                if(btnName[i].equals("Professor") || btnName[i].equals("Mensalidade")){
+                    pan.remove(btn[i]);
+                }
+            }
         }
         
         /**cards buttons names*/
@@ -122,6 +127,11 @@ public final class MainFramee extends JPanel {
             cards[i].addActionListener(new clique(cards[i]));
             cards[i].setActionCommand("card"+(i+1));
             pan2.add(cards[i]);
+            if(CtrlGeral.getNivel_acesso().equals("normal")){
+                if(cardName[i].equals("Cadastrar professor")){
+                    pan2.remove(cards[i]);
+                }
+            }
         }
                 
         pane.add(pan,BorderLayout.NORTH);
@@ -209,8 +219,10 @@ public final class MainFramee extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(e.getActionCommand().equals("card1")){
-                    MyProceduress.updateAdicionarProfessor();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
+                    if(CtrlGeral.getNivel_acesso().equals("admin")){
+                        MyProceduress.updateAdicionarProfessor();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
+                    }
                 }else if(e.getActionCommand().equals("card2")){
                     MyProceduress.updateAdicionarAluno();
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
@@ -225,6 +237,7 @@ public final class MainFramee extends JPanel {
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
                     if(dialog.getSimTeste()){
                         CtrlGeral.setProfessor_logado(null);
+                        CtrlGeral.setNivel_acesso("normal");
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
                     }
                 }
@@ -244,33 +257,41 @@ public final class MainFramee extends JPanel {
             
             public void mouseClicked(MouseEvent e){
                 
-                if(type==1){
-                    MyProceduress.updateVerAlunos();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
-                }
-                else if(type==2){
-                    MyProceduress.updateVerProfessores();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
-                }
-                else if(type==3){
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
-                }
-                else if(type==4){
-                    Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
-                    v.setVoltar("mainFrame");
-                    MyProceduress.updateVerObservacoes();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
-                }
-                else if(type==5){
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
-                }
-                else if(type==6){
-                    MyProceduress.updateVerTurmas();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
-                }
-                else if(type==7){
-                    MyProceduress.updateVerMensalidade();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verMensalidade");
+                switch (type) {
+                    case 1:
+                        MyProceduress.updateVerAlunos();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
+                        break;
+                    case 2:
+                        if(CtrlGeral.getNivel_acesso().equals("admin")){
+                             MyProceduress.updateVerProfessores();
+                             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
+                        }
+                        break;
+                    case 3:
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
+                        break;
+                    case 4:
+                        Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
+                        v.setVoltar("mainFrame");
+                        MyProceduress.updateVerObservacoes();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
+                        break;
+                    case 5:
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
+                        break;
+                    case 6:
+                        MyProceduress.updateVerTurmas();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
+                        break;
+                    case 7:
+                        if(CtrlGeral.getNivel_acesso().equals("admin")){
+                            MyProceduress.updateVerMensalidade();
+                            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verMensalidade");
+                        }
+                        break;
+                    default:
+                        break;
                 }
                 
             }

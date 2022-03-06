@@ -96,6 +96,32 @@ public class Turma_dao {
         return turmas;
     }
     
+    public static ArrayList<Turma> getTurmas(int prof_id){
+        Connection con=Conexaoo.getConnection();
+        String select="select * from turma t join professor_turma pt on t.id=pt.turma_id  where professor_id = ? order by nome;";
+        ArrayList<Turma> turmas=new ArrayList();
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setInt(1, prof_id);
+            ResultSet rs=stmt.executeQuery();
+            while(rs.next()){
+                Turma turma=new Turma();
+                turma.setId(rs.getInt("id"));
+                turma.setNome(rs.getString("nome"));
+                turma.setClasse(rs.getString("classe"));
+                turma.setHorarios(getHorario(turma.getId()));
+                turma.setProfessor(getProfessor_turma(turma.getId()));
+                turma.setAlunos(getAluno_turma(turma.getId()));
+                turmas.add(turma);
+            }
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return turmas;
+    }
+    
     public static void setTurma(Turma turma){
         Connection con=Conexaoo.getConnection();
         String select="call myclasscount.inserir_turma_horario(?, ?, ?, ?, ?, ?);";

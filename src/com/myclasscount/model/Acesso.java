@@ -9,6 +9,7 @@ package com.myclasscount.model;
  *
  * @author CUINIC4
  */
+
 public class Acesso {
     private int id;
     private int professor_id;
@@ -16,6 +17,7 @@ public class Acesso {
     private String codigo;
     private String pergunta;
     private String resposta;
+    private String nivel_acesso;
 
     public int getId() {
         return id;
@@ -39,6 +41,14 @@ public class Acesso {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    
+    public String getNivel_acesso() {
+        return nivel_acesso;
+    }
+
+    public void setNivel_acesso(String nivel_acesso) {
+        this.nivel_acesso = nivel_acesso;
     }
 
     public String getCodigo() {
@@ -71,11 +81,14 @@ public class Acesso {
         sb.append("Acesso\nid=").append(id);
         sb.append("\nprofessor_id=").append(professor_id);
         sb.append("\nusername=").append(username);
+        sb.append("\nnivel_acesso=").append(nivel_acesso);
         sb.append("\ncodigo=").append(codigo);
         sb.append("\npergunta=").append(pergunta);
         sb.append("\nresposta=").append(resposta);
         return sb.toString();
     }
+
+    
     
     
 }

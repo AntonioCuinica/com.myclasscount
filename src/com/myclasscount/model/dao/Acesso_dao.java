@@ -36,6 +36,7 @@ public class Acesso_dao {
                 acesso.setPergunta(rs.getString("pergunta"));
                 acesso.setResposta(rs.getString("rsposta"));
                 acesso.setProfessor_id(rs.getInt("professor_id"));
+                acesso.setNivel_acesso(rs.getString("nivel"));
             }
             stmt.close();
             rs.close();
@@ -62,6 +63,7 @@ public class Acesso_dao {
                 acesso.setPergunta(rs.getString("pergunta"));
                 acesso.setResposta(rs.getString("resposta"));
                 acesso.setProfessor_id(rs.getInt("professor_id"));
+                acesso.setNivel_acesso(rs.getString("nivel"));
             }
             stmt.close();
             rs.close();
@@ -74,7 +76,7 @@ public class Acesso_dao {
     
     public static void setAcesso(Acesso acesso,int prof_id){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_professor_acesso(?, ?, ?, ?, ?);";
+        String select="call myclasscount.inserir_professor_acesso(?, ?, ?, ?, ?, ?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,String.valueOf(prof_id));
@@ -82,6 +84,7 @@ public class Acesso_dao {
             stmt.setString(3,acesso.getCodigo());
             stmt.setString(4,acesso.getPergunta());
             stmt.setString(5,acesso.getResposta());
+            stmt.setString(6,acesso.getNivel_acesso());
             
             stmt.execute();
             stmt.close();

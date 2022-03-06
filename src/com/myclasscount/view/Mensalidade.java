@@ -48,7 +48,6 @@ public class Mensalidade extends JPanel {
         this.ano=ano;
         setLayout(null);
         setBackground(backColor.darker());
-        addCategoria(mes,ano);
         setVisible(true);
     }
     
@@ -84,13 +83,14 @@ public class Mensalidade extends JPanel {
             bts[i].setPreferredSize(new Dimension(250,250));
             
             JPanel status=status(mensa.get(i).getEstado());
-            Aluno aluno=new Aluno();
+            Aluno aluno=null;
             for(Aluno a:alunos){
                 if(a.getId()==mensa.get(i).getAluno_id()){
                     aluno=a;
                     break;
                 }
             }
+            
             JPanel centro=centro(aluno,mensa.get(i));
             centro.setBorder(new EmptyBorder(2,2,2,2));
             
@@ -186,7 +186,6 @@ public class Mensalidade extends JPanel {
         double totP=0,totD=0;
         for(com.myclasscount.model.Mensalidade m:mensa){
             totP+=m.getValor();
-            
             String p=Aluno_ctrl.pagamento(m.getAluno_id())[2];
             if(p!=null){
                 double pag=Double.parseDouble(p);
@@ -196,6 +195,7 @@ public class Mensalidade extends JPanel {
         }
         dir.add(MyProceduress.info("Total pago",": "+totP, Color.white,14));
         dir.add(MyProceduress.info("Total em dívida",": "+totD, Color.white,14));
+        //dir.add(MyProceduress.info("Numero de alunos",": "+mensa.size(), Color.white,14));
         
         desc.add(esc); desc.add(dir);
         return desc;
@@ -205,6 +205,7 @@ public class Mensalidade extends JPanel {
         JPanel panel=new JPanel(new BorderLayout());
         btnPagar_visivel=true;
         linhaCentro=7;
+        
         if(txt.equals("aberta")){
             panel.setBackground(Color.BLUE);
         }else if(txt.equals("divida")){
@@ -214,6 +215,7 @@ public class Mensalidade extends JPanel {
             btnPagar_visivel=false;
             linhaCentro=6;
         }
+        
         JButton imprimir=new JButton();
         imprimir.setLayout(new GridLayout());
         MyLabell icon=new MyLabell("img/print.png");
@@ -324,7 +326,5 @@ public class Mensalidade extends JPanel {
                 }
             }
         }
-            
     }
-    
 }

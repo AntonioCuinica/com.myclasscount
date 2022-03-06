@@ -51,6 +51,10 @@ public class Turma_ctrl {
         return Turma_dao.getTurmas();
     }
     
+    public static ArrayList<Turma> getTurmas(int prof_id){
+        return Turma_dao.getTurmas(prof_id);
+    }
+    
     public static void updateTurma(Turma turma){
         Turma_dao.updateTurma(turma);
     }

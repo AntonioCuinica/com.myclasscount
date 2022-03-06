@@ -5,7 +5,6 @@
  */
 package com.myclasscount.model.dao;
 
-import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Professor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -185,8 +184,8 @@ public class Professor_dao {
             stmt.setString(7,professor.getMorada());
             stmt.setString(8,professor.getTelefone());
             stmt.setString(9,professor.getEmail());
-            stmt.setDouble(10,professor.getSalario());
-            stmt.setString(11,professor.getNUIT());
+            stmt.setString(10,professor.getNUIT());
+            stmt.setDouble(11,professor.getSalario());
             stmt.execute(); 
             
             stmt.close();

@@ -142,8 +142,13 @@ public class Loginn extends JPanel {
         if(Login_ctrl.login_ctrl(txtF.getText(),psw)){
             CtrlGeral.carregando();
             countFalhas=0;
+            
             Acesso acesso=Acesso_ctrl.getAcesso(txtF.getText());
             CtrlGeral.setProfessor_logado(Professor_ctrl.getProfessor(acesso.getProfessor_id()));
+            CtrlGeral.setNivel_acesso(acesso.getNivel_acesso());
+           
+            CtrlGeral.inicializarTelas();
+            
             MyProceduress.updateMainFrame();
             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
            

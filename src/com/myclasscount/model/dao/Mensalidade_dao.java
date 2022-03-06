@@ -148,8 +148,8 @@ public class Mensalidade_dao {
         ArrayList<Mensalidade> mensalidades=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,mes);
-            stmt.setString(2,ano);
+            stmt.setString(1,ano);
+            stmt.setString(2,mes);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
                 Mensalidade mensalidade=new Mensalidade();

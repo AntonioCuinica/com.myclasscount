@@ -13,6 +13,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -53,10 +54,6 @@ public class Myclasscount extends JFrame {
         add(login,"login");
         CtrlGeral.setTela("login",login);
         
-        MainFramee mainF=new MainFramee();
-        add(mainF,"mainFrame");
-        CtrlGeral.setTela("mainFrame",mainF);
-        
         Ver_Alunos verA=new Ver_Alunos();
         add(verA,"verAlunos");
         CtrlGeral.setTela("verAlunos",verA);
@@ -68,14 +65,6 @@ public class Myclasscount extends JFrame {
         Ver_Categoria cat=new Ver_Categoria();
         add(cat,"categoria");
         CtrlGeral.setTela("categoria",cat);
-        
-        Ver_Turmas verT=new Ver_Turmas();
-        add(verT,"verTurmas");
-        CtrlGeral.setTela("verTurmas",verT);
-        
-        Ver_Turmas2 verT2=new Ver_Turmas2();
-        add(verT2,"verTurmas2");
-        CtrlGeral.setTela("verTurmas2",verT2);
         
         Ver_Observacoes verO=new Ver_Observacoes();
         add(verO,"verObservacoes");

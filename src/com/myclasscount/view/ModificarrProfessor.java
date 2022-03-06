@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -235,13 +236,27 @@ public class ModificarrProfessor extends JDialog {
                         txtF[1].grabFocus();
                     }else if(Professor_ctrl.getErro().contains("BI")){
                         txtF[2].setText("");
-                        txtF[2].grabFocus();
+                        if(Professor_ctrl.getErro().contains("aleatorio")){
+                            Random r=new Random();
+                            Calendar cal=Calendar.getInstance();
+                            String bi=new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+                            bi+=(r.nextInt(1000)+1000)+""+professor.getNome().charAt(0);
+                            txtF[2].setText(bi);
+                            professor.setBI(bi);
+                        }
                     }else if(Professor_ctrl.getErro().contains("salario")){
                         txtF[3].setText("");
                         txtF[3].grabFocus();
                     }else if(Professor_ctrl.getErro().contains("NUIT")){
                         txtF[4].setText("");
-                        txtF[4].grabFocus();
+                        if(Professor_ctrl.getErro().contains("aleatorio")){
+                            Random r=new Random();
+                            Calendar cal=Calendar.getInstance();
+                            String nuit=new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+                            nuit+=(r.nextInt(1000)+1000)+""+nuit.charAt(0);
+                            txtF[4].setText(nuit);
+                            professor.setNUIT(nuit);
+                        }
                     }else if(Professor_ctrl.getErro().contains("telefone")){
                         txtF[5].setText("");
                         txtF[5].grabFocus();

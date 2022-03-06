@@ -12,6 +12,7 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -27,9 +28,11 @@ public class CriarSenha extends JPanel {
     private Panel title;
     private MyProceduress myProc;
     private JTextField txtF[];
+    private JComboBox nivel;
     private JLabel labels[];
     private Acesso acesso=null;
     private String prof_BI="";
+    
     
     public  void setProf_BI(String prof_BI){
         this.prof_BI=prof_BI;
@@ -52,21 +55,23 @@ public class CriarSenha extends JPanel {
     
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
-        pan1.setLayout(new GridLayout(10,1));
+        pan1.setLayout(new GridLayout(12,1));
         pan1.invisible(true, true);
         
         myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[1].addMouseListener(new Clique());
         
         txtF=new JTextField[]{new JTextField(),new JTextField(),new JTextField(),new JTextField(),new JTextField()};
-        labels=new JLabel[]{new JLabel("Username"),new JLabel("Criar Senha"),new JLabel("Confirmar Senha"),
+        nivel=new JComboBox(new String[]{"normal","admin"});
+        labels=new JLabel[]{new JLabel("Usuário"),new JLabel("Nivel de acesso"),new JLabel("Criar Senha"),new JLabel("Confirmar Senha"),
                          new JLabel("Pergunta de Recuperaçao"),new JLabel("Resposta")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         pan1.add(labels[0]); pan1.add(txtF[0]);
-        pan1.add(labels[1]); pan1.add(txtF[1]);
-        pan1.add(labels[2]); pan1.add(txtF[2]);
-        pan1.add(labels[3]); pan1.add(txtF[3]);
-        pan1.add(labels[4]); pan1.add(txtF[4]);
+        pan1.add(labels[1]); pan1.add(nivel);
+        pan1.add(labels[2]); pan1.add(txtF[1]);
+        pan1.add(labels[3]); pan1.add(txtF[2]);
+        pan1.add(labels[4]); pan1.add(txtF[3]);
+        pan1.add(labels[5]); pan1.add(txtF[4]);
         
         mainPane.add(pan1);
         
@@ -114,7 +119,7 @@ public class CriarSenha extends JPanel {
             }
             acesso.setPergunta(txtF[3].getText());
             acesso.setResposta(txtF[4].getText());
-            
+            acesso.setNivel_acesso(String.valueOf(nivel.getSelectedItem()));
             String resultado=Acesso_ctrl.setAcesso(acesso,prof_BI);
             if(resultado.equals("valido")){
                 MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
@@ -123,7 +128,6 @@ public class CriarSenha extends JPanel {
                 for(JTextField txt:txtF){
                     txt.setText("");
                 }
-                
             }else {
                 if(resultado.contains("1")){
                     txtF[0].setText("");

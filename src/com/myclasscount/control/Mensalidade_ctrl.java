@@ -45,6 +45,6 @@ public class Mensalidade_ctrl {
     }
     
     public static void inserirMensalidades(){
-        Mensalidade.updateMensalidades();
+        Mensalidade.actualizarMensalidades();
     }
 }

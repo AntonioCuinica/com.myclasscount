@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 import javax.swing.*;
 
 /**
@@ -178,18 +179,19 @@ public class AdicionarProfessor extends JPanel {
                     professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(data.getDate()));
                 }catch(NullPointerException n){
                     System.out.println("Erro, data nula"+n.getMessage());
-                     Calendar cal=Calendar.getInstance();
+                    Calendar cal=Calendar.getInstance();
                     professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime()));
                 }
                 if(male.isSelected()){
-                    professor.setSexo("M");
+                    professor.setSexo("Masculino");
                 }else{
-                    professor.setSexo("F");
+                    professor.setSexo("Femenino");
                 }
                 
                 professor.setNivel((String) combbx.getSelectedItem());
                 
                 String salario=txtF[3].getText();
+                
                 if(!Professor_ctrl.validarNumero(salario,"salario").equals("valido")){
                     professor.setSalario(-1);
                 }else{
@@ -211,13 +213,27 @@ public class AdicionarProfessor extends JPanel {
                         txtF[1].grabFocus();
                     }else if(Professor_ctrl.getErro().contains("BI")){
                         txtF[2].setText("");
-                        txtF[2].grabFocus();
+                        if(Professor_ctrl.getErro().contains("aleatorio")){
+                            Random r=new Random();
+                            Calendar cal=Calendar.getInstance();
+                            String bi=new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+                            bi+=(r.nextInt(1000)+1000)+""+professor.getNome().charAt(0);
+                            txtF[2].setText(bi);
+                            professor.setBI(bi);
+                        }
                     }else if(Professor_ctrl.getErro().contains("salario")){
                         txtF[3].setText("");
                         txtF[3].grabFocus();
                     }else if(Professor_ctrl.getErro().contains("NUIT")){
                         txtF[4].setText("");
-                        txtF[4].grabFocus();
+                        if(Professor_ctrl.getErro().contains("aleatorio")){
+                            Random r=new Random();
+                            Calendar cal=Calendar.getInstance();
+                            String nuit=new SimpleDateFormat("ddMMyyyy").format(cal.getTime());
+                            nuit+=(r.nextInt(1000)+1000)+""+nuit.charAt(0);
+                            txtF[4].setText(nuit);
+                            professor.setNUIT(nuit);
+                        }
                     }else if(Professor_ctrl.getErro().contains("telefone")){
                         txtF[5].setText("");
                         txtF[5].grabFocus();
@@ -247,8 +263,6 @@ public class AdicionarProfessor extends JPanel {
                     
                 }
             
-            }else if(e.getComponent().toString().contains("Voltar")){
-                
             }
         }
     }

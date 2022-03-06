@@ -67,7 +67,7 @@ public class ValidarProfessor {
     
     public static String validarBI(String BI, int prof_id){
         if(BI.isBlank()){
-            return "Erro, BI vazio";
+            return "BI, será aleatorio, continuar ?";
         }else if(BI.length()!=13){
             return "Erro, BI invalido";
         }else{
@@ -109,19 +109,19 @@ public class ValidarProfessor {
         return "valido";
     }
     
-    public static String validarNUIT(String NUTI, int prof_id){
-        if(NUTI.isBlank()){
-            return "Erro, NUIT vazio";
-        }else if(NUTI.length()!=13){
+    public static String validarNUIT(String NUIT, int prof_id){
+        if(NUIT.isBlank()){
+            return "NUIT, será aleatorio, continuar ?";
+        }else if(NUIT.length()!=13){
             return "Erro, NUIT invalido";
         }else{
             boolean valido=false;
             try{
-                Long texto=Long.parseLong(NUTI.substring(0,13));
+                Long texto=Long.parseLong(NUIT.substring(0,13));
                 valido=true;
             }catch(RuntimeException n){
                 if(!valido)return "Erro, NUIT invalido";
-                Professor prof = Professor_ctrl.getProfessorNUIT(NUTI);
+                Professor prof = Professor_ctrl.getProfessorNUIT(NUIT);
                 if(prof!=null && prof.getId()!=prof_id){
                     return "Erro, NUIT existente";
                 }
@@ -133,15 +133,14 @@ public class ValidarProfessor {
     
     
     public static String validarTelefone(String telefone){
-        if(telefone.isBlank()){
-            return "Erro, telefone vazio";
-        }else{
+        if(!telefone.isBlank()){
             if(telefone.matches("[a-zA-Z]*")){
                 return "Erro, telefone invalido";
             }else if(!telefone.matches("[0-9]*") && !telefone.substring(0,1).equals("+")){
                 return "Erro, telefone invalido";
             }
         }
+        
         return "valido";
     }
     
