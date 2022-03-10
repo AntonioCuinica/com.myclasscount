@@ -19,7 +19,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.net.URL;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public final class MainFramee extends JPanel {
@@ -37,7 +43,7 @@ public final class MainFramee extends JPanel {
     
     public void mainBar(){
         Professor professor=CtrlGeral.getProfessor_logado();
-        Panel pane= new Panel(new Color(0,24,242),false);
+        Panel pane=new Panel(new Color(0,24,242),false);
         pane.setLayout(new BoxLayout(pane,BoxLayout.X_AXIS));
         pane.setPreferredSize(new Dimension(getWidth()-60,100));
         pane.setBorder(new EmptyBorder(30,30,30,30));
@@ -78,7 +84,7 @@ public final class MainFramee extends JPanel {
     
     public void mainPane(){
         /**main panel*/
-        Panel pane= new Panel(new Color(0,24,242),false);
+        Panel pane=new Panel(new Color(0,24,242),false);
         pane.setBorderColor(new Color(0,24,242));
         pane.setLayout(new BorderLayout());
         pane.setPreferredSize(new Dimension(getWidth()-60,600));
@@ -86,7 +92,7 @@ public final class MainFramee extends JPanel {
         
         /**out(sair) button*/
         MyButtonn sair=new MyButtonn("Logout",false);
-        sair.addActionListener(new clique(sair,(byte)-1));
+        sair.addActionListener(new Clique(sair,(byte)-1));
         sair.setActionCommand("out");
         JPanel pan3=new JPanel(new FlowLayout(2));
         pan3.setBorder(new EmptyBorder(0,20,20,20));
@@ -104,7 +110,7 @@ public final class MainFramee extends JPanel {
             btn[i]=new JButton(btnName[i]);
             btn[i].setBackground(new Color(104,97,138));
             btn[i].setForeground(Color.white);
-            btn[i].addMouseListener(new clique(btn[i],(byte)(i+1)));
+            btn[i].addMouseListener(new Clique(btn[i],(byte)(i+1)));
             pan.add(btn[i]);
              if(CtrlGeral.getNivel_acesso().equals("normal")){
                 if(btnName[i].equals("Professor") || btnName[i].equals("Mensalidade")){
@@ -115,16 +121,16 @@ public final class MainFramee extends JPanel {
         
         /**cards buttons names*/
         String cardName[]={"Cadastrar professor","Cadastrar Alunos","Inserir Disciplina","Criar Turma"};
-        mycard cards[]=new mycard[cardName.length];
+        Mycard cards[]=new Mycard[cardName.length];
         Panel pan2=new Panel(Color.lightGray,false);
         pan2.invisible(true,true);
         pan2.setLayout(new GridLayout(1,cards.length,18,0));
         pan2.setBorder(new EmptyBorder(20,20,20,20));
         
         for(int i=0;i<cards.length;i++){
-            cards[i]=new mycard(cardName[i],"img/card"+(i+1)+".png");
-            cards[i].addMouseListener(new clique(cards[i]));
-            cards[i].addActionListener(new clique(cards[i]));
+            cards[i]=new Mycard(cardName[i],"img/card"+(i+1)+".jpg");
+            cards[i].addMouseListener(new Clique(cards[i]));
+            cards[i].addActionListener(new Clique(cards[i]));
             cards[i].setActionCommand("card"+(i+1));
             pan2.add(cards[i]);
             if(CtrlGeral.getNivel_acesso().equals("normal")){
@@ -142,23 +148,17 @@ public final class MainFramee extends JPanel {
         
     }
     
-    private class mycard extends JButton{
+    private class Mycard extends JButton{
         String name="New Card";
         String URL;
         boolean needImage;
         private Color barColor=Color.DARK_GRAY;
         
-        public mycard(String name,String URL){
+        public Mycard(String name,String URL){
+            super();
             this.name=name;
             this.URL=URL;
             needImage=true;
-            setOpaque(false);
-        }
-        
-        public mycard(String name){
-            this.name=name;
-            needImage=false;
-            setOpaque(false);
         }
         
         public void setBarColor(Color color){
@@ -199,47 +199,53 @@ public final class MainFramee extends JPanel {
         mainPane();
     }
     
-    private class clique extends MouseAdapter implements ActionListener {
-            private mycard btn=null;
+    private class Clique extends MouseAdapter implements ActionListener {
+            private Mycard btn=null;
             private JButton btn2=null;
             private Color color;
             private byte type=0;
             
-            public clique(mycard btn){
+            public Clique(Mycard btn){
                 this.btn=btn;
                 color=btn.getBarColor();
                 type=0;
             }
             
-            public clique(JButton btn,byte type){
+            public Clique(JButton btn,byte type){
                 this.btn2=btn;
                 this.type=type;
             }
             
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(e.getActionCommand().equals("card1")){
-                    if(CtrlGeral.getNivel_acesso().equals("admin")){
-                        MyProceduress.updateAdicionarProfessor();
-                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
-                    }
-                }else if(e.getActionCommand().equals("card2")){
-                    MyProceduress.updateAdicionarAluno();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
-                }
-                else if(e.getActionCommand().equals("card3")){
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"registSubject");
-                }
-                else if(e.getActionCommand().equals("card4")){
-                    MyProceduress.updateCriarTurma();
-                    Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
-                }else if(e.getActionCommand().equals("out")){
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
-                    if(dialog.getSimTeste()){
-                        CtrlGeral.setProfessor_logado(null);
-                        CtrlGeral.setNivel_acesso("normal");
-                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
-                    }
+                switch (e.getActionCommand()) {
+                    case "card1":
+                        if(CtrlGeral.getNivel_acesso().equals("admin")){
+                            MyProceduress.updateAdicionarProfessor();
+                            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"adicionarProfessor");
+                        }   
+                        break;
+                    case "card2":
+                        MyProceduress.updateAdicionarAluno();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"addStudent");
+                        break;
+                    case "card3":
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"registSubject");
+                        break;
+                    case "card4":
+                        MyProceduress.updateCriarTurma();
+                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"criarTurma");
+                        break;
+                    case "out":
+                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja fazer logout ?",true);
+                        if(dialog.getSimTeste()){
+                            CtrlGeral.setProfessor_logado(null);
+                            CtrlGeral.setNivel_acesso("normal");
+                            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
+                        }   
+                        break;
+                    default:
+                        break;
                 }
             }
             
@@ -255,43 +261,40 @@ public final class MainFramee extends JPanel {
                 }
             }
             
+            @Override
             public void mouseClicked(MouseEvent e){
                 
                 switch (type) {
-                    case 1:
+                    case 1 -> {
                         MyProceduress.updateVerAlunos();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
-                        break;
-                    case 2:
+                    }
+                    case 2 -> {
                         if(CtrlGeral.getNivel_acesso().equals("admin")){
-                             MyProceduress.updateVerProfessores();
-                             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
+                            MyProceduress.updateVerProfessores();
+                            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
                         }
-                        break;
-                    case 3:
-                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
-                        break;
-                    case 4:
+                    }
+                    case 3 -> Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
+                    case 4 -> {
                         Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
                         v.setVoltar("mainFrame");
                         MyProceduress.updateVerObservacoes();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
-                        break;
-                    case 5:
-                        Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
-                        break;
-                    case 6:
+                    }
+                    case 5 -> Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
+                    case 6 -> {
                         MyProceduress.updateVerTurmas();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
-                        break;
-                    case 7:
+                    }
+                    case 7 -> {
                         if(CtrlGeral.getNivel_acesso().equals("admin")){
                             MyProceduress.updateVerMensalidade();
                             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verMensalidade");
                         }
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
                 
             }

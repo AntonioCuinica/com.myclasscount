@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 import javax.swing.JPanel;
 import javax.swing.*;
@@ -82,7 +83,6 @@ public class Mensalidade extends JPanel {
             bts[i].setMinimumSize(new Dimension(250,350));
             bts[i].setPreferredSize(new Dimension(250,250));
             
-            JPanel status=status(mensa.get(i).getEstado());
             Aluno aluno=null;
             for(Aluno a:alunos){
                 if(a.getId()==mensa.get(i).getAluno_id()){
@@ -91,6 +91,16 @@ public class Mensalidade extends JPanel {
                 }
             }
             
+            if(mensa.get(i).getEstado().equals("aberta")){
+                if(Calendar.getInstance().getTime().after(mensa.get(i).getDataPagamento())){
+                    mensa.get(i).setEstado("divida");
+                    Mensalidade_ctrl.updateMensalidade(mensa.get(i));
+                    System.out.println("");
+                }
+            }
+            
+            JPanel status=status(mensa.get(i).getEstado());
+            
             JPanel centro=centro(aluno,mensa.get(i));
             centro.setBorder(new EmptyBorder(2,2,2,2));
             
@@ -98,6 +108,7 @@ public class Mensalidade extends JPanel {
             btn.addMouseListener(new Clique(aluno,mensa.get(i)));
             btn.setBackground(Color.white);
             btn.setForeground(Color.blue);
+            
             
             bts[i].add(status,BorderLayout.NORTH);
             bts[i].add(centro,BorderLayout.CENTER);

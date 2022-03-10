@@ -7,13 +7,11 @@ package com.myclasscount.view;
 
 import com.myclasscount.control.Aluno_ctrl;
 import com.myclasscount.control.CtrlGeral;
-import com.myclasscount.control.Mensalidade_ctrl;
 import com.myclasscount.model.Aluno;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -141,6 +139,7 @@ public class MyProceduress {
         
         return pane;
     }
+    
 
     public static JPanel info(String n,String v){
         JPanel panel=new JPanel(new GridLayout(1,2));

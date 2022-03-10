@@ -3,22 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.view;
 
 import com.myclasscount.control.CtrlGeral;
-import com.myclasscount.control.Mensalidade_ctrl;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
  * @author CUINIC4
  */
+
 public class Myclasscount extends JFrame {
     private static CardLayout layout;
     private static Container container;
@@ -110,26 +110,23 @@ public class Myclasscount extends JFrame {
         add(verM,"verMensalidade");
         CtrlGeral.setTela("verMensalidade",verM);
         
-        
         resizing();
     }
     
     
     public void resizing(){
         new Thread(
-            new Runnable(){
-                public void run(){
-                    while(true){
-                        try{
-                            Thread.sleep(50);
-                        }catch(InterruptedException e){
-                            System.out.println("Erro: "+e.getMessage());
-                        }
-                        for(Component cmp:getComponents()){
-                            cmp.setSize(getSize());
-                        }
-                        revalidate();
+            () -> {
+                while(true){
+                    try{
+                        Thread.sleep(50);
+                    }catch(InterruptedException e){
+                        System.out.println("Erro: "+e.getMessage());
                     }
+                    for(Component cmp:getComponents()){
+                        cmp.setSize(getSize());
+                    }
+                    revalidate();
                 }
             }
         ).start();

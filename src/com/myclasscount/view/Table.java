@@ -44,9 +44,7 @@ public class Table extends JTable {
         setHearderColor(Color.blue,Color.white);
         setShowVerticalLines(false);
         setRowHeight(40);
-        setDragEnabled(false);
         getTableHeader().setReorderingAllowed(false);
-        getTableHeader().setBounds(0, 0,WIDTH,40);
     }
     
     public void setTableData(Object linhas[][]){
