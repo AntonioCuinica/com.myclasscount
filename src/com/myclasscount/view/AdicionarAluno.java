@@ -191,11 +191,11 @@ public class AdicionarAluno extends JPanel {
                 aluno.setBI(txtF[2].getText());
                 
                 try{
-                    aluno.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(data.getDate()));
+                    aluno.setNascimento(new SimpleDateFormat("yyyy-MM-dd").format(data.getDate()));
                 }catch(NullPointerException n){
                     System.out.println("Erro, data nula"+n.getMessage());
                     Calendar cal=Calendar.getInstance();
-                    aluno.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime()));
+                    aluno.setNascimento(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
                 }
                 
                 if(male.isSelected()){

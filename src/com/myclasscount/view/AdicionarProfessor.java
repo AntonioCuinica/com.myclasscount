@@ -176,11 +176,11 @@ public class AdicionarProfessor extends JPanel {
                 professor.setApelido(txtF[1].getText());
                 professor.setBI(txtF[2].getText());
                 try{
-                    professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(data.getDate()));
+                    professor.setNascimento(new SimpleDateFormat("yyyy-MM-dd").format(data.getDate()));
                 }catch(NullPointerException n){
                     System.out.println("Erro, data nula"+n.getMessage());
                     Calendar cal=Calendar.getInstance();
-                    professor.setNascimento(new SimpleDateFormat("yyyy/MM/dd").format(cal.getTime()));
+                    professor.setNascimento(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
                 }
                 if(male.isSelected()){
                     professor.setSexo("Masculino");

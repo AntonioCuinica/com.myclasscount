@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.Disciplina_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
@@ -151,12 +152,8 @@ public class Ver_Professores extends JPanel {
         pan1.add(MyProceduress.info("Apelido",": "+professor.getApelido()));
         pan1.add(MyProceduress.info("BI",": "+professor.getBI()));
         try{
-            System.out.println("Nasc1: "+professor.getNascimento().split("-")[0]);
             String dt=professor.getNascimento().substring(0,4);
-            System.out.println("Nascimento: "+professor.getNascimento());
-            System.out.println("Idade : "+dt);
             pan1.add(MyProceduress.info("Idade",": "+MyProceduress.idade(dt)));
-            System.out.println("Idade : "+dt);
         }catch(NumberFormatException e){
             System.out.println("Erro, data: "+e.getMessage());
         }
@@ -173,7 +170,9 @@ public class Ver_Professores extends JPanel {
         MyButtonn modificar=new MyButtonn("Modificar",false);
         modificar.addMouseListener(new Clique());
         MyButtonn remover=new MyButtonn("Remover",false);
-        remover.addMouseListener(new Clique());
+        if(!professor.getBI().equals(CtrlGeral.getProfessor_logado().getBI())){
+            remover.addMouseListener(new Clique());
+        }
         pan2.add(modificar);
         pan2.add(remover);
                         

@@ -11,6 +11,9 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -43,6 +46,9 @@ public class Myclasscount extends JFrame {
         setLayout(layout);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        URL url=getClass().getResource("img/logo_2.png");
+        Image img=Toolkit.getDefaultToolkit().getImage(url);
+        setIconImage(img);
         addViews();
         container=getContentPane();
         frame=this;

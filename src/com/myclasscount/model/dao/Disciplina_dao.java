@@ -21,7 +21,7 @@ public class Disciplina_dao {
     
     public static Disciplina getDisciplina(String nome){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.disciplina WHERE nome=?";
+        String select="SELECT * FROM disciplina WHERE nome=?";
         Disciplina disciplina=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -37,14 +37,14 @@ public class Disciplina_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getDisciplina nome: "+e.getMessage());
         }
         return disciplina;
     }
     
     public static ArrayList<Disciplina> getDisciplinas(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.disciplina order by nome";
+        String select="SELECT * FROM disciplina order by nome";
         ArrayList<Disciplina> disciplina=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -60,7 +60,7 @@ public class Disciplina_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getDisciplinas: "+e.getMessage());
         }
         return disciplina;
     
@@ -85,7 +85,7 @@ public class Disciplina_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getDisciplina id: "+e.getMessage());
         }
         return disciplina;
     
@@ -93,7 +93,7 @@ public class Disciplina_dao {
     
     public static void updateDisciplina(Disciplina disc){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE myclasscount.disciplina SET nome=?,carga_horaria=?,seccao=? WHERE id=?;";
+        String select="UPDATE disciplina SET nome=?,carga_horaria=?,seccao=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,disc.getNome());
@@ -105,13 +105,13 @@ public class Disciplina_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro updateDisciplina: "+e.getMessage());
         }
     }
     
     public static void setDisciplina(Disciplina disc){
         Connection con=Conexaoo.getConnection();
-        String select="CALL myclasscount.inserir_disciplina(?,?,?);";
+        String select="insert into disciplina(nome,carga_horaria,seccao) values (?,?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,disc.getNome());
@@ -122,13 +122,13 @@ public class Disciplina_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setDisciplina: "+e.getMessage());
         }
     }
     
     public static boolean delDisciplina(Disciplina disc){
         Connection con=Conexaoo.getConnection();
-        String select="DELETE FROM myclasscount.disciplina WHERE id=?;";
+        String select="DELETE FROM disciplina WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,disc.getId());
@@ -139,7 +139,7 @@ public class Disciplina_dao {
             
             return true;
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro delDisciplina nome: "+e.getMessage());
             return false;
         }
     }

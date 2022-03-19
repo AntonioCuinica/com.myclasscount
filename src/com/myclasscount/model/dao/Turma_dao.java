@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package com.myclasscount.model.dao;
 
 import com.myclasscount.model.Aluno;
@@ -19,16 +20,18 @@ import java.util.ArrayList;
  *
  * @author CUINIC4
  */
+
 public class Turma_dao {
     
     public static Turma getTurma(int turma_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.turma where id=?;";
+        String select="SELECT * FROM turma where id=?;";
         Turma turma=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,turma_id);
             ResultSet rs=stmt.executeQuery();
+            
             while(rs.next()){
                 turma=new Turma();
                 turma.setId(rs.getInt("id"));
@@ -41,14 +44,14 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getTurma id: "+e.getMessage());
         }
         return turma;
     }
     
     public static Turma getTurma(String nome){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.turma where nome=?;";
+        String select="SELECT * FROM turma where nome=?;";
         Turma turma=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -66,32 +69,33 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getTurma nome: "+e.getMessage());
         }
         return turma;
     }
     
     public static ArrayList<Turma> getTurmas(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.turma order by nome;";
+        String select="SELECT * FROM turma order by nome;";
         ArrayList<Turma> turmas=new ArrayList();
         try{
-            PreparedStatement stmt=con.prepareStatement(select);
-            ResultSet rs=stmt.executeQuery();
-            while(rs.next()){
-                Turma turma=new Turma();
-                turma.setId(rs.getInt("id"));
-                turma.setNome(rs.getString("nome"));
-                turma.setClasse(rs.getString("classe"));
-                turma.setHorarios(getHorario(turma.getId()));
-                turma.setProfessor(getProfessor_turma(turma.getId()));
-                turma.setAlunos(getAluno_turma(turma.getId()));
-                turmas.add(turma);
+            try (PreparedStatement stmt = con.prepareStatement(select)) {
+                ResultSet rs=stmt.executeQuery();
+                while(rs.next()){
+                    Turma turma=new Turma();
+                    turma.setId(rs.getInt("id"));
+                    turma.setNome(rs.getString("nome"));
+                    turma.setClasse(rs.getString("classe"));
+                    turma.setHorarios(getHorario(turma.getId()));
+                    turma.setProfessor(getProfessor_turma(turma.getId()));
+                    turma.setAlunos(getAluno_turma(turma.getId()));
+                    turmas.add(turma);
+                }
+                stmt.close();   
+                con.close();
             }
-            stmt.close();
-            con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getTurmas: "+e.getMessage());
         }
         return turmas;
     }
@@ -117,34 +121,50 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getTurmas id: "+e.getMessage());
         }
         return turmas;
     }
     
     public static void setTurma(Turma turma){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_turma_horario(?, ?, ?, ?, ?, ?);";
+        String insert1="insert into turma(nome,classe) values(?,?)";
+        String select ="select id from turma where turma.nome like?";
+        String insert2="insert into horario(turno,hora_inicio,hora_fim,dia_semana,turma_id) values(?,?,?,?,?)";
         try{
-            PreparedStatement stmt=con.prepareStatement(select);
+            PreparedStatement stmt=con.prepareStatement(insert1);
             stmt.setString(1,turma.getNome());
             stmt.setString(2,turma.getClasse());
-            stmt.setString(3,turma.getHorario().getTurno());
-            stmt.setString(4,turma.getHorario().getHora_inicio());
-            stmt.setString(5,turma.getHorario().getHora_fim());
-            stmt.setString(6,turma.getHorario().getDia_semana());
+            stmt.execute();
+            stmt.close();
+            
+            stmt=con.prepareStatement(select);
+            stmt.setString(1,turma.getNome());
+            ResultSet rs=stmt.executeQuery();
+            String id="";
+            while(rs.next()){
+                id=rs.getString("id");
+            }
+            stmt.close();
+            
+            stmt=con.prepareStatement(insert2);
+            stmt.setString(1,turma.getHorario().getTurno());
+            stmt.setString(2,turma.getHorario().getHora_inicio());
+            stmt.setString(3,turma.getHorario().getHora_fim());
+            stmt.setString(4,turma.getHorario().getDia_semana());
+            stmt.setString(5,id);
             stmt.execute(); 
             
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setTurma: "+e.getMessage());
         }
     }
     
     public static void setAluno_turma(String nome,int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_aluno_turma(?, ?);";
+        String select="insert into aluno_turma(aluno_id,turma_id) values(?,?)";
         Turma turma=getTurma(nome);
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -155,13 +175,13 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setAlunoTurma: "+e.getMessage());
         }
     }
     
     public static ArrayList<Aluno> getAluno_turma(int turma_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.aluno_turma where turma_id=?;";
+        String select="SELECT * FROM aluno_turma where turma_id=?;";
         ArrayList<Aluno> alunos=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -174,14 +194,14 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getAlunoTurma: "+e.getMessage());
         }
         return alunos;
     }
     
     public static void delAluno_turma(Turma turma,int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="delete from aluno_turma where turma_id=? and aluno_id=?";
+        String select="delete from aluno_turma where turma_id=? and aluno_id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,turma.getId());
@@ -197,7 +217,7 @@ public class Turma_dao {
     
     public static void delHorario(Turma turma,String dia_semana){
         Connection con=Conexaoo.getConnection();
-        String select="delete from horario where turma_id=? and dia_semana=?";
+        String select="delete from horario where turma_id=? and dia_semana=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,turma.getId());
@@ -213,7 +233,7 @@ public class Turma_dao {
     
     public static ArrayList<Horario> getHorario(int turma_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.horario where turma_id=?;";
+        String select="SELECT * FROM horario where turma_id=?;";
         ArrayList<Horario> horarios=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -232,14 +252,14 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println("Erro ao retornar horarios: "+e.getMessage());
+            System.out.println("Erro ao retornar horarios da turma: "+e.getMessage());
         }
         return horarios;
     }
     
     public static void setProfessor_turma(int turma_id,int prof_id){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_professor_turma(?, ?);";
+        String select="insert into professor_turma(professor_id,turma_id) values(?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,prof_id);
@@ -249,13 +269,13 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setProfessorTurma: "+e.getMessage());
         }
     }
      
     public static Professor getProfessor_turma(int turma_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor_turma where turma_id=?;";
+        String select="SELECT * FROM professor_turma where turma_id=?";
         Professor prof=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -267,7 +287,7 @@ public class Turma_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getProfessorTurma: "+e.getMessage());
         }
         return prof;
     }
@@ -276,26 +296,30 @@ public class Turma_dao {
         Connection con=Conexaoo.getConnection();
         String update1="update turma set nome=? where id=?";
         String update2="update professor_turma set professor_id=? where turma_id=?";
-        String update3="insert into horario (turno,hora_inicio,hora_fim,dia_semana,turma_id) values(?,?,?,?,?);";
+        String update3="insert into horario (turno,hora_inicio,hora_fim,dia_semana,turma_id) values(?,?,?,?,?)";
         String update3_1="update horario set turno=?,hora_inicio=?,hora_fim=?,dia_semana=? where id=?";
-        String update4="call myclasscount.inserir_aluno_turma(?, ?);";
+        String update4="insert into aluno_turma values(?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(update1);
             stmt.setString(1,turma.getNome());
             stmt.setInt(2,turma.getId());
             stmt.execute();
             stmt.close();
+            con.close();
             
             turma.setId(getTurma(turma.getNome()).getId());
             
+            con=Conexaoo.getConnection();
             stmt=con.prepareStatement(update2);
             stmt.setInt(1,turma.getProfessor().getId());
             stmt.setInt(2,turma.getId());
             stmt.execute();
             stmt.close();
+            con.close();
             
             if(turma.getHorario()!=null){
                 if(turma.getHorario().getId()<=0){
+                con=Conexaoo.getConnection();
                 stmt=con.prepareStatement(update3);
                 stmt.setString(5,String.valueOf(turma.getId()));
                 }else{
@@ -306,19 +330,21 @@ public class Turma_dao {
                 stmt.setString(2,turma.getHorario().getHora_inicio());
                 stmt.setString(3,turma.getHorario().getHora_fim());
                 stmt.setString(4,turma.getHorario().getDia_semana());
-                stmt.execute();
+                stmt.execute(); 
+                stmt.close();
+                con.close();
             }
-            stmt.close();
             
             for(Aluno a:turma.getAlunos()){
+                con=Conexaoo.getConnection();
                 stmt=con.prepareStatement(update4);
                 stmt.setInt(1,a.getId());
                 stmt.setInt(2,turma.getId());
                 stmt.execute();
                 stmt.close();
+                con.close();
+                
             }
-            
-            con.close();
         }catch(SQLException e){
             System.out.println("Erro , ao actualizar turma: "+e.getMessage());
         }
@@ -326,10 +352,10 @@ public class Turma_dao {
 
     public static boolean removerTurma(Turma turma) {
         Connection con=Conexaoo.getConnection();
-        String select1="delete from aluno_turma where turma_id=?;";
-        String select2="delete from professor_turma where turma_id=?;";
-        String select3="delete from horario where turma_id=?;";
-        String select4="delete from myclasscount.turma where id=?;";
+        String select1="delete from aluno_turma where turma_id=?";
+        String select2="delete from professor_turma where turma_id=?";
+        String select3="delete from horario where turma_id=?";
+        String select4="delete from turma where id=?";
         try{
             PreparedStatement stmt=con.prepareStatement(select1);
             stmt.setInt(1,turma.getId());
@@ -355,4 +381,5 @@ public class Turma_dao {
         }
         return true;
     }
+    
 }

@@ -95,7 +95,6 @@ public class Mensalidade extends JPanel {
                 if(Calendar.getInstance().getTime().after(mensa.get(i).getDataPagamento())){
                     mensa.get(i).setEstado("divida");
                     Mensalidade_ctrl.updateMensalidade(mensa.get(i));
-                    System.out.println("");
                 }
             }
             

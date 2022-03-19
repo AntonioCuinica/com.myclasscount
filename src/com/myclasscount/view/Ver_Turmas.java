@@ -50,13 +50,13 @@ public class Ver_Turmas extends JPanel {
         pan.setBorder(new EmptyBorder(15,15,0,15));
         
         ArrayList<Turma> turmas;
+        
         if(CtrlGeral.getNivel_acesso().equals("admin")){
             turmas=Turma_ctrl.getTurmas();
         }else{
             turmas=Turma_ctrl.getTurmas(CtrlGeral.getProfessor_logado().getId());
         }
         MyButtonn bts[]=new MyButtonn[turmas.size()];
-        
         for(int i=0;i<bts.length;i++){
             bts[i]=new MyButtonn(turmas.get(i).getNome(),false);
             bts[i].setText(turmas.get(i).getNome());

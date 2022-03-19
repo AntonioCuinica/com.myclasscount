@@ -10,9 +10,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +25,7 @@ import java.util.Date;
 public class Mensalidade_dao {
     public static Mensalidade getMensalidade(int id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.mensalidade WHERE id=? order by dataP;";
+        String select="SELECT * FROM mensalidade WHERE id=? order by dataP;";
         Mensalidade mensalidade=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -31,21 +35,27 @@ public class Mensalidade_dao {
                 mensalidade=new Mensalidade();
                 mensalidade.setId(rs.getInt("id"));
                 mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
+                Date data;
+                try {
+                    data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                    mensalidade.setDataPagamento(data);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
             }
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getMensalidade id: "+e.getMessage());
         }
         return mensalidade;
     }
     
     public static ArrayList<Mensalidade> getMensalidades(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.mensalidade order by dataP;";
+        String select="SELECT * FROM mensalidade order by dataP;";
         ArrayList<Mensalidade> mensalidades=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -54,7 +64,13 @@ public class Mensalidade_dao {
                 Mensalidade mensalidade=new Mensalidade();
                 mensalidade.setId(rs.getInt("id"));
                 mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
+                Date data;
+                try {
+                    data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                    mensalidade.setDataPagamento(data);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
                 mensalidades.add(mensalidade);
@@ -62,7 +78,7 @@ public class Mensalidade_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getMensalidades: "+e.getMessage());
         }
         return mensalidades;
     
@@ -79,7 +95,13 @@ public class Mensalidade_dao {
                 Mensalidade mensalidade=new Mensalidade();
                 mensalidade.setId(rs.getInt("id"));
                 mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
+                Date data;
+                try {
+                    data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                    mensalidade.setDataPagamento(data);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
                 mensalidades.add(mensalidade);
@@ -87,14 +109,14 @@ public class Mensalidade_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getMensalidadesDiferentes: "+e.getMessage());
         }
         return mensalidades;
     }
     
     public static ArrayList<Mensalidade> getMensalidades(int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.mensalidade WHERE aluno_id=? order by dataP;";
+        String select="SELECT * FROM mensalidade WHERE aluno_id=? order by dataP;";
         ArrayList<Mensalidade> mensalidades=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -104,7 +126,13 @@ public class Mensalidade_dao {
                 Mensalidade mensalidade=new Mensalidade();
                 mensalidade.setId(rs.getInt("id"));
                 mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
+                Date data;
+                try {
+                    data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                    mensalidade.setDataPagamento(data);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
                 mensalidades.add(mensalidade);
@@ -112,65 +140,55 @@ public class Mensalidade_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getMensalidades aluno_id: "+e.getMessage());
         }
         return mensalidades;
     }
     
     public static ArrayList<Mensalidade> getMensalidades(String ano){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.mensalidade where year(dataP)=? order by dataP;";
+        String select="SELECT * FROM mensalidade order by dataP;";
         ArrayList<Mensalidade> mensalidades=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,ano);
             ResultSet rs=stmt.executeQuery();
             while(rs.next()){
-                Mensalidade mensalidade=new Mensalidade();
-                mensalidade.setId(rs.getInt("id"));
-                mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
-                mensalidade.setValor(rs.getDouble("valor"));
-                mensalidade.setAluno_id(rs.getInt("aluno_id"));
-                mensalidades.add(mensalidade);
+                Date data=null;
+                try {
+                    data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                } catch (ParseException ex) {
+                    Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(data!=null){
+                    String a=new SimpleDateFormat("yyyy").format(data);
+                    if(a.equals(ano)){
+                        Mensalidade mensalidade=new Mensalidade();
+                        mensalidade.setId(rs.getInt("id"));
+                        mensalidade.setEstado(rs.getString("estado"));
+                        Date dt;
+                        try {
+                            dt = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                            mensalidade.setDataPagamento(dt);
+                        } catch (ParseException ex) {
+                            Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        mensalidade.setValor(rs.getDouble("valor"));
+                        mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                        mensalidades.add(mensalidade);
+                    }
+                }
             }
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-        return mensalidades;
-    }
-    
-    public static ArrayList<Mensalidade> getMensalidades(String mes,String ano){
-        Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.mensalidade where year(dataP)=? and month(dataP)=? order by dataP;";
-        ArrayList<Mensalidade> mensalidades=new ArrayList();
-        try{
-            PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,ano);
-            stmt.setString(2,mes);
-            ResultSet rs=stmt.executeQuery();
-            while(rs.next()){
-                Mensalidade mensalidade=new Mensalidade();
-                mensalidade.setId(rs.getInt("id"));
-                mensalidade.setEstado(rs.getString("estado"));
-                mensalidade.setDataPagamento(rs.getDate("dataP"));
-                mensalidade.setValor(rs.getDouble("valor"));
-                mensalidade.setAluno_id(rs.getInt("aluno_id"));
-                mensalidades.add(mensalidade);
-            }
-            stmt.close();
-            con.close();
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getMensalidade ano: "+e.getMessage());
         }
         return mensalidades;
     }
     
     public static void updateMensalidade(Mensalidade mensalidade){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE myclasscount.mensalidade SET estado=?,valor=? WHERE id=?;";
+        String select="UPDATE mensalidade SET estado=?,valor=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,mensalidade.getEstado());
@@ -181,23 +199,29 @@ public class Mensalidade_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro updateMensalidade: "+e.getMessage());
         }
     }
     
     public static void setMensalidade(int aluno_id, Date dataInicial){
         Connection con=Conexaoo.getConnection();
-        String select="CALL myclasscount.inserir_mensalidade(?,?);";
+        //String select="CALL inserir_mensalidade(?,?);";
+        String select="insert into mensalidade(estado,aluno_id,valor,dataP) values('aberta',?,'0',?);";
+        
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,aluno_id);
-            stmt.setString(2,new SimpleDateFormat("yyyy-MM-dd").format(dataInicial));
+            Calendar g=Calendar.getInstance();
+            g.setTime(dataInicial);
+            g.add(Calendar.DAY_OF_MONTH,31);
+            String dataFinal=new SimpleDateFormat("dd/MM/yyyy").format(g.getTime());
+            stmt.setString(2,dataFinal);
             stmt.execute(); 
             
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setMensalidade aluno_id e dataI: "+e.getMessage());
         }
     }
     

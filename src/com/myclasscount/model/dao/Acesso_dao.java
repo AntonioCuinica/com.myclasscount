@@ -21,7 +21,7 @@ public class Acesso_dao {
     
     public static Acesso getAcesso(String user,String psw){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.acesso WHERE username=? and codigo=?";
+        String select="SELECT * FROM acesso WHERE username=? and codigo=?";
         Acesso acesso=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -34,7 +34,7 @@ public class Acesso_dao {
                 acesso.setUsername(rs.getString("username"));
                 acesso.setCodigo(rs.getString("codigo"));
                 acesso.setPergunta(rs.getString("pergunta"));
-                acesso.setResposta(rs.getString("rsposta"));
+                acesso.setResposta(rs.getString("resposta"));
                 acesso.setProfessor_id(rs.getInt("professor_id"));
                 acesso.setNivel_acesso(rs.getString("nivel"));
             }
@@ -42,14 +42,14 @@ public class Acesso_dao {
             rs.close();
             con.close();
         }catch(SQLException e){
-        
+            System.out.println("Erro getAcesso user and psw: "+e.getMessage());
         }
         return acesso;
     }
     
     public static Acesso getAcesso(String user){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.acesso WHERE username=?";
+        String select="SELECT * FROM acesso WHERE username=?";
         Acesso acesso=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -69,28 +69,28 @@ public class Acesso_dao {
             rs.close();
             con.close();
         }catch(SQLException e){
-        
+            System.out.println("Erro getAcesso user: "+e.getMessage());
         }
         return acesso;
     }
     
     public static void setAcesso(Acesso acesso,int prof_id){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_professor_acesso(?, ?, ?, ?, ?, ?);";
+        String select="insert into acesso(username,codigo,pergunta,resposta,professor_id,nivel) values (?,?,?,?,?,?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setString(1,String.valueOf(prof_id));
-            stmt.setString(2,acesso.getUsername());
-            stmt.setString(3,acesso.getCodigo());
-            stmt.setString(4,acesso.getPergunta());
-            stmt.setString(5,acesso.getResposta());
+            stmt.setString(1,acesso.getUsername());
+            stmt.setString(2,acesso.getCodigo());
+            stmt.setString(3,acesso.getPergunta());
+            stmt.setString(4,acesso.getResposta());
+            stmt.setString(5,String.valueOf(prof_id));
             stmt.setString(6,acesso.getNivel_acesso());
             
             stmt.execute();
             stmt.close();
             con.close();
         }catch(SQLException e){
-        
+            System.out.println("Erro setAcesso: "+e.getMessage());
         }
     }
     
@@ -105,7 +105,7 @@ public class Acesso_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-        
+            System.out.println("Erro mudarSenha: "+e.getMessage());
         }
     }
     

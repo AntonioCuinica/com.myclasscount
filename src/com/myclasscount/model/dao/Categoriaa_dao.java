@@ -20,7 +20,7 @@ public class Categoriaa_dao {
     
     public static Categoria getCategoria(String nome){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.categoria_aluno WHERE nome=?";
+        String select="SELECT * FROM categoria_aluno WHERE nome=?";
         Categoria categoria=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -38,14 +38,14 @@ public class Categoriaa_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getCategooria nome: "+e.getMessage());
         }
         return categoria;
     }
     
     public static Categoria getCategoria(int id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.categoria_aluno WHERE id=?";
+        String select="SELECT * FROM categoria_aluno WHERE id=?";
         Categoria categoria=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -63,14 +63,14 @@ public class Categoriaa_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getCategooria id: "+e.getMessage());
         }
         return categoria;
     }
     
     public static ArrayList<Categoria> getCategorias(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.categoria_aluno order by nome";
+        String select="SELECT * FROM categoria_aluno order by nome";
         ArrayList<Categoria> categoria=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -88,7 +88,7 @@ public class Categoriaa_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getCategoorias "+e.getMessage());
         }
         return categoria;
     
@@ -96,7 +96,7 @@ public class Categoriaa_dao {
     
     public static void updateCategoria(Categoria cat){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE myclasscount.categoria_aluno SET nome=?,tipo_ensino=?,class=?,preco=?,descricao=? WHERE id=?;";
+        String select="UPDATE categoria_aluno SET nome=?,tipo_ensino=?,class=?,preco=?,descricao=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,cat.getNome());
@@ -110,13 +110,13 @@ public class Categoriaa_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro updateCategooria: "+e.getMessage());
         }
     }
     
     public static void setCategoria(Categoria cat){
         Connection con=Conexaoo.getConnection();
-        String select="CALL myclasscount.inserir_categoria(?,?,?,?,?);";
+        String select="insert into categoria_aluno(nome,tipo_ensino,class,preco,descricao)  values(?,?,?,?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,cat.getNome());
@@ -129,13 +129,13 @@ public class Categoriaa_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro setCategooria: "+e.getMessage());
         }
     }
     
     public static boolean delCategoria(Categoria cat){
         Connection con=Conexaoo.getConnection();
-        String select="DELETE FROM `myclasscount`.`categoria_aluno` WHERE id=?;";
+        String select="DELETE FROM categoria_aluno WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setInt(1,cat.getId());
@@ -146,7 +146,7 @@ public class Categoriaa_dao {
             
             return true;
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro detCategooria: "+e.getMessage());
             return false;
         }
     }

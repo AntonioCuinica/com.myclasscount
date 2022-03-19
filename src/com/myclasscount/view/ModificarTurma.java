@@ -208,7 +208,6 @@ public class ModificarTurma extends JDialog {
                     txtF.grabFocus();
                 }
                 else{
-                    System.out.println("Deu tudo certo !!!");
                     turma.setNome(txtF.getText());
                     turma.setClasse(String.valueOf(combbx[1].getSelectedItem()));
                     for(Horario h:turma.getHorarios()){

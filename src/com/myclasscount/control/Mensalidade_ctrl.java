@@ -32,9 +32,6 @@ public class Mensalidade_ctrl {
         return Mensalidade_dao.getMensalidades(ano);
     }
     
-    public static ArrayList<Mensalidade> getMensalidades(String mes,String ano){
-        return Mensalidade_dao.getMensalidades(mes,ano);
-    }
     
     public static void updateMensalidade(Mensalidade mensalidade){
         Mensalidade_dao.updateMensalidade(mensalidade);

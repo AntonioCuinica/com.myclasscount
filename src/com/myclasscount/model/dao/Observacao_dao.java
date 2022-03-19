@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Observacao_dao {
     
     public static ArrayList<Observacao> getObservacoes(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.observacao;";
+        String select="SELECT * FROM observacao;";
         ArrayList<Observacao> observacao=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -46,13 +49,29 @@ public class Observacao_dao {
     
     public static void setObservacao(Observacao observ){
         Connection con=Conexaoo.getConnection();
-        String select="CALL myclasscount.observacao(?,?,?,?);";
+        String insert="insert into observacao(id,professor_id,aluno_id,titulo,nota,dateO) values(?,?,?,?,?,?);";
+        String select="SELECT max(id) as 'id' FROM observacao;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setInt(1,observ.getProfessor_id());
-            stmt.setInt(2,observ.getAluno_id());
-            stmt.setString(3,observ.getTitulo());
-            stmt.setString(4,observ.getNota());
+            stmt=con.prepareStatement(select);
+            ResultSet rs=stmt.executeQuery();
+            String id="";
+            while(rs.next()){
+                id=rs.getString("id");
+            }
+            stmt=con.prepareStatement(insert);
+            if(id==null){
+                stmt.setInt(1,1);
+            }else {
+                stmt.setInt(1,Integer.parseInt(id)+1);
+            }
+            stmt.setInt(2,observ.getProfessor_id());
+            stmt.setInt(3,observ.getAluno_id());
+            stmt.setString(4,observ.getTitulo());
+            stmt.setString(5,observ.getNota());
+            Date data=Calendar.getInstance().getTime();
+            String dt=new SimpleDateFormat("yyyy-MM-dd").format(data);
+            stmt.setString(6, dt);
             stmt.execute(); 
             
             stmt.close();

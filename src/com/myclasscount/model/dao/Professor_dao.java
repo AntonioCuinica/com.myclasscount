@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -21,7 +24,7 @@ public class Professor_dao {
     
     public static Professor getProfessor(String BI){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor WHERE BI=?";
+        String select="SELECT * FROM professor WHERE BI=?";
         Professor professor=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -45,7 +48,7 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getProfessor bi: "+e.getMessage());
         }
         return professor;
     }
@@ -53,7 +56,7 @@ public class Professor_dao {
     
     public static Professor getProfessorID(int prof_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor WHERE id=?";
+        String select="SELECT * FROM professor WHERE id=?";
         Professor professor=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -77,14 +80,14 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getProfessor id: "+e.getMessage());
         }
         return professor;
     }
     
     public static Professor getProfessorNUIT(final String NUIT){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor WHERE NUIT=?";
+        String select="SELECT * FROM professor WHERE NUIT=?";
         Professor professor=null;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -108,14 +111,14 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getProfessor nuit: "+e.getMessage());
         }
         return professor;
     }
     
     public static ArrayList<Professor> getProfessores(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM myclasscount.professor order by nome;";
+        String select="SELECT * FROM professor order by nome;";
         ArrayList<Professor> professores=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
@@ -139,14 +142,14 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro getProfessores: "+e.getMessage());
         }
         return professores;
     }
     
     public static void updateProfessor(Professor professor){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE myclasscount.professor SET nome=?,apelido=?,BI=?,nascimento=?,sexo=?,nivel=?,morada=?,telefone=?,email=?,salario=?,NUIT=? WHERE id=?;";
+        String select="UPDATE professor SET nome=?,apelido=?,BI=?,nascimento=?,sexo=?,nivel=?,morada=?,telefone=?,email=?,salario=?,NUIT=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
@@ -166,13 +169,15 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro updateProfessor: "+e.getMessage());
         }
     }
     
     public static void setProfessor(Professor professor){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inserir_professor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String select="""
+                      insert into professor (nome,apelido,BI,nascimento,sexo,nivel,morada,telefone,email,NUIT,salario)
+                      values (?,?,?,?,?,?,?,?,?,?,?)""";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
@@ -191,14 +196,14 @@ public class Professor_dao {
             stmt.close();
             con.close();
         }catch(SQLException e){
-            System.out.println("setProfessor: "+e.getMessage());
+            System.out.println("Erro setProfessor: "+e.getMessage());
         }
     }
     
     public static boolean delProfessor(int professor_id){
         Connection con=Conexaoo.getConnection();
         String delete1="delete from acesso where professor_id=?";
-        String delete2="DELETE FROM `myclasscount`.`professor` WHERE id=?;";
+        String delete2="DELETE FROM professor WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(delete1);
             stmt.setInt(1,professor_id);
@@ -213,18 +218,21 @@ public class Professor_dao {
             
             return true;
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro delProfessor: "+e.getMessage());
             return false;
         }
     }
     
     public static void inscricaoProfessorDisc(Professor professor,int disc_id){
         Connection con=Conexaoo.getConnection();
-        String select="call myclasscount.inscrever_professor_disciplina(?, ?);";
+        String select="insert into ensina values(?,?,?);";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setInt(1,professor.getId());
-            stmt.setInt(2,disc_id);
+            Date data=Calendar.getInstance().getTime();
+            String dt=new SimpleDateFormat("yyyy-MM-dd").format(data);
+            stmt.setString(1,dt);
+            stmt.setInt(2,professor.getId());
+            stmt.setInt(3,disc_id);
             stmt.execute(); 
             
             stmt.close();
@@ -249,7 +257,7 @@ public class Professor_dao {
             
             return true;
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Erro delInscricaoProfessor: "+e.getMessage());
             return false;
         }
     }
