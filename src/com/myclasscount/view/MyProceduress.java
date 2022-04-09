@@ -16,13 +16,22 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -229,6 +238,84 @@ public class MyProceduress {
         return ver_dialog;
     }
     
+    public static void ActualizarLicensa(JFrame frame){
+        MyDialogg actualizar=new MyDialogg(frame,true);
+        Color color=Color.red;
+        Font font=new Font("Arial",Font.BOLD,22);
+        actualizar.setUndecorated(true);
+        actualizar.setLayout(new BorderLayout());
+        actualizar.setSize(550,200);
+        actualizar.setLocationRelativeTo(frame);
+        
+        JPanel pan1=new JPanel(new GridLayout());
+        pan1.setBackground(color);
+        pan1.setBorder(new EmptyBorder(30,30,0,30));
+        
+        JLabel lb1=new JLabel("Acesso bloqueado, a sua Licensa Expirou !!!",SwingConstants.CENTER);
+        lb1.setFont(font);
+        lb1.setForeground(Color.white);
+        pan1.add(lb1);
+        
+        JPanel pan2=new JPanel(new GridLayout(2,1));
+        pan2.setBackground(color);
+        pan2.setBorder(new EmptyBorder(30,30,30,30));
+        JLabel lb2=new JLabel("Insira um novo codigo",SwingConstants.CENTER);
+        lb2.setFont(font);
+        lb2.setForeground(Color.white);
+        
+        JPanel pan3=new JPanel(new BorderLayout(10,0));
+        pan3.setBackground(color);
+        JTextField codigo=new JTextField();
+        JButton btn=new JButton("Gravar");
+        btn.addActionListener(
+            (ActionEvent e)->{
+                String array[]=CtrlGeral.decryptar(codigo.getText());
+                if(array==null || array.length!=6){
+                    MyDialogg dialog=new MyDialogg(frame,1,"Erro, codigo invalido", true);
+                    codigo.setText("");
+                }else{
+                    String userName=System.getProperty("user.name");
+                    String osHome=System.getProperty("user.home");
+                    boolean teste=osHome.toLowerCase().equals(array[5]);
+                    teste=teste && userName.toLowerCase().equals(array[3]);
+                    try {
+                        Date dataFinal=new SimpleDateFormat("ddMMyyyy").parse(array[2]);
+                        teste=teste && dataFinal.after(Calendar.getInstance().getTime());
+                    } catch (ParseException ex) {
+                        teste=false;
+                    }
+                    if(teste){
+                        CtrlGeral.gravarLicenca(codigo.getText());
+                        MyDialogg dialog=new MyDialogg(frame,1,"Codigo gravado com sucesso", true);
+                        actualizar.dispose();
+                    }else{
+                        MyDialogg dialog=new MyDialogg(frame,1,"Erro, codigo invalido", true);
+                        codigo.setText("");
+                    }
+                }
+            }
+        );
+        btn.setBackground(Color.white);
+        pan3.add(codigo,BorderLayout.CENTER);
+        pan3.add(btn,BorderLayout.EAST);
+        
+        pan2.add(lb2);
+        pan2.add(pan3);
+        
+        JButton sair=new JButton("Sair");
+        sair.setBackground(Color.white);
+        sair.addActionListener(
+            (ActionEvent e)->{
+                System.exit(0);
+            }
+        );
+        
+        actualizar.add(pan1,BorderLayout.NORTH);
+        actualizar.add(pan2,BorderLayout.CENTER);
+        actualizar.add(sair,BorderLayout.SOUTH);
+        actualizar.setVisible(true);
+    }
+    
     public static void updateVerAlunos(){
         Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
         v.updateComponents();
@@ -302,4 +389,5 @@ public class MyProceduress {
         Calendar cal=Calendar.getInstance();
         return cal.get(Calendar.YEAR)-(Integer.parseInt(ano));
     }
+    
 }

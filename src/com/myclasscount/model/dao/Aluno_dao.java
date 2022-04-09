@@ -197,6 +197,8 @@ public class Aluno_dao {
         Connection con=Conexaoo.getConnection();
         String delete1="delete from observacao where aluno_id=?";
         String delete2="DELETE FROM aluno WHERE id=?;";
+        String delete3="DELETE FROM mensalidade WHERE aluno_id=?;";
+        String delete4="DELETE FROM aluno_turma WHERE aluno_id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(delete1);
             stmt.setInt(1,aluno_id);
@@ -205,6 +207,15 @@ public class Aluno_dao {
             stmt=con.prepareStatement(delete2);
             stmt.setInt(1,aluno_id);
             stmt.execute();
+            
+            stmt=con.prepareStatement(delete3);
+            stmt.setInt(1,aluno_id);
+            stmt.execute();
+            
+            stmt=con.prepareStatement(delete4);
+            stmt.setInt(1,aluno_id);
+            stmt.execute();
+            
             
             stmt.close();
             con.close();

@@ -33,6 +33,8 @@ public class ValidarAluno {
         
         if(!erro(validarTelefone(aluno.getTelefone())))return false;
         
+        if(aluno.getCategoria_id()==0)return false;
+        
         return true;
     }
     

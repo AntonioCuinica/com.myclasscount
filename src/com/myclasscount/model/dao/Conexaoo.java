@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,6 +12,7 @@ package com.myclasscount.model.dao;
  * @author CUINIC4
  */
 
+import static com.myclasscount.model.Licensa.criarDir;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -37,19 +39,24 @@ public class Conexaoo {
     public static Connection getConnection(){
         try{
             Class.forName("org.sqlite.JDBC");
-            String url=System.getProperty("user.dir");
+            final String caminho=System.getProperty("user.home");
+            //System.out.println("Caminnho: "+caminho);
             //if (con == null) {
-                con=DriverManager.getConnection("jdbc:sqlite:"+url+"\\src\\com\\myclasscount\\model\\dao\\myclasses.db");
+            //System.out.println("User dir: "+url);
+            criarDir(caminho+"\\myclasscount");
+            con=DriverManager.getConnection("jdbc:sqlite:"+caminho+"\\myclasscount\\myclasses.db");
             //} else {
                 //con.close();
-                //con=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\CUINIC4\\OneDrive\\Documents\\NetBeansProjects\\com.myclasscount\\src\\com\\myclasscount\\model\\dao\\myclasses.db");
+                //con=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\CUINIC4\\OneDrive\\Documents\\NetBeansProjects\\com.myclasscount\\dist\\myclasses.db");
             //}
         }catch(SQLException | ClassNotFoundException e){
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro con: "+e);
+        }catch(RuntimeException e){
+            
         }
         return con;
     }
-    
+
     public static void close(){
         try {
             con.close();
@@ -57,7 +64,5 @@ public class Conexaoo {
             Logger.getLogger(Conexaoo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-   
     
 }

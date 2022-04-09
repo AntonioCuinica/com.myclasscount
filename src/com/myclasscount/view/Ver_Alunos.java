@@ -128,18 +128,23 @@ public class Ver_Alunos extends JPanel {
     
     public  void updateComponents(){
         removeAll();
-        alunos=Aluno_ctrl.getAlunos();
-        if(alunos!=null){
-            for(Aluno a:alunos){
-                if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
-                    aluno=a;
-                }else{
-                    Aluno aln=Aluno_ctrl.getAluno(aluno_id);
-                    if(aln!=null){
-                        aluno=aln;
+        try{
+            alunos=Aluno_ctrl.getAlunos();
+            if(alunos!=null){
+                for(Aluno a:alunos){
+                    if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                        aluno=a;
+                    }else{
+                        Aluno aln=Aluno_ctrl.getAluno(aluno_id);
+                        if(aln!=null){
+                            aluno=aln;
+                        }
                     }
                 }
             }
+            
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("Erro - verAlunos, "+e.getMessage());
         }
         container.add(title);
         addTable();

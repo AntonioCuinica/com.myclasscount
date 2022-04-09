@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -45,7 +46,16 @@ public class Table extends JTable {
         setShowVerticalLines(false);
         setRowHeight(40);
         getTableHeader().setReorderingAllowed(false);
+        //DefaultTableCellRenderer cent=new DefaultTableCellRenderer();
+        //cent.setHorizontalAlignment(SwingConstants.CENTER);
+        //getColumnModel().getColumn(0).setCellRenderer(cent);
+        
+         ((DefaultTableCellRenderer)getTableHeader().getDefaultRenderer())
+         .setHorizontalAlignment(SwingConstants.CENTER);
+        
     }
+    
+           
     
     public void setTableData(Object linhas[][]){
         for(int i=0;i<linhas.length;i++){
@@ -138,6 +148,9 @@ public class Table extends JTable {
             }else{
                 setText(value.toString());
             }
+            DefaultTableCellRenderer cent=( DefaultTableCellRenderer)jtable.getTableHeader().getDefaultRenderer();
+            cent.setHorizontalAlignment(SwingConstants.CENTER);
+            
             return this;
         }
         

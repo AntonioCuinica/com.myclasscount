@@ -228,6 +228,12 @@ public class Mensalidade extends JPanel {
         
         JButton imprimir=new JButton();
         imprimir.setLayout(new GridLayout());
+        imprimir.setVisible(false);
+        imprimir.addActionListener(
+            (ActionEvent)->{
+            
+            }
+        );
         MyLabell icon=new MyLabell("img/print.png");
         JPanel user=new JPanel(new GridLayout());
         user.setPreferredSize(new Dimension(20,20));
@@ -275,7 +281,7 @@ public class Mensalidade extends JPanel {
             t.setName(aluno.getBI());
             txtF.add(t);
 
-            JButton btn=new JButton("pagar");
+            MyButtonn btn=new MyButtonn("pagar",false);
             btn.addMouseListener(new Clique(aluno,mensa));
             pan.add(t); pan.add(btn);
 
