@@ -23,7 +23,7 @@ public class ValidarAcesso {
     }
     
     public static String setAcesso(Acesso acesso){
-        if(acesso.getUsername().isBlank()){
+        if(acesso.getUsername().isEmpty()){
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, usuario vazio",true);
             return "invalido 1";
         }else if(Acesso_ctrl.getAcesso(acesso.getUsername())!=null){
@@ -32,10 +32,10 @@ public class ValidarAcesso {
         }else if(acesso.getCodigo().isEmpty()){
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, senha vazia",true);
             return "invalido 2";
-        }else if(acesso.getPergunta().isBlank()){
+        }else if(acesso.getPergunta().isEmpty()){
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, pergunta vazia",true);
             return "invalido 3";
-        }else if(acesso.getPergunta().isBlank()){
+        }else if(acesso.getPergunta().isEmpty()){
             MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, resposta vazia",true);
             return "invalido 4";
         }

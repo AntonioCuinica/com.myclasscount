@@ -105,7 +105,7 @@ public class RecuperarSenha extends JPanel {
             String nPsw=new String(pswF[0].getPassword());
             String cPsw=new String(pswF[1].getPassword());
             if(!(acesso==null)){
-                if(nPsw.equals(cPsw) && !nPsw.isBlank()){
+                if(nPsw.equals(cPsw) && !nPsw.isEmpty()){
                     if(acesso.getResposta().equals(txtF[1].getText())){
                         Acesso_ctrl.mudarSenha(nPsw,acesso.getId());
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"login");
@@ -114,7 +114,7 @@ public class RecuperarSenha extends JPanel {
                         txtF[1].setText("");
                         txtF[1].grabFocus();
                     }
-                }else if(nPsw.isBlank()){
+                }else if(nPsw.isEmpty()){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, senha vazia",true);
                     pswF[0].grabFocus();
                 }else{

@@ -51,7 +51,7 @@ public class ValidarAluno {
     
     
     public static String validarTexto(String texto,String tipo){
-        if(texto.isBlank()){
+        if(texto.isEmpty()){
             return "Erro , "+tipo+" vazio";
         }else{
             for(int i=0;i<texto.length();i++){
@@ -64,7 +64,7 @@ public class ValidarAluno {
     }
     
     public static String validarBI(String BI, int aluno_id){
-        if(BI.isBlank()){
+        if(BI.isEmpty()){
             return "BI, será aleatorio, continuar ?";
         }else if(BI.length()!=13){
             return "Erro, BI invalido";
@@ -89,7 +89,7 @@ public class ValidarAluno {
     }
     
     public static String validarTelefone(String telefone){
-        if(!telefone.isBlank()){
+        if(!telefone.isEmpty()){
             if(telefone.matches("[a-zA-Z]*")){
                 return "Erro, telefone invalido";
             }else if(!telefone.matches("[0-9]*") && !telefone.substring(0,1).equals("+")){

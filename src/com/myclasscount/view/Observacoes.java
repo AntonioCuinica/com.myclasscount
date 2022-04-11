@@ -107,10 +107,10 @@ public class Observacoes extends JPanel {
     private class Clique extends MouseAdapter{
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Gravar")){
-                if(txtF.getText().isBlank()){
+                if(txtF.getText().isEmpty()){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, titulo vazio",true);
                     txtF.grabFocus();
-                }else if(note.getText().isBlank()){
+                }else if(note.getText().isEmpty()){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, nota vazia",true);
                     note.grabFocus();
                 }else{
@@ -130,7 +130,7 @@ public class Observacoes extends JPanel {
                     note.setText("");
                 }
             }else if(e.getComponent().toString().contains("Proximo")){
-                if(txtF.getText().isBlank() && note.getText().isBlank()){
+                if(txtF.getText().isEmpty() && note.getText().isEmpty()){
                     Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
                     v.setVoltar("observacoes");
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");

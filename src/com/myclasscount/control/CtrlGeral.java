@@ -16,6 +16,7 @@ import com.myclasscount.view.Myclasscount;
 import com.myclasscount.view.Ver_Turmas;
 import com.myclasscount.view.Ver_Turmas2;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -30,7 +31,9 @@ public class CtrlGeral {
     private static boolean iniciar=true;
     
     public static void setTela(String nome,Object tela){
-        Map novaTela=Map.of(nome,tela);
+        //Map novaTela=Map.of(nome,tela);
+        Map novaTela=new HashMap<String,Object>();
+        novaTela.put(nome,tela);
         telas.add(novaTela);
     }
     

@@ -82,34 +82,34 @@ public class Ver_Turmas2 extends JPanel {
         dados1[1][0]="Fim";
         for(int i=0; i<turma.getHorarios().size() && i<dados1[0].length;i++){
             switch(turma.getHorarios().get(i).getDia_semana()){
-                case "Segunda" -> {
+                case "Segunda":
                      dados1[0][1]=turma.getHorarios().get(i).getHora_inicio();
                      dados1[1][1]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Terça" -> {
+                break;
+                case "Terça":
                     dados1[0][2]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][2]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Quarta" -> {
+                break;
+                case "Quarta":
                     dados1[0][3]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][3]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Quinta" -> {
+                break;
+                case "Quinta":
                     dados1[0][4]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][4]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Sexta" -> {
+                break;
+                case "Sexta":
                     dados1[0][5]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][5]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Sabado" -> {
+                break;
+                case "Sabado":
                     dados1[0][6]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][6]=turma.getHorarios().get(i).getHora_fim();
-                }
-                case "Domingo" -> {
+                break;
+                case "Domingo":
                     dados1[0][7]=turma.getHorarios().get(i).getHora_inicio();
                     dados1[1][7]=turma.getHorarios().get(i).getHora_fim();
-                }
+                break;
             } 
             
         }
@@ -201,27 +201,27 @@ public class Ver_Turmas2 extends JPanel {
                             int coluna=horarios.getSelectedColumn();
                             String dia_semana=new String();
                             switch(coluna){
-                                case 1 ->{
+                                case 1:
                                     dia_semana="Segunda";
-                                }
-                                case 2 ->{
+                                break;
+                                case 2:
                                     dia_semana="Terça";
-                                }
-                                case 3 ->{
+                                break;
+                                case 3:
                                     dia_semana="Quarta";
-                                }
-                                case 4 ->{
+                                break;
+                                case 4:
                                     dia_semana="Quinta";
-                                }
-                                case 5 ->{
+                                break;
+                                case 5:
                                     dia_semana="Sexta";
-                                }
-                                case 6 ->{
+                                break;
+                                case 6:
                                     dia_semana="Sabado";
-                                }
-                                case 7 ->{
+                                break;
+                                case 7:
                                     dia_semana="Domingo";
-                                }
+                                break;
                             }
                             Turma_ctrl.delHorario(turma, dia_semana);
                             for(Horario hor:turma.getHorarios()){

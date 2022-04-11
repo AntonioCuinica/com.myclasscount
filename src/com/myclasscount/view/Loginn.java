@@ -175,7 +175,7 @@ public class Loginn extends JPanel {
                     esqueceu.setVisible(false);
                 }
             }else if(e.getSource().equals(pswF)){
-                if(e.getKeyText(e.getKeyCode()).equals("Backspace") && String.valueOf(pswF.getPassword()).isBlank()){
+                if(e.getKeyText(e.getKeyCode()).equals("Backspace") && String.valueOf(pswF.getPassword()).isEmpty()){
                     pswF.transferFocusBackward();
                 }else if(e.getKeyText(e.getKeyCode()).equals("Up") ){
                     pswF.transferFocusBackward();

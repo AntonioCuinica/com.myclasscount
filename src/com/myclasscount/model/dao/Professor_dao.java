@@ -175,9 +175,8 @@ public class Professor_dao {
     
     public static void setProfessor(Professor professor){
         Connection con=Conexaoo.getConnection();
-        String select="""
-                      insert into professor (nome,apelido,BI,nascimento,sexo,nivel,morada,telefone,email,NUIT,salario)
-                      values (?,?,?,?,?,?,?,?,?,?,?)""";
+        String select="insert into professor (nome,apelido,BI,nascimento,sexo,nivel,morada,telefone,email,NUIT,salario)"
+                + "values (?,?,?,?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,professor.getNome());
@@ -205,17 +204,18 @@ public class Professor_dao {
         String delete1="delete from acesso where professor_id=?";
         String delete2="DELETE FROM professor WHERE id=?;";
         try{
-            PreparedStatement stmt=con.prepareStatement(delete1);
-            stmt.setInt(1,professor_id);
-            stmt.execute();
-            
-            stmt=con.prepareStatement(delete2);
-            stmt.setInt(1,professor_id);
-            stmt.execute(); 
-            
-            stmt.close();
-            con.close();
-            
+            if(getProfessores().size()>1){
+                PreparedStatement stmt=con.prepareStatement(delete1);
+                stmt.setInt(1,professor_id);
+                stmt.execute();
+
+                stmt=con.prepareStatement(delete2);
+                stmt.setInt(1,professor_id);
+                stmt.execute(); 
+
+                stmt.close();
+                con.close();
+            }
             return true;
         }catch(SQLException e){
             System.out.println("Erro delProfessor: "+e.getMessage());

@@ -169,9 +169,8 @@ public class Aluno_dao {
     
     public static void setAluno(Aluno aluno){
         Connection con=Conexaoo.getConnection();
-        String select="""
-                      insert into aluno (nome,apelido,BI,nascimento,sexo,nivel,morada,telefone,email,categoria_id)
-                      values (?,?,?,?,?,?,?,?,?,?)""";
+        String select="insert into aluno (nome,apelido,BI,nascimento,sexo,nivel,morada,telefone,email,categoria_id) "
+                + "values (?,?,?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,aluno.getNome());

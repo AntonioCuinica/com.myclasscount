@@ -14,7 +14,7 @@ import com.myclasscount.model.dao.Disciplina_dao;
 public class ValidarDisciplina {
     public static String validarDisciplina(String nome){
         
-        if(nome.isBlank()){
+        if(nome.isEmpty()){
             return "Erro, nome vazio";
         }else if(Disciplina_dao.getDisciplina(nome)!=null){
             return "Erro, a disciplina ja existe";

@@ -265,36 +265,36 @@ public final class MainFramee extends JPanel {
             public void mouseClicked(MouseEvent e){
                 
                 switch (type) {
-                    case 1 -> {
+                    case 1:
                         MyProceduress.updateVerAlunos();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verAlunos");
-                    }
-                    case 2 -> {
+                    break;
+                    case 2:
                         if(CtrlGeral.getNivel_acesso().equals("admin")){
                             MyProceduress.updateVerProfessores();
                             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verProfessores");
                         }
-                    }
-                    case 3 -> Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
-                    case 4 -> {
+                    break;
+                    case 3: Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
+                    break;
+                    case 4:
                         Ver_Observacoes v=(Ver_Observacoes)CtrlGeral.getTela("verObservacoes");
                         v.setVoltar("mainFrame");
                         MyProceduress.updateVerObservacoes();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
-                    }
-                    case 5 -> Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
-                    case 6 -> {
+                    break;
+                    case 5:Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verDisciplinas");
+                    break;
+                    case 6:
                         MyProceduress.updateVerTurmas();
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verTurmas");
-                    }
-                    case 7 -> {
+                    break;
+                    case 7:
                         if(CtrlGeral.getNivel_acesso().equals("admin")){
                             MyProceduress.updateVerMensalidade();
                             Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verMensalidade");
                         }
-                    }
-                    default -> {
-                    }
+                    break;
                 }
                 
             }

@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.Random;
 import javax.swing.*;
@@ -105,7 +106,7 @@ public class AdicionarProfessor extends JPanel {
         for(int i=0;i<labels.length;i++){labels[i].setForeground(Color.white);}
         
         data=new JDateChooser();
-        Calendar cal=Calendar.getInstance();
+        Calendar cal=new GregorianCalendar();
         data.setDate(cal.getTime());
         data.setLocale(Locale.forLanguageTag("pt-br"));
         data.setDateFormatString("dd/MM/yyyy");

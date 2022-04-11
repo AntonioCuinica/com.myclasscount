@@ -17,7 +17,7 @@ import  com.myclasscount.model.dao.Categoriaa_dao;
 public class ValidarCategoria {
     public static String validarCategoria(Categoria cat){
         
-        if(cat.getNome().isBlank()){
+        if(cat.getNome().isEmpty()){
             return "Erro, nome vazio";
         }else if(Categoriaa_dao.getCategoria(cat.getNome())!=null){
             return "Erro, a categoria ja existe";

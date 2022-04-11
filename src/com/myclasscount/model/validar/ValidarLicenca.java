@@ -51,7 +51,7 @@ public class ValidarLicenca {
     }
     
     public static String[] decryptar(String codigo){
-        if(!codigo.isBlank()){
+        if(!codigo.isEmpty()){
             String array[]=new String[size(codigo)];
             codigo=codigo.replace("?","s").replace("!","n").replace("*","2").toLowerCase();
             String ai[]=codigo.split("-");
