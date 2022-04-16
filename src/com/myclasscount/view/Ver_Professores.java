@@ -49,7 +49,7 @@ public class Ver_Professores extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome","BI","Idade","Sexo","Nível","Telefone","Salario"};
+        String colunas[]={"Nr","Nome","BI","Idade","Sexo","Nível","Telefone","Salario"};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
@@ -58,13 +58,14 @@ public class Ver_Professores extends JPanel {
         professores=Professor_ctrl.getProfessores();
         String dados[][]=new String[professores.size()][colunas.length];
          for(int i=0;i<dados.length;i++){
-            dados[i][0]=professores.get(i).getNome()+" "+professores.get(i).getApelido();
-            dados[i][1]=professores.get(i).getBI();
-            dados[i][2]=String.valueOf(MyProceduress.idade(professores.get(i).getNascimento().split("-")[0]));
-            dados[i][3]=professores.get(i).getSexo();
-            dados[i][4]=professores.get(i).getNivel();
-            dados[i][5]=professores.get(i).getTelefone();
-            dados[i][6]=String.valueOf(professores.get(i).getSalario());
+            dados[i][0]=String.valueOf((i+1));
+            dados[i][1]=professores.get(i).getNome()+" "+professores.get(i).getApelido();
+            dados[i][2]=professores.get(i).getBI();
+            dados[i][3]=String.valueOf(MyProceduress.idade(professores.get(i).getNascimento().split("-")[0]));
+            dados[i][4]=professores.get(i).getSexo();
+            dados[i][5]=professores.get(i).getNivel();
+            dados[i][6]=professores.get(i).getTelefone();
+            dados[i][7]=String.valueOf(professores.get(i).getSalario());
         }
          
         tabela.setTableData(dados);
@@ -106,7 +107,7 @@ public class Ver_Professores extends JPanel {
                     if(evento.getClickCount()==2){
                        linhaSelecionada=tabela.getSelectedRow();
                        for(Professor a:professores){
-                            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,1).toString())){
+                            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
                                 professor=a;
                             }
                         }

@@ -6,6 +6,7 @@
 package com.myclasscount.model.dao;
 
 import com.myclasscount.model.Mensalidade;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
  *
  * @author CUINIC4
  */
+
 public class Mensalidade_dao {
     public static Mensalidade getMensalidade(int id){
         Connection con=Conexaoo.getConnection();

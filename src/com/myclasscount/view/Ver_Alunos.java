@@ -53,7 +53,7 @@ public class Ver_Alunos extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome","Apelido","BI","Idade","Classe","Sexo","Nível","Pagamento"};
+        String colunas[]={"Nr","Nome","Apelido","BI","Idade","Classe","Sexo","Nível","Pagamento"};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
@@ -64,15 +64,16 @@ public class Ver_Alunos extends JPanel {
         /**Preenchimento dos dados da tabela ver aluno*/
         String dados[][]=new String[alunos.size()][colunas.length];
         for(int i=0;i<dados.length;i++){
-            dados[i][0]=alunos.get(i).getNome();
-            dados[i][1]=alunos.get(i).getApelido();
-            dados[i][2]=alunos.get(i).getBI();
-            dados[i][3]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
+            dados[i][0]=String.valueOf((i+1));
+            dados[i][1]=alunos.get(i).getNome();
+            dados[i][2]=alunos.get(i).getApelido();
+            dados[i][3]=alunos.get(i).getBI();
+            dados[i][4]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
             Categoria cat=categoria_ctrl.getCategoria(alunos.get(i).getCategoria_id());
-            dados[i][4]=cat.getClasse();
-            dados[i][5]=alunos.get(i).getSexo();
-            dados[i][6]=alunos.get(i).getNivel();
-            dados[i][7]=Aluno_ctrl.pagamento(alunos.get(i).getId())[2];
+            dados[i][5]=cat.getClasse();
+            dados[i][6]=alunos.get(i).getSexo();
+            dados[i][7]=alunos.get(i).getNivel();
+            dados[i][8]=Aluno_ctrl.pagamento(alunos.get(i).getId())[2];
         }
         
         tabela.setTableData(dados);
@@ -114,7 +115,7 @@ public class Ver_Alunos extends JPanel {
                     if(evento.getClickCount()==2){
                         linhaSelecionada=tabela.getSelectedRow();
                         for(Aluno a:alunos){
-                            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,3).toString())){
                                 aluno=a;
                                 aluno_id=a.getId();
                             }
@@ -132,7 +133,7 @@ public class Ver_Alunos extends JPanel {
             alunos=Aluno_ctrl.getAlunos();
             if(alunos!=null){
                 for(Aluno a:alunos){
-                    if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                    if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,3).toString())){
                         aluno=a;
                     }else{
                         Aluno aln=Aluno_ctrl.getAluno(aluno_id);

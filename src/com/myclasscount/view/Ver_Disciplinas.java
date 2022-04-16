@@ -38,7 +38,7 @@ public class Ver_Disciplinas extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome","Carga Horaria","Secçao",""," "};
+        String colunas[]={"Nr","Nome","Carga Horaria","Secçao",""," "};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
@@ -48,9 +48,10 @@ public class Ver_Disciplinas extends JPanel {
         Object dados[][]=new Object[disciplinas.size()][colunas.length];
         
         for(int i=0;i<dados.length;i++){
-            dados[i][0]=disciplinas.get(i).getNome();
-            dados[i][1]=disciplinas.get(i).getCarga_horaria();
-            dados[i][2]=disciplinas.get(i).getSeccao();
+            dados[i][0]=String.valueOf((i+1));
+            dados[i][1]=disciplinas.get(i).getNome();
+            dados[i][2]=disciplinas.get(i).getCarga_horaria();
+            dados[i][3]=disciplinas.get(i).getSeccao();
         }
         
         tabela.setTableData(dados);
@@ -98,11 +99,11 @@ public class Ver_Disciplinas extends JPanel {
             new MouseAdapter(){
                 public void mouseClicked(MouseEvent e){
                     int linha=tabela.getSelectedRow();
-                    Disciplina disciplina=Disciplina_ctrl.getDisciplina(tabela.getValueAt(linha,0).toString());
-                    if(tabela.getSelectedColumn()==3){
+                    Disciplina disciplina=Disciplina_ctrl.getDisciplina(tabela.getValueAt(linha,1).toString());
+                    if(tabela.getSelectedColumn()==4){
                         ModificarDisciplina mDisc=new ModificarDisciplina(frame,disciplina,true);
                         mDisc.setVisible(true);
-                    }else if(tabela.getSelectedColumn()==4){
+                    }else if(tabela.getSelectedColumn()==5){
                         MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover ?",true);
                         if(dialog.getSimTeste()){
                             if(Disciplina_ctrl.delDisciplina(disciplina)){

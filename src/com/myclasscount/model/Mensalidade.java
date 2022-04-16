@@ -115,6 +115,21 @@ public class Mensalidade {
                     );
                     mensa=Mensalidade_ctrl.getMensalidades();
                 }
+            }else{
+                for(Aluno aluno:alunos){
+                    ArrayList<Mensalidade> m=Mensalidade_ctrl.getMensalidades(aluno.getId());
+                    if(m.size()==0){
+                        System.out.println("Aluno sem mensalidade:: "+aluno.getNome()+" "+aluno.getApelido());
+                        Date dataInicial=cal.getTime();
+                        Mensalidade_ctrl.setMensalidade(aluno.getId(),dataInicial);
+                        for(int i=0;i<3;i++){
+                            m=Mensalidade_ctrl.getMensalidades(aluno.getId());
+                            dataInicial=m.get(m.size()-1).getDataPagamento();
+                            System.out.println("Adicionando na data: "+dataInicial);
+                            Mensalidade_ctrl.setMensalidade(aluno.getId(),dataInicial);
+                        }
+                    }
+                }
             }
         }
     }

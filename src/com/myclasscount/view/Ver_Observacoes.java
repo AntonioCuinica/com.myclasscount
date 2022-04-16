@@ -45,7 +45,7 @@ public class Ver_Observacoes extends JPanel {
     }
     
     public void addTable(){
-        String colunas[]={"Nome do Aluno","Titulo","Nota","Data",""};
+        String colunas[]={"Nr","Nome do Aluno","Titulo","Nota","Data",""};
         MyButtonn voltar=new MyButtonn("Voltar",false);
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
@@ -55,15 +55,16 @@ public class Ver_Observacoes extends JPanel {
         ArrayList<Aluno> alunos=Aluno_ctrl.getAlunos();
         String dados[][]=new String[observacoes.size()][colunas.length];
         for(int i=0;i<dados.length;i++){
+            dados[i][0]=String.valueOf((i+1));
             int aluno_id=observacoes.get(i).getAluno_id();
             for(Aluno aluno:alunos){
                 if(aluno.getId()==aluno_id){
-                    dados[i][0]=aluno.getNome()+" "+aluno.getApelido();
+                    dados[i][1]=aluno.getNome()+" "+aluno.getApelido();
                 }
             }
-            dados[i][1]=observacoes.get(i).getTitulo();
-            dados[i][2]=observacoes.get(i).getNota();
-            dados[i][3]=observacoes.get(i).getDataObservacao();
+            dados[i][2]=observacoes.get(i).getTitulo();
+            dados[i][3]=observacoes.get(i).getNota();
+            dados[i][4]=observacoes.get(i).getDataObservacao();
         }
         tabela.setTableData(dados);
         tabela.setButton("","Eliminar",Color.red);
@@ -109,7 +110,7 @@ public class Ver_Observacoes extends JPanel {
                 public void mouseClicked(MouseEvent evento){
                     if(evento.getClickCount()==1){
                         int linha=tabela.getSelectedRow();
-                        if(tabela.getSelectedColumn()==4){
+                        if(tabela.getSelectedColumn()==5){
                             MyDialogg dialog=new MyDialogg(frame,2,"Deseja remover observaçao ?", true);
                             if(dialog.getSimTeste()){
                                 Observacao observ=observacoes.get(linha);
