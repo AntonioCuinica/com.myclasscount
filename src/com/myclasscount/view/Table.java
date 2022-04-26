@@ -46,12 +46,6 @@ public class Table extends JTable {
         setShowVerticalLines(false);
         setRowHeight(40);
         getTableHeader().setReorderingAllowed(false);
-        //DefaultTableCellRenderer cent=new DefaultTableCellRenderer();
-        //cent.setHorizontalAlignment(SwingConstants.CENTER);
-        //getColumnModel().getColumn(0).setCellRenderer(cent);
-        
-         ((DefaultTableCellRenderer)getTableHeader().getDefaultRenderer())
-         .setHorizontalAlignment(SwingConstants.CENTER);
         
     }
     
@@ -109,7 +103,8 @@ public class Table extends JTable {
         DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
         headerRenderer.setBackground(color1);
         headerRenderer.setForeground(color2);
-
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        
         for (int i = 0; i < this.getModel().getColumnCount(); i++) {
             this.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
         }
@@ -148,8 +143,10 @@ public class Table extends JTable {
             }else{
                 setText(value.toString());
             }
-            DefaultTableCellRenderer cent=( DefaultTableCellRenderer)jtable.getTableHeader().getDefaultRenderer();
+            
+            DefaultTableCellRenderer cent=new DefaultTableCellRenderer();
             cent.setHorizontalAlignment(SwingConstants.CENTER);
+            getColumnModel().getColumn(column).setCellRenderer(cent);
             
             return this;
         }

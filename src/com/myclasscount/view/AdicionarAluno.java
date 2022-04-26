@@ -29,6 +29,7 @@ import javax.swing.*;
  *
  * @author CUINIC4
  */
+
 public class AdicionarAluno extends JPanel {
     private Color backColor=new Color(0,24,242);
     private Container container;
@@ -213,7 +214,6 @@ public class AdicionarAluno extends JPanel {
                 if(!catID.equals("null")){
                     aluno.setCategoria_id(categoria_ctrl.getCategoria(catID).getId());
                 }
-                
                 
                 if(!Aluno_ctrl.setAluno(aluno)){
                     if(Aluno_ctrl.getErro().contains("nome")){

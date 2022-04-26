@@ -217,7 +217,7 @@ public class Ver_Alunos extends JPanel {
                         
         JPanel titulo=new JPanel();
         titulo.setOpaque(false);
-        JLabel texto=new JLabel("Inscricoes",SwingConstants.CENTER);
+        JLabel texto=new JLabel("inscrições",SwingConstants.CENTER);
         texto.setForeground(Color.white);
         texto.setFont(new Font("Arial",Font.BOLD,18));
         titulo.add(texto);

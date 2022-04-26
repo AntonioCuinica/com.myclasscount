@@ -11,6 +11,7 @@ import com.myclasscount.control.Turma_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Horario;
 import com.myclasscount.model.Turma;
+import com.myclasscount.model.dao.Categoriaa_dao;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -54,8 +55,11 @@ public class Ver_Turmas2 extends JPanel {
         pan.setBackground(backColor.darker());
         pan.setBorder(new EmptyBorder(10,0,10,0));
         mainPane.add(pan,BorderLayout.NORTH);
-        
-        String turmaTurno[][]={{"Classe",turma.getClasse()},{"Alunos",""+turma.getAlunos().size()},
+        double pag=0;
+        for(Aluno a:turma.getAlunos()){
+            pag+=Double.parseDouble(Aluno_ctrl.pagamento(a.getId())[2]);
+        }
+        String turmaTurno[][]={{"Valor total",String.valueOf(pag)},{"Alunos",""+turma.getAlunos().size()},
                                {"Professor",turma.getProfessor().getNome()+" "+turma.getProfessor().getApelido()}};
         JPanel pan1=new JPanel(new GridLayout(3,1));
         pan1.setBorder(new EmptyBorder(0,15,0,15));
@@ -114,7 +118,7 @@ public class Ver_Turmas2 extends JPanel {
             
         }
         tabela.setTableData(dados1);
-        tabela.setBackground(Color.black);
+        tabela.setShowVerticalLines(true);
         removeHorario(tabela,Myclasscount.getFrame());
         JScrollPane src1=new JScrollPane(tabela);
         src1.setPreferredSize(new Dimension(200,100));
@@ -143,11 +147,10 @@ public class Ver_Turmas2 extends JPanel {
             dados[i][1]=alunos.get(i).getApelido();
             dados[i][2]=alunos.get(i).getBI();
             dados[i][3]=String.valueOf(MyProceduress.idade(alunos.get(i).getNascimento().split("-")[0]));
-            dados[i][4]=alunos.get(i).getNivel();
+            dados[i][4]=Categoriaa_dao.getCategoria(alunos.get(i).getCategoria_id()).getClasse();
             dados[i][5]=alunos.get(i).getSexo();
             dados[i][6]=alunos.get(i).getNivel();
             dados[i][7]=Aluno_ctrl.pagamento(alunos.get(i).getId())[2];
-            
         }
         tabela.setTableData(dados);
         JScrollPane src=new JScrollPane(tabela);
