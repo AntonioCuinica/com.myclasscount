@@ -28,9 +28,8 @@ public class ValidarLicenca {
         String userName=System.getProperty("user.name");
         String osHome=System.getProperty("user.home");
         String cod=encryptar(osName,osVersion,dataFinal,userName,dataActual,osHome);
-        
-        System.out.println("Codigo: "+cod);
-        
+        System.out.println("Codigo normal: "+osName+""+osVersion+""+dataFinal+""+userName+""+dataActual+""+osHome);
+        System.out.println("Codigo cifrado: "+cod);
         return cod;
     }
     

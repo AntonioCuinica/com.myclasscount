@@ -37,6 +37,7 @@ public class Mensalidade extends JPanel {
     private double tPago=0,tDever=0;
     private String mes;
     private String ano;
+    private String dia;
     private ArrayList<JTextField> txtF;
     private ArrayList<Aluno> alunos;
     
@@ -44,7 +45,8 @@ public class Mensalidade extends JPanel {
         return mes;
     }
     
-    public Mensalidade(String mes, String ano){
+    public Mensalidade(String dia, String mes, String ano){
+        this.dia=dia;
         this.mes=mes;
         this.ano=ano;
         setLayout(null);
@@ -65,7 +67,7 @@ public class Mensalidade extends JPanel {
         JPanel mainPane=new JPanel();
         mainPane.setLayout(new BorderLayout());
         
-        JPanel descPanel=descricao(mes,ano,mensa);
+        JPanel descPanel=descricao(dia,mes,ano,mensa);
         
         Panel mPanel=new Panel(Color.white,true);
         GridLayout gLyt=new GridLayout(1,3,15,0);
@@ -182,7 +184,7 @@ public class Mensalidade extends JPanel {
     }
     
     
-    public JPanel descricao(String mes,String ano,ArrayList<com.myclasscount.model.Mensalidade> mensa){
+    public JPanel descricao(String dia,String mes,String ano,ArrayList<com.myclasscount.model.Mensalidade> mensa){
         JPanel desc=new JPanel(new GridLayout(1,2));
         desc.setBackground(Color.black);
         desc.setBorder(new EmptyBorder(1,1,1,1));

@@ -16,6 +16,7 @@ import java.util.Date;
  *
  * @author CUINIC4
  */
+
 public class Mensalidade {
     private int id;
     private String estado;

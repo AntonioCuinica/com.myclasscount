@@ -120,6 +120,7 @@ public class AdicionarAluno extends JPanel {
         data.setDate(cal.getTime());
         data.setLocale(Locale.forLanguageTag("pt-br"));
         data.setDateFormatString("dd/MM/yyyy");
+        //data.setUI(UIManager.getLookAndFeel());
         
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(txtF[1]);
@@ -240,7 +241,6 @@ public class AdicionarAluno extends JPanel {
                 }else if(catID.equals("null")){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, categoria nao definida", true);
                 }else{
-                    
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
                     
                     for(JTextField txtF:txtF){  txtF.setText(""); }
