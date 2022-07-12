@@ -71,7 +71,7 @@ public class ModificarCategoria extends JDialog {
         String classe[];
         if(categoria.getTipoEnsino().equals("Primario")){
             classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
-        }else if(categoria.getTipoEnsino().equals("Secundario")){
+        }else if(categoria.getTipoEnsino().equals("Secondario")){
             classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
         }else{
             classe=new String[]{"Superior"};

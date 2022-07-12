@@ -33,9 +33,7 @@ public class ValidarAluno {
         
         if(!erro(validarTelefone(aluno.getTelefone())))return false;
         
-        if(aluno.getCategoria_id()==0)return false;
-        
-        return true;
+        return aluno.getCategoria_id() != 0;
     }
     
     public static boolean erro(String resultado){
@@ -51,12 +49,18 @@ public class ValidarAluno {
     
     
     public static String validarTexto(String texto,String tipo){
+        texto=texto.trim();
         if(texto.isEmpty()){
             return "Erro , "+tipo+" vazio";
         }else{
+            int count=0;
             for(int i=0;i<texto.length();i++){
                 if(texto.substring(i,(i+1)).matches("[0-9]*")){
                     return "Erro, O "+tipo+" contem numero";
+                }else if(!texto.substring(i,(i+1)).matches("[a-zA-Z]*")){
+                    if(count++!=0){
+                        return "Erro, O "+tipo+" invalido";
+                    }
                 }
             }
         } 

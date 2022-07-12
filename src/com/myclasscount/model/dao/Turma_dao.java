@@ -319,12 +319,12 @@ public class Turma_dao {
             
             if(turma.getHorario()!=null){
                 if(turma.getHorario().getId()<=0){
-                con=Conexaoo.getConnection();
-                stmt=con.prepareStatement(update3);
-                stmt.setString(5,String.valueOf(turma.getId()));
+                    con=Conexaoo.getConnection();
+                    stmt=con.prepareStatement(update3);
+                    stmt.setString(5,String.valueOf(turma.getId()));
                 }else{
                     stmt=con.prepareStatement(update3_1);
-                    stmt.setInt(5,turma.getHorario().getId());
+                    stmt.setString(5,String.valueOf(turma.getHorario().getId()));
                 }
                 stmt.setString(1,turma.getHorario().getTurno());
                 stmt.setString(2,turma.getHorario().getHora_inicio());

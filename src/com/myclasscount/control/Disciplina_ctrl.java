@@ -56,6 +56,9 @@ public class Disciplina_ctrl {
     }
     
     public static boolean delDisciplina(Disciplina disc){
+        if(Disciplina_dao.temInscricao(disc.getId())){
+            return false;
+        }
         return Disciplina_dao.delDisciplina(disc);
     }
         

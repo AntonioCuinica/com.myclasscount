@@ -46,11 +46,12 @@ public class Licensa implements Serializable {
         try {
             //Cria o ficheiro Falunos.txt para armazenar os objectos 
             File dir=new File(uri);
-            if(dir.mkdirs()){
-                System.out.println("Diretorio criado com sucesso");
-            }else{
-                System.out.println("Erro ao criar diretorio");
-            }
+            dir.mkdirs();
+            //if(dir.mkdirs()){
+            //   System.out.println("Diretorio criado com sucesso");
+            //}else{
+            //   System.out.println("Erro ao criar diretorio");
+            //}
         }catch(Exception e) { 
             e.printStackTrace(); 
         }  

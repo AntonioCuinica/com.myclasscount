@@ -11,8 +11,10 @@ import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Disciplina;
 import com.myclasscount.model.Professor;
 import com.toedter.calendar.JDateChooser;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
@@ -58,9 +60,22 @@ public class AdicionarProfessor extends JPanel {
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(15,1));
         pan1.invisible(true, true);
+        
         Panel pan2=new Panel(Color.black,false);
-        pan2.setLayout(null);
+        pan2.setLayout(new BoxLayout(pan2,BoxLayout.Y_AXIS));
         pan2.invisible(true, true);
+        
+        Panel pMorada=new Panel(Color.black,false);
+        pMorada.setLayout(new BorderLayout());
+        pMorada.invisible(true, true);
+        
+        Panel pTxtF=new Panel(Color.black,false);
+        pTxtF.setLayout(new GridLayout(6,1));
+        pTxtF.invisible(true, true);
+        
+        Panel pDisc=new Panel(Color.black,false);
+        pDisc.setLayout(new BorderLayout());
+        pDisc.invisible(true, true);
         
         myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[1].addMouseListener(new Clique());
@@ -119,11 +134,20 @@ public class AdicionarProfessor extends JPanel {
         pan1.add(labels[5]); pan1.add(combbx);
         pan1.add(labels[6]);pan1.add(txtF[3]);
         
-        pan2.add(labels[7]); pan2.add(morada);
-        pan2.add(labels[8]); pan2.add(txtF[4]);
-        pan2.add(labels[9]); pan2.add(txtF[5]);
-        pan2.add(labels[10]); pan2.add(txtF[6]);
-        pan2.add(labels[11]); pan2.add(disc);
+        
+        pMorada.add(labels[7],BorderLayout.NORTH); pMorada.add(morada,BorderLayout.CENTER);
+        
+        pan2.add(pMorada);
+        
+        pTxtF.add(labels[8]); pTxtF.add(txtF[4]);
+        pTxtF.add(labels[9]); pTxtF.add(txtF[5]);
+        pTxtF.add(labels[10]); pTxtF.add(txtF[6]);
+        
+        pan2.add(pTxtF);
+        
+        pDisc.add(labels[11],BorderLayout.NORTH); pDisc.add(disc,BorderLayout.CENTER);
+        
+        pan2.add(pDisc);
         
         mainPane.add(pan1);
         mainPane.add(pan2);
@@ -141,17 +165,17 @@ public class AdicionarProfessor extends JPanel {
                         x=container.getWidth()/2-title.getWidth()/2;
                         title.setLocation(x,y);
                         pan1.setBounds(50,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
-                        pan2.setBounds(mainPane.getWidth()/2+25,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
-                        labels[11].setBounds(labels[5].getBounds());
-                        disc.setBounds(0,combbx.getY(),combbx.getWidth(),3*combbx.getHeight());
-                        labels[10].setBounds(labels[4].getBounds());
-                        txtF[6].setBounds(sexo.getBounds());
-                        labels[9].setBounds(labels[3].getBounds());
-                        txtF[5].setBounds(pan1.getComponent(7).getBounds());
-                        labels[8].setBounds(labels[2].getBounds());
-                        txtF[4].setBounds(txtF[2].getBounds());
-                        labels[7].setBounds(labels[0].getBounds());
-                        morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),3*txtF[0].getHeight());
+                        pan2.setBounds(mainPane.getWidth()/2+25,25,pan1.getWidth(),pan1.getHeight());
+//                        labels[11].setBounds(labels[5].getBounds());
+//                        disc.setBounds(0,combbx.getY(),combbx.getWidth(),3*combbx.getHeight());
+//                        labels[10].setBounds(labels[4].getBounds());
+//                        txtF[6].setBounds(sexo.getBounds());
+//                        labels[9].setBounds(labels[3].getBounds());
+//                        txtF[5].setBounds(pan1.getComponent(7).getBounds());
+//                        labels[8].setBounds(labels[2].getBounds());
+//                        txtF[4].setBounds(txtF[2].getBounds());
+//                        labels[7].setBounds(labels[0].getBounds());
+//                        morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),3*txtF[0].getHeight());
                         
                         myProc.getBtns()[0].setVisible(true);
                         myProc.getBtns()[1].setVisible(true);

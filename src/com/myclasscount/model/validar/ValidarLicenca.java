@@ -33,6 +33,15 @@ public class ValidarLicenca {
         return cod;
     }
     
+    public static String gerarCodigoLicenca2(String nomeSO,String versaoSO,String nomeUsuario,String dirHomeSO,int periodoMes){
+        Calendar data=Calendar.getInstance();
+        String dataActual=new SimpleDateFormat("ddMMyyyy").format(data.getTime());
+        data.add(Calendar.MONTH,periodoMes);
+        String dataFinal=new SimpleDateFormat("ddMMyyyy").format(data.getTime());
+        String cod=encryptar(nomeSO,versaoSO,dataFinal,nomeUsuario,dataActual,dirHomeSO);
+        return cod;
+    }
+    
     public static String encryptar(String ... args){
         String codigo="";
         for(String a:args){

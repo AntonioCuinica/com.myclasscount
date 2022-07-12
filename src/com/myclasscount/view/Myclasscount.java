@@ -86,6 +86,7 @@ public class Myclasscount extends JFrame {
         
         AdicionarAluno addE=new AdicionarAluno();
         add(addE,"addStudent");
+        
         CtrlGeral.setTela("addStudent",addE);
         
         AdicionarDisciplina addD=new AdicionarDisciplina();

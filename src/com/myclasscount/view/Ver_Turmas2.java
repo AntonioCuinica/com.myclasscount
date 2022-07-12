@@ -57,8 +57,13 @@ public class Ver_Turmas2 extends JPanel {
         mainPane.add(pan,BorderLayout.NORTH);
         double pag=0;
         for(Aluno a:turma.getAlunos()){
-            pag+=Double.parseDouble(Aluno_ctrl.pagamento(a.getId())[2]);
+            try{
+                pag+=Double.parseDouble(Aluno_ctrl.pagamento(a.getId())[2]);
+            }catch(NullPointerException e){
+                pag+=0;
+            }
         }
+        
         String turmaTurno[][]={{"Valor total",String.valueOf(pag)},{"Alunos",""+turma.getAlunos().size()},
                                {"Professor",turma.getProfessor().getNome()+" "+turma.getProfessor().getApelido()}};
         JPanel pan1=new JPanel(new GridLayout(3,1));

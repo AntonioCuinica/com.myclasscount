@@ -62,7 +62,7 @@ public class Mensalidade extends JPanel {
         ArrayList<com.myclasscount.model.Mensalidade> mensa;
         mensa=getMensalidade(mes,ano);
         
-        alunos=Aluno_ctrl.getAlunosInscritos();
+        alunos=Aluno_ctrl.getAlunos();
         
         JPanel mainPane=new JPanel();
         mainPane.setLayout(new BorderLayout());
@@ -255,8 +255,8 @@ public class Mensalidade extends JPanel {
     public JPanel centro(Aluno aluno,com.myclasscount.model.Mensalidade mensa){
         JPanel panel=new JPanel(new GridLayout(linhaCentro,1));
         panel.setBackground(Color.white);
+        System.out.println("aluno: "+mensa.getAluno_id());
         panel.add(MyProceduress.info("Nome",": "+aluno.getNome()+" "+aluno.getApelido(),Color.black,14));
-        panel.add(MyProceduress.info("Sexo",": "+aluno.getSexo(),Color.black,14));
         panel.add(MyProceduress.info("Telefone",": "+aluno.getTelefone(),Color.black,14));
         
         double pag=0;
@@ -270,10 +270,10 @@ public class Mensalidade extends JPanel {
            pag=tPago;
            tDever=0.0;
         }
-        
         panel.add(MyProceduress.info("Total a pagar",": "+pag,Color.black,14));
         panel.add(MyProceduress.info("Valor pago",": "+tPago,Color.black,14));
         panel.add(MyProceduress.info("Valor a dever",": "+tDever,Color.black,14));
+        panel.add(MyProceduress.info("Prazo",": "+new SimpleDateFormat("dd/MM/yyyy").format(mensa.getDataPagamento()),Color.black,14));
         
         if(btnPagar_visivel){
             JPanel pan=new JPanel(new GridLayout(1,2));

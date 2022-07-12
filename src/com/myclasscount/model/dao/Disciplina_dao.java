@@ -19,6 +19,24 @@ import java.util.ArrayList;
 
 public class Disciplina_dao {
     
+    public static boolean temInscricao(int id){
+        Connection con=Conexaoo.getConnection();
+        String select="select * from disciplina d join inscricao i on d.id=i.disciplina_id where disciplina_id=?;";
+         boolean teste=false;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setInt(1,id);
+            ResultSet rs=stmt.executeQuery();
+            teste= rs.next();
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println("Erro getDisciplina nome: "+e.getMessage());
+        }
+        return teste;
+    }
+    
+    
     public static Disciplina getDisciplina(String nome){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM disciplina WHERE nome=?";

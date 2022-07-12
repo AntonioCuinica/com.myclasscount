@@ -44,8 +44,7 @@ public class Ver_Mensalidade extends JPanel {
     
     public void mensalidades(){
         mainPane=new JTabbedPane();
-        ArrayList<com.myclasscount.model.Mensalidade> mensas=Mensalidade_ctrl.getMensalidades();
-        
+        ArrayList<com.myclasscount.model.Mensalidade> mensas=Mensalidade_ctrl.getMensalidadesDiferentes();
         for(com.myclasscount.model.Mensalidade m:mensas){
             adicionarMensalidade(m);
         }
@@ -86,6 +85,7 @@ public class Ver_Mensalidade extends JPanel {
         boolean teste=false;
         String ano=new SimpleDateFormat("yyyy").format(mensalidade.getDataPagamento());
         String mes=new SimpleDateFormat("MMMM",Locale.forLanguageTag("PT-BR")).format(mensalidade.getDataPagamento());
+        System.out.println("Mes: "+mes);
         String dia=new SimpleDateFormat("dd").format(mensalidade.getDataPagamento());
         String esteMes=new SimpleDateFormat("MMMM",Locale.forLanguageTag("PT-BR")).format(Calendar.getInstance().getTime());
         
@@ -97,6 +97,7 @@ public class Ver_Mensalidade extends JPanel {
                     if(esteMes.equals(m1.getMes())) tab.setSelectedComponent(m1);
                     if(m1.getMes().equals(mes)){
                         teste=true;
+                        break;
                     }
                 }
                 if(!teste){

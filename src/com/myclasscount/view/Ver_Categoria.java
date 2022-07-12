@@ -5,6 +5,7 @@
  */
 package com.myclasscount.view;
 
+import com.myclasscount.control.CtrlGeral;
 import com.myclasscount.control.categoria_ctrl;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -199,6 +200,9 @@ public class Ver_Categoria extends JPanel {
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"mainFrame");
                 }else if(btn.getText().equals("Criar")){
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"CriarCat");
+                    CriarCategoria criar=(CriarCategoria)CtrlGeral.getTela("CriarCat");
+                    criar.setProximo("categoria");
+                    criar.setVoltar("categoria");
                 }else if(btn.getText().equals("Remover")){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja remover ?",true);
                     if(dialog.getSimTeste()){

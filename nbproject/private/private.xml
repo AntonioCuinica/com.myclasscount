@@ -12,15 +12,12 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Myclasscount.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Ver_Mensalidade.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/AdicionarAluno.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/validar/ValidarLicenca.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/ChangeLookAndFeel.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Mensalidade.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Ver_Alunos.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Table.java</file>
-            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/Ver_Turmas2.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Turma_dao.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/dao/Conexaoo.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/view/AdicionarProfessor.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/Aluno.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/control/Turma_ctrl.java</file>
+            <file>file:/C:/Users/CUINIC4/OneDrive/Documents/NetBeansProjects/com.myclasscount/src/com/myclasscount/model/Licensa.java</file>
         </group>
     </open-files>
 </project-private>

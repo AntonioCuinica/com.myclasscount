@@ -34,9 +34,7 @@ public class ValidarProfessor {
         
         if(!erro(validarNUIT(professor.getNUIT(),professor.getId())))return false;
         
-        if(!erro(validarTelefone(professor.getTelefone())))return false;
-        
-        return true;
+        return erro(validarTelefone(professor.getTelefone()));
     }
     
     
@@ -53,12 +51,18 @@ public class ValidarProfessor {
     
     
     public static String validarTexto(String texto,String tipo){
+        texto=texto.trim();
         if(texto.isEmpty()){
             return "Erro , "+tipo+" vazio";
         }else{
+            int count=0;
             for(int i=0;i<texto.length();i++){
                 if(texto.substring(i,(i+1)).matches("[0-9]*")){
                     return "Erro, O "+tipo+" contem numero";
+                }else if(!texto.substring(i,(i+1)).matches("[a-zA-Z]*")){
+                    if(count++!=0){
+                        return "Erro, O "+tipo+" invalido";
+                    }
                 }
             }
         } 

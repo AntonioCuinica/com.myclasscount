@@ -21,34 +21,13 @@ import java.util.logging.Logger;
 
 public class Conexaoo {
     private static Connection con=null;
-//    private static String username="root";
-//    private static String password="";
-//    private static String ip="localhost";
-//    private static String bdName="myclasscount";
-    
-//    public static Connection getConnection(){
-//        Connection connection=null;
-//        try{
-//            connection=DriverManager.getConnection("jdbc:mysql://"+ip+"/"+bdName,username,password);
-//        }catch(SQLException e){
-//            throw new RuntimeException(e);
-//        }
-//        return connection;
-//    }
     
     public static Connection getConnection(){
         try{
             Class.forName("org.sqlite.JDBC");
             final String caminho=System.getProperty("user.home");
-            //System.out.println("Caminnho: "+caminho);
-            //if (con == null) {
-            //System.out.println("User dir: "+url);
             criarDir(caminho+"\\myclasscount");
             con=DriverManager.getConnection("jdbc:sqlite:"+caminho+"\\myclasscount\\myclasses.db");
-            //} else {
-                //con.close();
-                //con=DriverManager.getConnection("jdbc:sqlite:C:\\Users\\CUINIC4\\OneDrive\\Documents\\NetBeansProjects\\com.myclasscount\\dist\\myclasses.db");
-            //}
         }catch(SQLException | ClassNotFoundException e){
             throw new RuntimeException("Erro con: "+e);
         }catch(RuntimeException e){

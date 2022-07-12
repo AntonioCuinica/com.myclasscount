@@ -11,12 +11,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
+import javax.swing.event.ChangeEvent;
 
 /**
  *
@@ -68,6 +70,14 @@ public class CriarHorario extends JDialog {
         pan1.setLayout(new GridLayout(10,1));
         pan1.invisible(true, true);
         
+        Panel horaI=new Panel(Color.black,false);
+        horaI.setLayout(new GridLayout(1,4));
+        horaI.invisible(true, true);
+        
+        Panel horaF=new Panel(Color.black,false);
+        horaF.setLayout(new GridLayout(1,4));
+        horaF.invisible(true, true);
+        
         myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[1].addMouseListener(new Clique());
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
@@ -80,15 +90,44 @@ public class CriarHorario extends JDialog {
         for(int i=0;i<hora.length;i++){
             hora[i]=i;
         }
-        txtF=new JSpinner[]{new JSpinner(new SpinnerListModel(hora)),new JSpinner(new SpinnerListModel(hora))};
+        Integer min[]=new Integer[60];
+        for(int i=0;i<min.length;i++){
+            min[i]=i;
+        }
+        txtF=new JSpinner[]{new JSpinner(new SpinnerListModel(hora)),new JSpinner(new SpinnerListModel(min)),
+                            new JSpinner(new SpinnerListModel(hora)),new JSpinner(new SpinnerListModel(min))};
         txtF[0].getModel().setValue(8);
-        txtF[1].getModel().setValue(12);
+        txtF[0].addChangeListener(
+            new ChangeListener(){
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    int minH=(int)txtF[0].getValue();
+                    Integer h[]=new Integer[24-minH];
+                    for(int i=0;i<h.length-1;i++){
+                        h[i]=(minH+i+1);
+                        System.out.println("I: "+i);
+                    }
+                    txtF[2].setModel(new SpinnerListModel(h));
+                }
+            }
+        );
+        txtF[1].getModel().setValue(30);
+        txtF[2].getModel().setValue(8);
+        txtF[3].getModel().setValue(30);
         JLabel labels[]={new JLabel("Hora Inicio"),new JLabel("Hora Fim"),new JLabel("Turno"),
                          new JLabel("Dia de Semana")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
+        JLabel lbHora[]={new JLabel("hora"),new JLabel("min"),new JLabel("hora"),new JLabel("min")};
+        for(JLabel lb:lbHora)lb.setForeground(Color.white);
         pan1.add(labels[2]); pan1.add(combbx[0]);
-        pan1.add(labels[0]); pan1.add(txtF[0]);
-        pan1.add(labels[1]); pan1.add(txtF[1]);
+        pan1.add(labels[0]); 
+        horaI.add(txtF[0]);horaI.add(lbHora[0]);
+        horaI.add(txtF[1]);horaI.add(lbHora[1]);
+        pan1.add(horaI);
+        pan1.add(labels[1]);
+        horaF.add(txtF[2]);horaF.add(lbHora[2]);
+        horaF.add(txtF[3]);horaF.add(lbHora[3]);
+        pan1.add(horaF);
         pan1.add(labels[3]); pan1.add(combbx[1]);
         
         mainPane.add(pan1);
@@ -122,12 +161,27 @@ public class CriarHorario extends JDialog {
     }
     private class Clique extends MouseAdapter {
         
+        public  String hora(Object hora, Object min){
+            String h="";
+            if(String.valueOf(hora).length()==1){
+                h="0"+hora;
+            }else{
+                h=""+hora;
+            }
+            if(String.valueOf(min).length()==1){
+                h+=":0"+min;
+            }else{
+                h+=":"+min;
+            }
+            return h;
+        }
+        
         public void mouseClicked(MouseEvent e){
             if(e.getComponent().toString().contains("Proximo")){
                 horario=new Horario();
                 horario.setTurno(String.valueOf(combbx[0].getSelectedItem()));
-                horario.setHora_inicio(String.valueOf(txtF[0].getValue()+":00:00"));
-                horario.setHora_fim(String.valueOf(txtF[1].getValue())+":00:00");
+                horario.setHora_inicio(hora(txtF[0].getValue(),txtF[2].getValue()));
+                horario.setHora_fim(hora(txtF[2].getValue(),txtF[3].getValue()));
                 horario.setDia_semana(String.valueOf(combbx[1].getSelectedItem()));
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),depois);
                 dispose();

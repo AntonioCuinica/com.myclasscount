@@ -18,6 +18,23 @@ import java.util.ArrayList;
  */
 public class Categoriaa_dao {
     
+    public static boolean temAluno(int id){
+        Connection con=Conexaoo.getConnection();
+        String select="select * from categoria_aluno c join aluno a on a.categoria_id=c.id where c.id=?;";
+         boolean teste=false;
+        try{
+            PreparedStatement stmt=con.prepareStatement(select);
+            stmt.setInt(1,id);
+            ResultSet rs=stmt.executeQuery();
+            teste= rs.next();
+            stmt.close();
+            con.close();
+        }catch(SQLException e){
+            System.out.println("Erro Categoria temAluno: "+e.getMessage());
+        }
+        return teste;
+    }
+    
     public static Categoria getCategoria(String nome){
         Connection con=Conexaoo.getConnection();
         String select="SELECT * FROM categoria_aluno WHERE nome=?";

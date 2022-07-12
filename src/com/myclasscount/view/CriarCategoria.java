@@ -34,7 +34,33 @@ public class CriarCategoria extends JPanel {
     private JComboBox combbx[];
     private JTextField txtF[];
     private JTextArea desc;
+    private String proximo="categoria";
+    private String voltar="voltar";
     
+    public void setProximo(String proximo){
+        this.proximo=proximo;
+    }
+    
+    public String getProximo(){
+        return proximo;
+    }
+    
+    public MyButtonn getBtnProximo(){
+        return myProc.getBtns()[1];
+    }
+    
+    
+    public void setVoltar(String voltar){
+        myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[0].getMouseListeners()[0]);
+        myProc.getBtns()[0].addMouseListener(new Voltar(voltar));
+        this.voltar=voltar;
+    }
+    
+    
+    
+    public String getVoltar(){
+        return voltar;
+    }
     
     public CriarCategoria(){
         setLayout(null);
@@ -138,7 +164,7 @@ public class CriarCategoria extends JPanel {
             cat.setDescricao(desc.getText());
             if(categoria_ctrl.inserirCategoria(cat)){
                 MyProceduress.updateCategoria();
-                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"categoria");
+                Myclasscount.getCardLayout().show(Myclasscount.getContainer(),proximo);
                 txtF[0].setText(""); combbx[0].setSelectedIndex(0);
                 txtF[1].setText(""); combbx[1].setSelectedIndex(0);
                 desc.setText("");
@@ -151,6 +177,16 @@ public class CriarCategoria extends JPanel {
             }
         }
 
+    }
+    
+    private class Voltar extends MouseAdapter{
+        String voltar;
+        public Voltar(String voltar){
+            this.voltar=voltar;
+        }
+        public void mouseClicked(MouseEvent e){
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),voltar);
+        }
     }
    
 }

@@ -49,6 +49,9 @@ public class categoria_ctrl {
     }
     
     public static boolean deletarCategoria(Categoria cat){
+        if(Categoriaa_dao.temAluno(cat.getId())){
+            return false;
+        }
         return Categoriaa_dao.delCategoria(cat);
     }
     

@@ -89,21 +89,21 @@ public class Mensalidade {
     }
     
     public static void actualizarMensalidades(){
-        Calendar cal=Calendar.getInstance();
-        String mes=new SimpleDateFormat("MM").format(cal.getTime());
-        ArrayList<com.myclasscount.model.Mensalidade> mensa=Mensalidade_ctrl.getMensalidades();
+        Calendar dataActual=Calendar.getInstance();
+        String mesActual=new SimpleDateFormat("MM").format(dataActual.getTime());
+        ArrayList<com.myclasscount.model.Mensalidade>  mensa=Mensalidade_ctrl.getMensalidades();
         ArrayList<Aluno> alunos=Aluno_ctrl.getAlunosInscritos();
-        String ultimoMes=mes;
+        String ultimoMes=mesActual;
         if(mensa.isEmpty()){
             alunos.forEach(
                 a -> {
-                    Mensalidade_ctrl.setMensalidade(a.getId(),cal.getTime());
+                    Mensalidade_ctrl.setMensalidade(a.getId(),dataActual.getTime());
                 }
             );
         }else{
             ultimoMes=new SimpleDateFormat("MM").format(mensa.get(mensa.size()-1).getDataPagamento());
         }
-        int x=Integer.parseInt(mes);
+        int x=Integer.parseInt(mesActual);
         int y=Integer.parseInt(ultimoMes);
         if(!mensa.isEmpty()){
             if(Math.abs(x-y)<=2 || Math.abs(x-y)==0){
@@ -119,9 +119,9 @@ public class Mensalidade {
             }else{
                 for(Aluno aluno:alunos){
                     ArrayList<Mensalidade> m=Mensalidade_ctrl.getMensalidades(aluno.getId());
-                    if(m.size()==0){
+                    if(m.isEmpty()){
                         System.out.println("Aluno sem mensalidade:: "+aluno.getNome()+" "+aluno.getApelido());
-                        Date dataInicial=cal.getTime();
+                        Date dataInicial=dataActual.getTime();
                         Mensalidade_ctrl.setMensalidade(aluno.getId(),dataInicial);
                         for(int i=0;i<3;i++){
                             m=Mensalidade_ctrl.getMensalidades(aluno.getId());
@@ -133,5 +133,44 @@ public class Mensalidade {
                 }
             }
         }
+    }
+    
+    public static void actualizarMensalidadesTeste(){
+        Calendar dataActual=Calendar.getInstance();
+        String mesActual=new SimpleDateFormat("MM").format(dataActual.getTime());
+        ArrayList<Aluno> alunos=Aluno_ctrl.getAlunosInscritos();
+        alunos.forEach(
+            a -> {
+                ArrayList<Mensalidade> mensaAl=Mensalidade_ctrl.getMensalidades(a.getId());
+                String ultimoMes=mesActual;
+                if(mensaAl.size()>0)ultimoMes=new SimpleDateFormat("MM").format(mensaAl.get(mensaAl.size()-1).getDataPagamento());
+                int x=Integer.parseInt(mesActual);
+                int y=Integer.parseInt(ultimoMes);
+                if(mensaAl!=null){
+                    System.out.println("Aluno================================Nome: "+a.getNome());
+                    System.out.println("Tamanho==============================tam: "+mensaAl.size());
+                    System.out.println("X====================================: "+x);
+                    System.out.println("Y====================================: "+y);
+                    System.out.println("Tamanho==============================mensalidades: "+mensaAl);
+                    if(mensaAl.isEmpty()){
+                        Mensalidade_ctrl.setMensalidade(a.getId(),dataActual.getTime());
+                    }
+                }else{
+                    Mensalidade_ctrl.setMensalidade(a.getId(),dataActual.getTime());
+                }
+                if(Math.abs(x-y)<=2 || Math.abs(x-y)==0){
+                    Date dataInicial=dataActual.getTime();
+                    for(int i=0;i<3;i++){
+                        if(!mensaAl.isEmpty()){
+                            dataInicial=mensaAl.get(mensaAl.size()-1).getDataPagamento();
+                            Mensalidade_ctrl.setMensalidade(a.getId(),dataInicial);
+                            mensaAl=Mensalidade_ctrl.getMensalidades(a.getId());
+                        }else{
+                            Mensalidade_ctrl.setMensalidade(a.getId(),dataInicial);
+                        }
+                    }
+                }
+            }
+        );
     }
 }

@@ -83,13 +83,21 @@ public class Mensalidade_dao {
             System.out.println("Erro getMensalidades: "+e.getMessage());
         }
         return mensalidades;
-    
     }
     
     public static ArrayList<Mensalidade> getMensalidadesDiferentes(){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT  * FROM mensalidade group by year(dataP) order by dataP ;";
+        String select="SELECT * FROM mensalidade group by dataP order by dataP;";
         ArrayList<Mensalidade> mensalidades=new ArrayList();
+        int anoSize=(Integer.parseInt(new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime())))-2022;
+        if(anoSize<=0){
+            anoSize=1;
+        }else{
+            anoSize++;
+        }
+        int m[][]=new int[anoSize][12];
+        Mensalidade mensa[][]=new Mensalidade[anoSize][12];
+        int mes=0;int ano=0;
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             ResultSet rs=stmt.executeQuery();
@@ -100,25 +108,38 @@ public class Mensalidade_dao {
                 Date data;
                 try {
                     data = new SimpleDateFormat("dd/MM/yyyy").parse(rs.getString("dataP"));
+                    mes=Integer.parseInt(new SimpleDateFormat("MM").format(data));
+                    ano=Integer.parseInt(new SimpleDateFormat("yyyy").format(data))-2022;
+                    if(ano>=anoSize)ano=anoSize-1;
                     mensalidade.setDataPagamento(data);
                 } catch (ParseException ex) {
                     Logger.getLogger(Mensalidade_dao.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
-                mensalidades.add(mensalidade);
+                if(m[ano][mes-1]==0){
+                    m[ano][mes-1]=mes;
+                    mensa[ano][mes-1]=mensalidade;
+                }
             }
             stmt.close();
             con.close();
         }catch(SQLException e){
             System.out.println("Erro getMensalidadesDiferentes: "+e.getMessage());
         }
+        
+        for(int i=0;i<mensa.length;i++){
+            for(int j=0;j<mensa[0].length;j++){
+                if(mensa[i][j]!=null)mensalidades.add(mensa[i][j]);
+            }
+        }
+                
         return mensalidades;
     }
     
     public static ArrayList<Mensalidade> getMensalidades(int aluno_id){
         Connection con=Conexaoo.getConnection();
-        String select="SELECT * FROM mensalidade WHERE aluno_id=? order by dataP;";
+        String select="SELECT * FROM mensalidade WHERE aluno_id=?;";
         ArrayList<Mensalidade> mensalidades=new ArrayList();
         try{
             PreparedStatement stmt=con.prepareStatement(select);
