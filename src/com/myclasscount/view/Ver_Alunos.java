@@ -60,6 +60,7 @@ public class Ver_Alunos extends JPanel {
         voltar.setVisible(false);
         tabela=new Table(colunas);
         alunos=Aluno_ctrl.getAlunos();
+        double total=0;
         
         /**Preenchimento dos dados da tabela ver aluno*/
         String dados[][]=new String[alunos.size()][colunas.length];
@@ -74,6 +75,11 @@ public class Ver_Alunos extends JPanel {
             dados[i][6]=alunos.get(i).getSexo();
             dados[i][7]=alunos.get(i).getNivel();
             dados[i][8]=Aluno_ctrl.pagamento(alunos.get(i).getId())[2];
+            try{
+                total+=Double.parseDouble(dados[i][8]);
+            }catch(NumberFormatException|NullPointerException e){
+                
+            }
         }
         
         tabela.setTableData(dados);
@@ -82,6 +88,15 @@ public class Ver_Alunos extends JPanel {
         src.getViewport().setBackground(Color.white);
         container.add(src);
         container.add(voltar);
+        Panel totais=new Panel(Color.black,false);
+        totais.setLayout(new GridLayout(2,1));
+        totais.invisible(true, true);
+        JLabel tot=new JLabel("Total de pagamento: "+total);
+        tot.setForeground(Color.white);
+        JLabel totA=new JLabel("Total de alunos: "+alunos.size());
+        totA.setForeground(Color.white);
+        totais.add(tot);totais.add(totA);
+        container.add(totais);
         verAlunos(Myclasscount.getFrame());
         new Thread(
             new Runnable(){
@@ -99,6 +114,7 @@ public class Ver_Alunos extends JPanel {
                         y=((container.getHeight()-(src.getHeight()+src.getY())))-(voltar.getHeight()/2);
                         x=title.getWidth()+title.getX()-voltar.getWidth();
                         voltar.setLocation(x,container.getHeight()-y);
+                        totais.setBounds(10,container.getHeight()-(y+(voltar.getHeight()/2)),300,2*voltar.getHeight());
                         voltar.setVisible(true);
                         container.revalidate();
                     }
@@ -259,7 +275,7 @@ public class Ver_Alunos extends JPanel {
                 Inscrever inscrever=new Inscrever(Myclasscount.getFrame(),aluno,true);
                 inscrever.setVisible(true);
             }else if(e.getComponent().toString().contains("Eliminar")){
-                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscriçao",true);
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscrição",true);
                 if(dialog.getSimTeste()){
                     dialog.dispose();
                     int linha=tabInscricao.getSelectedRow();

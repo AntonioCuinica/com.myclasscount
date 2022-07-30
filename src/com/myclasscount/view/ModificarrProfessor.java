@@ -85,7 +85,7 @@ public class ModificarrProfessor extends JDialog {
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
+        String nivel[]={"Primario","Secundario","Tecnico","Universitario"};
         combbx=new JComboBox(nivel);
         
         ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();

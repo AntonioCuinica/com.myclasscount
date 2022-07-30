@@ -31,7 +31,7 @@ public class Ver_Disciplinas extends JPanel {
         setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Lista de Disciplinas",this);
+        title=MyProceduress.barName("Disciplinas",this);
         container.add(title);
         addTable();
         setVisible(true);

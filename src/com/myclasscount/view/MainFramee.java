@@ -25,7 +25,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public final class MainFramee extends JPanel {
@@ -57,10 +56,14 @@ public final class MainFramee extends JPanel {
         
         JLabel btnSearch=new JLabel();
         if(professor!=null){
+            if(CtrlGeral.getNivel_acesso().equals("admin")){
+                btnSearch.setForeground(Color.orange);
+            }else{
+                btnSearch.setForeground(Color.white);
+            }
             btnSearch.setText(professor.getNome()+" "+professor.getApelido());
         }
         btnSearch.setFont(new Font("Arial",Font.BOLD,25));
-        btnSearch.setForeground(Color.white);
         
         MyLabell usuario=new MyLabell("img/user.png");
         JPanel user=new JPanel(new GridLayout());

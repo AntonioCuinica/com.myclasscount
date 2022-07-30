@@ -67,11 +67,11 @@ public class ModificarCategoria extends JDialog {
         myProc.getBtns()[0].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[0].addMouseListener(new Clique());
         
-        String  tipoEnsino[]={"Primario","Secondario","Tecnico","Universitario"};
+        String  tipoEnsino[]={"Primario","Secundario","Tecnico","Universitario"};
         String classe[];
         if(categoria.getTipoEnsino().equals("Primario")){
             classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
-        }else if(categoria.getTipoEnsino().equals("Secondario")){
+        }else if(categoria.getTipoEnsino().equals("Secundario")){
             classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
         }else{
             classe=new String[]{"Superior"};
@@ -86,7 +86,7 @@ public class ModificarCategoria extends JDialog {
                    combbx[1].removeAllItems();
                    if(combbx[0].getSelectedItem().equals("Primario")){
                         classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
-                   }else if(combbx[0].getSelectedItem().equals("Secondario")){
+                   }else if(combbx[0].getSelectedItem().equals("Secundario")){
                         classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
                    }else{
                         classe=new String[]{"Superior"};
@@ -106,7 +106,7 @@ public class ModificarCategoria extends JDialog {
         desc.setLineWrap(true);
         
         JLabel labels[]={new JLabel("Nome da Categoria"),new JLabel("Tipo de ensino"),new JLabel("Classe"),
-                         new JLabel("Preço"),new JLabel("Descriçao")};
+                         new JLabel("Preço"),new JLabel("Descrição")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
         pan1.add(labels[0]); pan1.add(txtF[0]);
         pan1.add(labels[1]); pan1.add(combbx[0]);

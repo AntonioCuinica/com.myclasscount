@@ -14,7 +14,6 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
@@ -55,14 +54,13 @@ public class AdicionarProfessor extends JPanel {
         setVisible(true);
     }
     
-   
     public void addComponentToMainPane(Panel mainPane){
         Panel pan1=new Panel(Color.black,false);
         pan1.setLayout(new GridLayout(15,1));
         pan1.invisible(true, true);
         
         Panel pan2=new Panel(Color.black,false);
-        pan2.setLayout(new BoxLayout(pan2,BoxLayout.Y_AXIS));
+        pan2.setLayout(new GridLayout(3,1));
         pan2.invisible(true, true);
         
         Panel pMorada=new Panel(Color.black,false);
@@ -89,7 +87,7 @@ public class AdicionarProfessor extends JPanel {
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
+        String nivel[]={"Primario","Secundario","Tecnico","Universitario"};
         combbx=new JComboBox(nivel);
         
         ArrayList<Disciplina> disciplinas=Disciplina_ctrl.getDisciplinas();
@@ -132,21 +130,15 @@ public class AdicionarProfessor extends JPanel {
         pan1.add(labels[3]); pan1.add(data);
         pan1.add(labels[4]); pan1.add(sexo);
         pan1.add(labels[5]); pan1.add(combbx);
-        pan1.add(labels[6]);pan1.add(txtF[3]);
-        
+        pan1.add(labels[6]); pan1.add(txtF[3]);
         
         pMorada.add(labels[7],BorderLayout.NORTH); pMorada.add(morada,BorderLayout.CENTER);
-        
         pan2.add(pMorada);
-        
         pTxtF.add(labels[8]); pTxtF.add(txtF[4]);
         pTxtF.add(labels[9]); pTxtF.add(txtF[5]);
         pTxtF.add(labels[10]); pTxtF.add(txtF[6]);
-        
         pan2.add(pTxtF);
-        
         pDisc.add(labels[11],BorderLayout.NORTH); pDisc.add(disc,BorderLayout.CENTER);
-        
         pan2.add(pDisc);
         
         mainPane.add(pan1);
@@ -166,17 +158,6 @@ public class AdicionarProfessor extends JPanel {
                         title.setLocation(x,y);
                         pan1.setBounds(50,25,mainPane.getWidth()/2-75,mainPane.getHeight()-50);
                         pan2.setBounds(mainPane.getWidth()/2+25,25,pan1.getWidth(),pan1.getHeight());
-//                        labels[11].setBounds(labels[5].getBounds());
-//                        disc.setBounds(0,combbx.getY(),combbx.getWidth(),3*combbx.getHeight());
-//                        labels[10].setBounds(labels[4].getBounds());
-//                        txtF[6].setBounds(sexo.getBounds());
-//                        labels[9].setBounds(labels[3].getBounds());
-//                        txtF[5].setBounds(pan1.getComponent(7).getBounds());
-//                        labels[8].setBounds(labels[2].getBounds());
-//                        txtF[4].setBounds(txtF[2].getBounds());
-//                        labels[7].setBounds(labels[0].getBounds());
-//                        morada.setBounds(0,txtF[0].getY(),txtF[0].getWidth(),3*txtF[0].getHeight());
-                        
                         myProc.getBtns()[0].setVisible(true);
                         myProc.getBtns()[1].setVisible(true);
                         mainPane.revalidate();

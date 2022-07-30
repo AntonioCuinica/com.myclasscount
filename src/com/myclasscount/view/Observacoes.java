@@ -39,7 +39,7 @@ public class Observacoes extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Observaçoes",this);
+        title=MyProceduress.barName("Observações",this);
         container.add(title);
         myProc=new MyProceduress();
         this.addComponentToMainPane(myProc.mainPane("verTurmas2","", container));
@@ -92,7 +92,7 @@ public class Observacoes extends JPanel {
                         labels[0].setBounds(0,0,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         txtF.setBounds(0,labels[0].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         labels[1].setBounds(0,txtF.getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
-                        note.setBounds(0,labels[1].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.5));
+                        note.setBounds(0,labels[1].getY()+y,pan1.getWidth(),(int)(pan1.getHeight()*0.3));
                         gravar.setBounds(0,note.getHeight()+note.getY()+10,pan1.getWidth(),(int)(pan1.getHeight()*0.1));
                         
                         myProc.getBtns()[0].setVisible(true);
@@ -113,6 +113,9 @@ public class Observacoes extends JPanel {
                 }else if(note.getText().isEmpty()){
                     MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, nota vazia",true);
                     note.grabFocus();
+                }else if(note.getText().length()>270){
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Erro, 270 letras suportadas",true);
+                    note.grabFocus();
                 }else{
                     Observacao observ=new Observacao();
                     if(CtrlGeral.getProfessor_logado()!=null){
@@ -124,7 +127,7 @@ public class Observacoes extends JPanel {
                     observ.setTitulo(txtF.getText());
                     observ.setNota(note.getText());
                     Observacao_ctrl.setObservacao(observ);
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Observaçao gravada !!",true);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Observação gravada !!",true);
                     MyProceduress.updateVerObservacoes();
                     txtF.setText("");
                     note.setText("");
@@ -135,7 +138,7 @@ public class Observacoes extends JPanel {
                     v.setVoltar("observacoes");
                     Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
                 }else{
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Nota nao gravada, continuar ?",true);
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Nota não gravada, continuar ?",true);
                     if(dialog.getSimTeste()){
                         Myclasscount.getCardLayout().show(Myclasscount.getContainer(),"verObservacoes");
                     }

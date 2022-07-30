@@ -123,7 +123,7 @@ public class RecuperarSenha extends JPanel {
                     pswF[1].grabFocus();
                 }
             }else{
-                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Utilizador nao cadastrado",true);
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Utilizador não cadastrado",true);
                 txtF[0].setText("");
                 txtF[0].grabFocus();
             }

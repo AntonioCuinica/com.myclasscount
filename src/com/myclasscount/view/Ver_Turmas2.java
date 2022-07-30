@@ -258,7 +258,7 @@ public class Ver_Turmas2 extends JPanel {
                         dialog.setLayout(new BorderLayout());
                         dialog.setSize(400,300);
                         dialog.setLocationRelativeTo(frame);
-                        MyButtonn observacao=new MyButtonn("Adicionar Observacao",false);
+                        MyButtonn observacao=new MyButtonn("Adicionar Observacão",false);
                         observacao.addActionListener(
                             (ActionEvent e)->{
                                 Observacoes observ=(Observacoes)CtrlGeral.getTela("observacoes");

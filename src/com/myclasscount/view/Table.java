@@ -40,7 +40,7 @@ public class Table extends JTable {
         modelo.setColumnIdentifiers(colunas);
         modelo.setRowCount(0);
         td=new Object[colunas.length];
-        setModel(this.modelo);
+        setModel(modelo);
         setDefaultRenderer(Object.class,new CellTableZebra());
         setHearderColor(Color.blue,Color.white);
         setShowVerticalLines(false);
@@ -59,6 +59,7 @@ public class Table extends JTable {
             this.modelo.addRow(this.td);
         }
     }
+    
     public void setNullValues(){
         for(int i=0;i<this.size;i++){
             this.td[i]="null";
@@ -73,7 +74,6 @@ public class Table extends JTable {
     public void setCellButton(JTextField data,int j){
         TableColumn col=getColumnModel().getColumn(j);
         col.setCellEditor(new DefaultCellEditor(data));
-        System.out.println(col);
     }
     
     public void setButton(String column,String txt,Color color){
@@ -174,8 +174,8 @@ public class Table extends JTable {
             }
             return button;
         }
-    
     }
+    
    
     
 }

@@ -221,7 +221,7 @@ public class MyProceduress {
                        
         JPanel titulo=new JPanel();
         titulo.setOpaque(false);
-        JLabel texto=new JLabel("Inscricoes",SwingConstants.CENTER);
+        JLabel texto=new JLabel("inscrições",SwingConstants.CENTER);
         texto.setForeground(Color.white);
         texto.setFont(new Font("Arial",Font.BOLD,18));
         titulo.add(texto);
@@ -251,7 +251,7 @@ public class MyProceduress {
         pan1.setBackground(color);
         pan1.setBorder(new EmptyBorder(30,30,0,30));
         
-        JLabel lb1=new JLabel("Acesso bloqueado, a sua Licensa Expirou !!!",SwingConstants.CENTER);
+        JLabel lb1=new JLabel("Acesso bloqueado, a sua Licensa Expirou!",SwingConstants.CENTER);
         lb1.setFont(font);
         lb1.setForeground(Color.white);
         pan1.add(lb1);
@@ -286,7 +286,7 @@ public class MyProceduress {
                     }
                     if(teste){
                         CtrlGeral.gravarLicenca(codigo.getText());
-                        MyDialogg dialog=new MyDialogg(frame,1,"Codigo gravado com sucesso", true);
+                        MyDialogg dialog=new MyDialogg(frame,1,"Codigo gravado com sucesso!", true);
                         actualizar.dispose();
                     }else{
                         MyDialogg dialog=new MyDialogg(frame,1,"Erro, codigo invalido", true);

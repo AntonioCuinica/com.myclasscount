@@ -93,7 +93,7 @@ public class ModificarEstudante extends JDialog {
         andress.setLineWrap(true);
         JScrollPane morada=new JScrollPane(andress);
         
-        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
+        String nivel[]={"Primario","Secundario","Tecnico","Universitario"};
         ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
         combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox()};
         for(int i=0;i<categorias.size();i++){

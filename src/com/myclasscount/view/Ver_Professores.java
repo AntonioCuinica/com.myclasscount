@@ -121,11 +121,16 @@ public class Ver_Professores extends JPanel {
     public  void updateComponents(){
         removeAll();
         professores=Professor_ctrl.getProfessores();
-        for(Professor a:professores){
-            if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
-                professor=a;
+        try{
+            for(Professor a:professores){
+                if(a.getBI().equals(tabela.getValueAt(linhaSelecionada,2).toString())){
+                    professor=a;
+                }
             }
+        }catch(Exception e){
+            System.out.println("verProf: "+e.getMessage());
         }
+        
         container.add(title);
         addTable();
     }
@@ -242,7 +247,7 @@ public class Ver_Professores extends JPanel {
                     }
                 }
             }else if(e.getComponent().toString().contains("Eliminar")){
-                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscriçao",true);
+                MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Deseja cancelar inscrição",true);
                 if(dialog.getSimTeste()){
                     dialog.dispose();
                     int linha=tabInscricao.getSelectedRow();

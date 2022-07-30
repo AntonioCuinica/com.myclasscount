@@ -15,7 +15,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -94,7 +93,7 @@ public class AdicionarAluno extends JPanel {
         morada.setPreferredSize(new Dimension(234,145));
         morada.setMinimumSize(new Dimension(234,145));
         
-        String nivel[]={"Primario","Secondario","Tecnico","Universitario"};
+        String nivel[]={"Primario","Secundario","Tecnico","Universitario"};
         ArrayList<Categoria> categorias=categoria_ctrl.getCategorias();
         combbx=new JComboBox[]{new JComboBox(nivel),new JComboBox()};
         combbx[0].setSelectedIndex(0);
@@ -258,7 +257,7 @@ public class AdicionarAluno extends JPanel {
                         txtF[3].setText("");
                         txtF[3].grabFocus();
                     }else if(catID.equals("null")){
-                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Nao há categoria, criar ?", true);
+                        MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),2,"Não há categoria, criar ?", true);
                         if(dialog.getSimTeste()){
                             CriarCategoria criar=(CriarCategoria)CtrlGeral.getTela("CriarCat");
                             criar.setProximo("addStudent");
@@ -293,14 +292,9 @@ public class AdicionarAluno extends JPanel {
                         }
                     }
                 }else{
-                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso !!", true);
-                    
+                    MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Cadastrado com sucesso!", true);
                     for(JTextField txtF:txtF){  txtF.setText(""); }
-                    
-                    //for(JComboBox combbx:combbx){ combbx.setSelectedIndex(0); }
-                    
                     andress.setText("");
-                    
                     Ver_Alunos v=(Ver_Alunos)CtrlGeral.getTela("verAlunos");
                     v.updateComponents();
                 }

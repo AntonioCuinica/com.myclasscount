@@ -81,7 +81,7 @@ public class CriarCategoria extends JPanel {
         myProc.getBtns()[1].removeMouseListener(myProc.getBtns()[1].getMouseListeners()[0]);
         myProc.getBtns()[1].addMouseListener(new Clique());
         
-        String  tipoEnsino[]={"Primario","Secondario","Tecnico","Universitario"};
+        String  tipoEnsino[]={"Primario","Secundario","Tecnico","Universitario"};
         String classe[]={"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
         combbx=new JComboBox[]{new JComboBox(tipoEnsino),new JComboBox(classe)};
         combbx[0].addActionListener(
@@ -91,7 +91,7 @@ public class CriarCategoria extends JPanel {
                    combbx[1].removeAllItems();
                    if(combbx[0].getSelectedItem().equals("Primario")){
                         classe=new String[]{"1a Classe","2a Classe","3a Classe","4a Classe","5a Classe","6a Classe","7a Classe"};
-                   }else if(combbx[0].getSelectedItem().equals("Secondario")){
+                   }else if(combbx[0].getSelectedItem().equals("Secundario")){
                         classe=new String[]{"8a Classe","9a Classe","10a Classe","11a Classe","12a Classe"};
                    }else{
                         classe=new String[]{"Superior"};

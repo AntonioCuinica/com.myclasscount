@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import com.myclasscount.control.Login_ctrl;
 import com.myclasscount.control.Professor_ctrl;
 import com.myclasscount.model.Acesso;
+import java.awt.Font;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -66,9 +67,10 @@ public class Loginn extends JPanel {
         pswF.addKeyListener(new ChangeFocus());
         MyButtonn entrar=new MyButtonn("Entrar",false);
         entrar.addMouseListener(new Clique());
-        labels=new JLabel[]{new JLabel("Bem vindo ao MyClassCount",SwingConstants.CENTER),new JLabel("Usuario"),
+        labels=new JLabel[]{new JLabel("Sistema de Gestão de turmas particulares e mensalidades",SwingConstants.CENTER),new JLabel("Usuario"),
             new JLabel("Senha")};
         for(JLabel lb:labels)lb.setForeground(Color.white);
+        labels[0].setFont(new Font("Arial",Font.BOLD,13));
         
         esqueceu=new JButton("Acesso invalido !!");
         esqueceu.setVisible(false);

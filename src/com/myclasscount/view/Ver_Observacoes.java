@@ -11,11 +11,17 @@ import com.myclasscount.control.Observacao_ctrl;
 import com.myclasscount.model.Aluno;
 import com.myclasscount.model.Observacao;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -38,7 +44,7 @@ public class Ver_Observacoes extends JPanel {
         this.setLayout(null);
         container=this;
         container.setBackground(backColor.darker());
-        title=MyProceduress.barName("Lista de Observaçoes",this);
+        title=MyProceduress.barName("Observações",this);
         container.add(title);
         this.addTable();
         this.setVisible(true);
@@ -50,10 +56,12 @@ public class Ver_Observacoes extends JPanel {
         voltar.setSize(85,25);
         voltar.addMouseListener(new Clique());
         voltar.setVisible(false);
+        
         tabela=new Table(colunas);
+        tabela.setDefaultRenderer(Object.class,new MyCell());
         observacoes=Observacao_ctrl.getObservacao();
         ArrayList<Aluno> alunos=Aluno_ctrl.getAlunos();
-        String dados[][]=new String[observacoes.size()][colunas.length];
+        Object dados[][]=new Object[observacoes.size()][colunas.length];
         for(int i=0;i<dados.length;i++){
             dados[i][0]=String.valueOf((i+1));
             int aluno_id=observacoes.get(i).getAluno_id();
@@ -63,11 +71,17 @@ public class Ver_Observacoes extends JPanel {
                 }
             }
             dados[i][2]=observacoes.get(i).getTitulo();
-            dados[i][3]=observacoes.get(i).getNota();
+            dados[i][3]=new JTextArea(observacoes.get(i).getNota());
             dados[i][4]=observacoes.get(i).getDataObservacao();
         }
+     
         tabela.setTableData(dados);
         tabela.setButton("","Eliminar",Color.red);
+        tabela.setRowHeight(100);
+        tabela.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tabela.getColumnModel().getColumn(3).setPreferredWidth(250);
+        tabela.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tabela.getColumnModel().getColumn(1).setPreferredWidth(80);
         JScrollPane src=new JScrollPane(tabela);
         src.setBackground(Color.blue);
         src.getViewport().setBackground(Color.white);
@@ -111,7 +125,7 @@ public class Ver_Observacoes extends JPanel {
                     if(evento.getClickCount()==1){
                         int linha=tabela.getSelectedRow();
                         if(tabela.getSelectedColumn()==5){
-                            MyDialogg dialog=new MyDialogg(frame,2,"Deseja remover observaçao ?", true);
+                            MyDialogg dialog=new MyDialogg(frame,2,"Deseja remover observação ?", true);
                             if(dialog.getSimTeste()){
                                 Observacao observ=observacoes.get(linha);
                                 Observacao_ctrl.delObservacao(observ.getId());
@@ -123,10 +137,30 @@ public class Ver_Observacoes extends JPanel {
             }
         );
     }
+
+    
+    private  class MyCell extends DefaultTableCellRenderer{
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            JTextArea txtA=null;
+            setHorizontalAlignment(SwingConstants.CENTER);
+            table.getColumnModel().getColumn(column).setCellRenderer(this);
+            if(value instanceof JTextArea){
+                txtA=(JTextArea)value;
+                txtA.setLineWrap(true);
+                txtA.setRows(20);
+                txtA.setBackground(Color.white);
+                txtA.setEditable(true);
+                return txtA;
+            }
+            return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        }
+    }
     
     private class Clique extends MouseAdapter{
+        @Override
         public void mouseClicked(MouseEvent e){
-          Myclasscount.getCardLayout().show(Myclasscount.getContainer(),voltar);
+            Myclasscount.getCardLayout().show(Myclasscount.getContainer(),voltar);
         }
     }
     

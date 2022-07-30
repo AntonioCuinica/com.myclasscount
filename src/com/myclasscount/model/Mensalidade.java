@@ -120,13 +120,11 @@ public class Mensalidade {
                 for(Aluno aluno:alunos){
                     ArrayList<Mensalidade> m=Mensalidade_ctrl.getMensalidades(aluno.getId());
                     if(m.isEmpty()){
-                        System.out.println("Aluno sem mensalidade:: "+aluno.getNome()+" "+aluno.getApelido());
                         Date dataInicial=dataActual.getTime();
                         Mensalidade_ctrl.setMensalidade(aluno.getId(),dataInicial);
                         for(int i=0;i<3;i++){
                             m=Mensalidade_ctrl.getMensalidades(aluno.getId());
                             dataInicial=m.get(m.size()-1).getDataPagamento();
-                            System.out.println("Adicionando na data: "+dataInicial);
                             Mensalidade_ctrl.setMensalidade(aluno.getId(),dataInicial);
                         }
                     }
@@ -147,11 +145,6 @@ public class Mensalidade {
                 int x=Integer.parseInt(mesActual);
                 int y=Integer.parseInt(ultimoMes);
                 if(mensaAl!=null){
-                    System.out.println("Aluno================================Nome: "+a.getNome());
-                    System.out.println("Tamanho==============================tam: "+mensaAl.size());
-                    System.out.println("X====================================: "+x);
-                    System.out.println("Y====================================: "+y);
-                    System.out.println("Tamanho==============================mensalidades: "+mensaAl);
                     if(mensaAl.isEmpty()){
                         Mensalidade_ctrl.setMensalidade(a.getId(),dataActual.getTime());
                     }
