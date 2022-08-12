@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +47,7 @@ public class Mensalidade_dao {
                 }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                mensalidade.setDivida(rs.getDouble("divida"));
             }
             stmt.close();
             con.close();
@@ -75,6 +77,7 @@ public class Mensalidade_dao {
                 }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                mensalidade.setDivida(rs.getDouble("divida"));
                 mensalidades.add(mensalidade);
             }
             stmt.close();
@@ -117,6 +120,7 @@ public class Mensalidade_dao {
                 }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                mensalidade.setDivida(rs.getDouble("divida"));
                 if(m[ano][mes-1]==0){
                     m[ano][mes-1]=mes;
                     mensa[ano][mes-1]=mensalidade;
@@ -158,6 +162,7 @@ public class Mensalidade_dao {
                 }
                 mensalidade.setValor(rs.getDouble("valor"));
                 mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                mensalidade.setDivida(rs.getDouble("divida"));
                 mensalidades.add(mensalidade);
             }
             stmt.close();
@@ -197,6 +202,7 @@ public class Mensalidade_dao {
                         }
                         mensalidade.setValor(rs.getDouble("valor"));
                         mensalidade.setAluno_id(rs.getInt("aluno_id"));
+                        mensalidade.setDivida(rs.getDouble("divida"));
                         mensalidades.add(mensalidade);
                     }
                 }
@@ -211,12 +217,13 @@ public class Mensalidade_dao {
     
     public static void updateMensalidade(Mensalidade mensalidade){
         Connection con=Conexaoo.getConnection();
-        String select="UPDATE mensalidade SET estado=?,valor=? WHERE id=?;";
+        String select="UPDATE mensalidade SET estado=?,valor=?,divida=? WHERE id=?;";
         try{
             PreparedStatement stmt=con.prepareStatement(select);
             stmt.setString(1,mensalidade.getEstado());
             stmt.setDouble(2,mensalidade.getValor());
-            stmt.setInt(3,mensalidade.getId());
+            stmt.setDouble(3,mensalidade.getDivida());
+            stmt.setInt(4,mensalidade.getId());
             stmt.execute();
             
             stmt.close();
@@ -229,23 +236,42 @@ public class Mensalidade_dao {
     public static void setMensalidade(int aluno_id, Date dataInicial){
         Connection con=Conexaoo.getConnection();
         //String select="CALL inserir_mensalidade(?,?);";
-        String select="insert into mensalidade(estado,aluno_id,valor,dataP) values('aberta',?,'0',?);";
+        String select="insert into mensalidade(estado,aluno_id,valor,dataP,divida) values('aberta',?,'0',?,'0');";
         
         try{
-            PreparedStatement stmt=con.prepareStatement(select);
-            stmt.setInt(1,aluno_id);
-            Calendar g=Calendar.getInstance();
-            g.setTime(dataInicial);
-            g.add(Calendar.DAY_OF_MONTH,31);
-            String dataFinal=new SimpleDateFormat("dd/MM/yyyy").format(g.getTime());
-            stmt.setString(2,dataFinal);
-            stmt.execute(); 
-            
-            stmt.close();
-            con.close();
+            if(!existeMensalidade(aluno_id,dataInicial)){
+                PreparedStatement stmt=con.prepareStatement(select);
+                stmt.setInt(1,aluno_id);
+                Calendar g=Calendar.getInstance();
+                g.setTime(dataInicial);
+                g.add(Calendar.DAY_OF_MONTH,31);
+                String dataFinal=new SimpleDateFormat("dd/MM/yyyy").format(g.getTime());
+                stmt.setString(2,dataFinal);
+                stmt.execute(); 
+
+                stmt.close();
+                con.close();
+            }
         }catch(SQLException e){
             System.out.println("Erro setMensalidade aluno_id e dataI: "+e.getMessage());
         }
+    }
+    
+    public static boolean existeMensalidade(int aluno_id, Date dataInicial){
+        ArrayList<Mensalidade> mensalidades=getMensalidades(aluno_id);
+        Calendar g=Calendar.getInstance();
+        g.setTime(dataInicial);
+        g.add(Calendar.DAY_OF_MONTH,31);
+        String mes=new SimpleDateFormat("MM/yyyy").format(g.getTime());
+        if(!mensalidades.isEmpty()){
+            for (Mensalidade m : mensalidades) {
+                String mesPag=new SimpleDateFormat("MM/yyyy").format(m.getDataPagamento());
+                if(mesPag.equals(mes)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
 }

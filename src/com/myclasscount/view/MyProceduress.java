@@ -376,10 +376,8 @@ public class MyProceduress {
         
         public void actionPerformed(ActionEvent e){
             if(e.getActionCommand().equals("Voltar")){
-                System.out.println("Voltar");
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),dir);
             } else if(e.getActionCommand().equals("Proximo")){
-                System.out.println("Proximo");
                 Myclasscount.getCardLayout().show(Myclasscount.getContainer(),dir);
             }      
         }

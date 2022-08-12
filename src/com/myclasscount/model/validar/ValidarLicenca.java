@@ -59,7 +59,9 @@ public class ValidarLicenca {
     }
     
     public static String[] decryptar(String codigo){
+        CifraVinegere cifra=new CifraVinegere();
         if(!codigo.isEmpty()){
+            codigo=cifra.decifrar(codigo,System.getProperty("user.name"));
             String array[]=new String[size(codigo)];
             codigo=codigo.replace("?","s").replace("!","n").replace("*","2").toLowerCase();
             String ai[]=codigo.split("-");
@@ -134,10 +136,73 @@ public class ValidarLicenca {
         return codigo.split("-").length;
     }
     
-    public static void main(String[] args) {
-        CtrlGeral.gerarCodigoGravar(4);
-        //Object obj[]=(Object[])CtrlGeral.retornarLicensa();
-        //System.out.println("Retornado: "+obj[0]);
-        //verificarLicensa();
+    public static class CifraVinegere {
+        int tabela[][]=new int[26][26];
+
+        public CifraVinegere(){
+            preencherTabela();
+        }
+
+        public void preencherTabela(){
+            int count=25;
+            int j=0;
+            for(int i=0;i<tabela.length;i++){
+                while(count>=0){
+                    if(j>25){
+                        j=0;
+                    }
+                    if(i>0){
+                        if(tabela[i-1][j]>=25){
+                            tabela[i][j]=0;
+                        }else{
+                            tabela[i][j]=tabela[i-1][j]+1;
+                        }
+                    }else{
+                        tabela[i][j]=j;
+                    }
+                    j++;
+                    count--;
+                }
+                count=25;
+            }
+        }
+
+        public String decifrar(String texto,String chave){
+            String textoC="";
+            texto=texto.toLowerCase();
+            chave=chave.toLowerCase();
+            char txt[]=texto.toCharArray();
+            char ch[]=chave.toCharArray();
+            int count=0;
+            for(char t:txt){
+                if(!(t<97 || t>122)){
+                    int i=t%26;
+                    int j=ch[count]%26;
+                    if(i>=19){
+                        i-=19;
+                    }else if(i<=18){
+                        i+=7;
+                    }
+                    if(j>=19){
+                        j-=19;
+                    }else if(j<=18){
+                        j+=7;
+                    }
+                    if(++count==ch.length){
+                        count=0;
+                    }
+                    for(int k=0;k<26;k++){
+                        if(tabela[j][k]==i){
+                            textoC+=(char)(tabela[0][k]+65);
+                            break;
+                        }
+                    }
+                }else{
+                    textoC+=t;
+                }
+            }
+            return textoC;
+        }
     }
+  
 }

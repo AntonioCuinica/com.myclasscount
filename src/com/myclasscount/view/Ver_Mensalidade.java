@@ -85,7 +85,6 @@ public class Ver_Mensalidade extends JPanel {
         boolean teste=false;
         String ano=new SimpleDateFormat("yyyy").format(mensalidade.getDataPagamento());
         String mes=new SimpleDateFormat("MMMM",Locale.forLanguageTag("PT-BR")).format(mensalidade.getDataPagamento());
-        System.out.println("Mes: "+mes);
         String dia=new SimpleDateFormat("dd").format(mensalidade.getDataPagamento());
         String esteMes=new SimpleDateFormat("MMMM",Locale.forLanguageTag("PT-BR")).format(Calendar.getInstance().getTime());
         
@@ -118,7 +117,8 @@ public class Ver_Mensalidade extends JPanel {
         
         mainPane.removeAll();
         for(Object[][] m:mensAno){
-            mainPane.addTab((String)m[0][0],(JTabbedPane)m[0][1]);
+            //mainPane.addTab((String)m[0][0],(JTabbedPane)m[0][1]);
+            mainPane.insertTab((String)m[0][0],null,(JTabbedPane)m[0][1],"",0);
             mainPane.setSelectedComponent((JTabbedPane)m[0][1]);
         }
     }

@@ -103,6 +103,7 @@ public class AdicionarProfessor extends JPanel {
         male=new JRadioButton("Masculino");
         male.setOpaque(false);
         male.setForeground(Color.white);
+        male.setSelected(true);
         female=new JRadioButton("Feminino");
         female.setOpaque(false);
         female.setForeground(Color.white);
@@ -189,9 +190,9 @@ public class AdicionarProfessor extends JPanel {
                     professor.setNascimento(new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()));
                 }
                 if(male.isSelected()){
-                    professor.setSexo("Masculino");
+                    professor.setSexo("M");
                 }else{
-                    professor.setSexo("Femenino");
+                    professor.setSexo("F");
                 }
                 
                 professor.setNivel((String) combbx.getSelectedItem());

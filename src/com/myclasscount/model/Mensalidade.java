@@ -23,7 +23,8 @@ public class Mensalidade {
     private Date dataPagamento;
     private double valor;
     private int aluno_id;
-
+    private double divida=0;
+    
     public int getId() {
         return id;
     }
@@ -62,6 +63,14 @@ public class Mensalidade {
 
     public void setAluno_id(int aluno_id) {
         this.aluno_id = aluno_id;
+    }
+    
+    public double getDivida() {
+        return divida;
+    }
+
+    public void setDivida(double divida) {
+        this.divida = divida;
     }
     
     public void mudarEstado(double pag){
@@ -166,4 +175,6 @@ public class Mensalidade {
             }
         );
     }
+
+    
 }

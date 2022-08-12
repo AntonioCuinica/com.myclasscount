@@ -202,8 +202,7 @@ public class Mensalidade extends JPanel {
             if(p!=null){
                 double pag=Double.parseDouble(p);
                 totD+=(pag-m.getValor());
-            }
-            
+            } 
         }
         dir.add(MyProceduress.info("Total pago",": "+totP, Color.white,14));
         dir.add(MyProceduress.info("Total em dívida",": "+totD, Color.white,14));
@@ -262,9 +261,18 @@ public class Mensalidade extends JPanel {
         double pag=0;
         if(Aluno_ctrl.pagamento(aluno.getId())[2]!=null){
             pag=Double.parseDouble(Aluno_ctrl.pagamento(aluno.getId())[2]);
+            if(pag<(mensa.getDivida()+mensa.getValor())){
+                pag=mensa.getDivida()+mensa.getValor();
+            }
         }
         tPago=mensa.getValor();
         tDever=pag-mensa.getValor();
+        
+        if(pag!=0){
+            mensa.setDivida(tDever);
+        }else{
+            tDever=mensa.getDivida();
+        }
         
         if(mensa.getEstado().equals("paga")){
            pag=tPago;
@@ -326,9 +334,17 @@ public class Mensalidade extends JPanel {
                     if(Aluno_ctrl.pagamento(aluno.getId())[2]!=null){
                         pag=Double.parseDouble(Aluno_ctrl.pagamento(aluno.getId())[2]);
                     }
-                    if((valor+mensalidade.getValor())<=pag){
+                    if((valor+mensalidade.getValor())<=pag || (valor>0 && valor<=mensalidade.getDivida())){
                         mensalidade.setValor(mensalidade.getValor()+valor);
                         mensalidade.mudarEstado(pag);
+                        if((valor>0 && valor<=mensalidade.getDivida())){
+                            mensalidade.setDivida(mensalidade.getDivida()-valor);
+                            if(mensalidade.getDivida()==0){
+                                mensalidade.setEstado("paga");
+                            }
+                        }else{
+                            mensalidade.setDivida(pag-mensalidade.getValor());
+                        }
                         Mensalidade_ctrl.updateMensalidade(mensalidade);
                         MyDialogg dialog=new MyDialogg(Myclasscount.getFrame(),1,"Pagamento feito com sucesso",true);
                         updateComponents();
