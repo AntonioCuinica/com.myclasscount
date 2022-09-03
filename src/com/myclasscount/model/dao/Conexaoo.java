@@ -13,6 +13,10 @@ package com.myclasscount.model.dao;
  */
 
 import static com.myclasscount.model.Licensa.criarDir;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -24,10 +28,23 @@ public class Conexaoo {
     
     public static Connection getConnection(){
         try{
+            final String userDir=System.getProperty("user.dir");
+            final String userHome=System.getProperty("user.home");
+            criarDir(userHome+"\\myclasscount");
+            System.out.println("User dir: "+userDir);
+            System.out.println("Home dir: "+System.getProperty("user.home"));
+            File file=new File(userHome+"\\myclasscount\\myclasses.db");
+            try {
+                System.out.println("Existe ?: "+file.exists());
+                if(!file.exists()){
+                    Files.copy(Paths.get(userDir+"\\myclasscount\\myclasses.db")
+                        ,Paths.get(userHome+"\\myclasscount\\myclasses.db"));
+                }
+            } catch (IOException ex) {
+                System.out.println("Erro, Conexao, base de dados nao movida");
+            }
             Class.forName("org.sqlite.JDBC");
-            final String caminho=System.getProperty("user.home");
-            criarDir(caminho+"\\myclasscount");
-            con=DriverManager.getConnection("jdbc:sqlite:"+caminho+"\\myclasscount\\myclasses.db");
+            con=DriverManager.getConnection("jdbc:sqlite:"+userHome+"\\myclasscount\\myclasses.db");
         }catch(SQLException | ClassNotFoundException e){
             throw new RuntimeException("Erro con: "+e);
         }catch(RuntimeException e){

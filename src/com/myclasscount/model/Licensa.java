@@ -52,7 +52,7 @@ public class Licensa implements Serializable {
             //}else{
             //   System.out.println("Erro ao criar diretorio");
             //}
-        }catch(Exception e) { 
+        }catch(Exception e){ 
             e.printStackTrace(); 
         }  
     }
